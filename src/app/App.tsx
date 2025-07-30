@@ -1,23 +1,19 @@
-import { useState, type JSX } from 'react';
+import { type JSX } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { RouterProvider } from 'react-router-dom';
+import './styles/index.css';
+import { router } from './router';
 
 function App(): JSX.Element {
-	const [count, setCount] = useState(0);
-
 	return (
-		<>
-			<div>
-				<a href="https://vite.dev" target="_blank"></a>
-				<a href="https://react.dev" target="_blank"></a>
-			</div>
-			<h1>Vite + React</h1>
-			<div className="card">
-				<button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-		</>
+		<HelmetProvider>
+			<Helmet>
+				<link rel="preconnect" href="https://fonts.googleapis.com" />
+				<link rel="preconnect" href="https://fonts.gstatic.com" />
+				<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+			</Helmet>
+			<RouterProvider router={router} />
+		</HelmetProvider>
 	);
 }
 

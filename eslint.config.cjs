@@ -15,65 +15,66 @@ const compat = new FlatCompat({
 });
 
 module.exports = defineConfig([
-  {
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-      },
+	{
+		languageOptions: {
+			globals: {
+				...globals.browser
+			},
 
-      parser: tsParser,
-    },
+			parser: tsParser
+		},
 
-    extends: fixupConfigRules(
-      compat.extends(
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react-hooks/recommended"
-      )
-    ),
+		extends: fixupConfigRules(
+			compat.extends('eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react-hooks/recommended')
+		),
 
-    plugins: {
-      "react-refresh": reactRefresh,
-      prettier,
-    },
+		plugins: {
+			'react-refresh': reactRefresh,
+			prettier
+		},
 
-    rules: {
-      "@typescript-eslint/no-unused-vars": "warn",
-      "@typescript-eslint/explicit-function-return-type": "warn",
-      "react-refresh/only-export-components": [
-        "warn",
-        {
-          allowConstantExport: true,
-        },
-      ],
-      "@typescript-eslint/no-empty-interface": [
-        "error",
-        {
-          allowSingleExtends: true,
-        },
-      ],
-      "@typescript-eslint/no-explicit-any": [
-        "off",
-        {
-          ignoreRestArgs: true,
-        },
-      ],
-      "prettier/prettier": [
-        "warn",
-        {
-          printWidth: 145,
-          useTabs: true,
-          tabWidth: 4,
-          bracketSpacing: true,
-          semi: true,
-          singleQuote: true,
-          trailingComma: "none",
-          bracketSameLine: true,
-          arrowParens: "always",
-          endOfLine: "lf",
-        },
-      ],
-    },
-  },
-  globalIgnores(["**/dist", "**/eslint.config.cjs"]),
+		rules: {
+			'@typescript-eslint/no-unused-vars': [
+				'warn',
+				{
+					caughtErrors: 'none'
+				}
+			],
+			'@typescript-eslint/explicit-function-return-type': 'warn',
+			'react-refresh/only-export-components': [
+				'warn',
+				{
+					allowConstantExport: true
+				}
+			],
+			'@typescript-eslint/no-empty-interface': [
+				'error',
+				{
+					allowSingleExtends: true
+				}
+			],
+			'@typescript-eslint/no-explicit-any': [
+				'off',
+				{
+					ignoreRestArgs: true
+				}
+			],
+			'prettier/prettier': [
+				'warn',
+				{
+					printWidth: 145,
+					useTabs: true,
+					tabWidth: 4,
+					bracketSpacing: true,
+					semi: true,
+					singleQuote: true,
+					trailingComma: 'none',
+					bracketSameLine: true,
+					arrowParens: 'always',
+					endOfLine: 'lf'
+				}
+			]
+		}
+	},
+	globalIgnores(['**/dist', '**/eslint.config.cjs'])
 ]);

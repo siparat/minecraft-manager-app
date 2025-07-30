@@ -1,0 +1,31 @@
+.primary {
+	color: var(--color-100);
+}
+
+.secondary {
+	color: var(--color-200);
+}
+
+.red {
+	color: var(--red)
+}
+
+.l {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.m {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.s {
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.xs {
+	font-size: 10px;
+	font-weight: 400;
+}

@@ -1,0 +1,11 @@
+.box {
+	max-width: 670px;
+	width: 100%;
+	background: var(--white);
+	border-radius: 31px;
+	padding: 30px;
+}
+
+.title {
+	margin-bottom: 25px;
+}

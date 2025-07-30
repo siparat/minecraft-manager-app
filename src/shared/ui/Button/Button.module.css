@@ -1,0 +1,22 @@
+.button {
+	padding: 16px 22px;
+	border-radius: 7px;
+	font-weight: 700;
+	font-size: 16px;
+	transition: .2s all ease;
+	width: 100%;
+}
+
+.primary {
+	background: var(--blue-100);
+	color: var(--white);
+}
+
+.primary:focus {
+	outline: 3px solid var(--blue-200);
+}
+
+.ghost {
+	background: var(--gray);
+	color: var(--gray);
+}

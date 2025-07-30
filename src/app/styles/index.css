@@ -1,68 +1,88 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	--primary: #000000;
+	--secondary: #99B2C6;
+	--text-100: #484964;
+	--text-200: #808192;
+	--text-300: #D2D7DE;
+	--gray: #5D6C7E;
+	--blue-100: #3678F6;
+	--blue-200: #E9F4FE;
+	--green: #09C269;
+	--red: #FA5757;
+	--purple: #644DED;
+	--white: #FFFFFF;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Montserrat", sans-serif;
+	color: var(--text-100)
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+	min-height: 100vh;
+	background: #F1F4FA;
+	overflow-x: hidden;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+#root {
+	width: 100%;
+	height: 100vh;
+}
+
+li {
+	list-style-type: none;
+}
+
+a {
+	text-decoration: none;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+*::-webkit-scrollbar {
+	width: 6px;
+	height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+	background: transparent;
+	margin: 60px;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: var(--secondary);
+	border-radius: 20px;
+}
+
+fieldset {
+	border: none;
+}
+
+.scroll-block {
+	overflow: hidden;
+}
+
+.separator {
+	height: 1px;
+	width: 100%;
+	background: #2E323A;
+	display: block;
+}
+
+.toast {
+	background: var(--bg-300) !important;
+	color: var(--red-100) !important;
+	font-weight: 500 !important;
+}
+
+.toast > svg {
+	width: 30px;
 }
