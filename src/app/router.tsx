@@ -3,6 +3,7 @@ import { MainPage } from '@/pages/main';
 import { Routes } from '@/shared/config';
 import { createBrowserRouter, createRoutesFromChildren, Route } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
+import { Layout } from '@/widgets/layout';
 
 export const router = createBrowserRouter(
 	createRoutesFromChildren(
@@ -12,7 +13,7 @@ export const router = createBrowserRouter(
 				path={Routes.MAIN}
 				element={
 					<ProtectedRoute>
-						<aside>Layout</aside>
+						<Layout />
 					</ProtectedRoute>
 				}>
 				<Route index element={<MainPage />}></Route>

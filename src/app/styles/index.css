@@ -30,6 +30,7 @@ body {
 #root {
 	width: 100%;
 	height: 100vh;
+	padding: 50px 40px;
 }
 
 li {
@@ -54,7 +55,7 @@ button {
 
 *::-webkit-scrollbar-track {
 	background: transparent;
-	margin: 60px;
+	margin-block: 30px;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -73,16 +74,40 @@ fieldset {
 .separator {
 	height: 1px;
 	width: 100%;
-	background: #2E323A;
+	background: rgba(153, 178, 198, .2);
 	display: block;
 }
 
 .toast {
-	background: var(--bg-300) !important;
-	color: var(--red-100) !important;
+	background: var(--white) !important;
+	color: var(--text-100) !important;
 	font-weight: 500 !important;
+	font-size: 14px;
 }
 
 .toast > svg {
-	width: 30px;
+	width: 40px;
+}
+
+.dialogOverlay {
+	background-color: rgba(0, 0, 0, .25);
+	position: fixed;
+	inset: 0;
+}
+
+.dialogContent {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.dialogContent:focus {
+	outline: none;
+}
+
+.dialogContent > div {
+	max-height: 90vh;
+    overflow-y: auto;
+    border: 2px solid white;
 }

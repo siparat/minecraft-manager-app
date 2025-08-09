@@ -1,0 +1,29 @@
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.button {
+	width: 100%;
+	border-radius: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 9px;
+	padding-block: 10px;
+}
+
+.button p {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--white);
+}
+
+.button.red {
+	background: var(--red);
+}
+
+.button.green {
+	background: var(--green);
+}

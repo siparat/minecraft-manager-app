@@ -1,4 +1,6 @@
 export const Routes = {
 	MAIN: '/',
-	AUTH: '/auth'
+	AUTH: '/auth',
+	MODS: '/mods',
+	PARSER: '/parser'
 };

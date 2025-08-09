@@ -1,4 +1,9 @@
+import { Title } from '@/shared/ui';
 import type { JSX } from 'react';
 export const MainPage = (): JSX.Element => {
-	return <p>123123</p>;
+	return (
+		<>
+			<Title tag="h1">Приложения</Title>
+		</>
+	);
 };

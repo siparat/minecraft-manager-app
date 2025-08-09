@@ -1,0 +1,38 @@
+.nav {
+	width: 100%;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+}
+
+.link {
+	width: 100%;
+	border-radius: 18px;
+	padding: 10px 20px;
+	display: flex;
+	gap: 9px;
+	background: transparent;
+	align-items: center;
+}
+
+.link.active {
+	background: var(--primary);
+}
+
+.link p {
+	color: var(--secondary);
+	font-weight: 500;
+	font-size: 13px;
+}
+
+.link.active p {
+	color: var(--white);
+}
+
+.link.active svg {
+	fill: var(--white);
+}

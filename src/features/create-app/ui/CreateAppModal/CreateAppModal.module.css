@@ -1,0 +1,57 @@
+.modal {
+	width: 671px;
+}
+
+form > * {
+	margin-top: 15px;
+}
+
+.arrowButton {
+	display: inline;
+}
+
+.inputWrapper {
+	display: flex;
+	gap: 10px;
+}
+
+.inputWrapper fieldset {
+	flex-grow: 1;
+}
+
+.inputWrapper button {
+	margin-top: 23px;
+	width: 38px;
+	height: 38px;
+}
+
+.inputWrapper button svg {
+	transition: .3s rotate ease;
+}
+
+.rotate {
+	rotate: 180deg
+}
+
+.inputsWrapper {
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	margin-top: 0;
+}
+
+.inputsWrapper.open {
+	margin-top: 15px;
+}
+
+.translateButton {
+	background: var(--blue-100);
+	border-radius: 5px;
+}
+
+.wrapper {
+	display: flex;
+	gap: 20px;
+	position: relative;
+}
