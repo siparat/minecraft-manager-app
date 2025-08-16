@@ -109,5 +109,44 @@ fieldset {
 .dialogContent > div {
 	max-height: 90vh;
     overflow-y: auto;
-    border: 2px solid white;
+    border: 2px solid var(--white);
+}
+
+div.MuiDataGrid-root {
+	border-radius: 15px;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+div.MuiDataGrid-root .MuiDataGrid-cell {
+	height: 56px;
+}
+
+div.MuiDataGrid-root .MuiDataGrid-columnHeaderTitle {
+	color: var(--white);
+	font-size: 15px;
+	font-weight: 600;
+}
+
+div.MuiDataGrid-root .MuiSvgIcon-root {
+	fill: var(--white);
+}
+
+.MuiDataGrid-root .MuiDataGrid-row:hover {
+	background-color: '#F9F9FC'
+}
+
+div.MuiDataGrid-root .MuiDataGrid-columnHeader, div.MuiDataGrid-root .MuiDataGrid-row--borderBottom {
+	background-color: var(--primary);
+	font-weight: 600;
+	border-bottom: none;
+	min-height: 48px !important;
+	max-height: 48px !important;
+}
+
+div.MuiDataGrid-row div.MuiDataGrid-cell:nth-child(2), 
+div.MuiDataGrid-columnHeaders div.MuiDataGrid-columnHeader:nth-child(2),
+div.MuiDataGrid-row div.MuiDataGrid-cell:nth-last-child(2), 
+div.MuiDataGrid-columnHeaders div.MuiDataGrid-columnHeader:nth-last-child(3) {
+	padding-inline: 20px;
 }

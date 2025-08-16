@@ -10,7 +10,10 @@ export interface App {
 	packageName: string;
 	logo: string;
 	banner: string;
-	translations: AppTranslation[];
+	translations: (Omit<AppTranslation, 'languageId'> & { language: AppLanguage })[];
+	_count: {
+		mods: number;
+	};
 }
 
 export interface AppTranslation {

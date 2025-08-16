@@ -7,7 +7,7 @@ export const Layout = (): JSX.Element => {
 	return (
 		<div className={styles['layout']}>
 			<Sidebar />
-			<main>
+			<main className={styles['main']}>
 				<Outlet />
 			</main>
 		</div>
