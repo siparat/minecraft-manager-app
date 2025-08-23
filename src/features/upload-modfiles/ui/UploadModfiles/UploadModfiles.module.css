@@ -1,0 +1,32 @@
+.buttons {
+	display: flex;
+	gap: 20px;
+	margin-top: 16px;
+}
+
+.button {
+	padding: 10px 20px;
+	background: var(--white);
+	border-radius: 8px;
+	font-weight: 700;
+	font-size: 16px;
+	display: flex;
+	align-items: center;
+	gap: 11px;
+}
+
+.green p {
+	color: #62B965;
+}
+
+.green svg {
+	stroke: #62B965;
+}
+
+.blue p {
+	color: #578BFA;
+}
+
+.blue svg {
+	stroke: #578BFA;
+}

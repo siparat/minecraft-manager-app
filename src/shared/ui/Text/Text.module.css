@@ -1,9 +1,9 @@
 .primary {
-	color: var(--color-100);
+	color: var(--text-100);
 }
 
 .secondary {
-	color: var(--color-200);
+	color: var(--secondary);
 }
 
 .red {

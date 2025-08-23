@@ -1,0 +1,38 @@
+.title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 16px;
+}
+
+.counts {
+	display: block;
+	text-align: center;
+	width: 33px;
+	height: 33px;
+	border-radius: 50%;
+	background: var(--red);
+	color: var(--white);
+	font-size: 22px;
+	line-height: 150%;
+}
+
+.solvedCounts {
+	display: block;
+	text-align: center;
+	height: 33px;
+	padding-inline: 15px;
+	border-radius: 10px;
+	background: var(--blue-100);
+	color: var(--white);
+	font-size: 22px;
+	line-height: 150%;
+}
+
+.wrapper {
+	max-width: 760px;
+}
+
+.issue:not(:first-child) {
+	margin-top: 15px;
+}

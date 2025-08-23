@@ -1,0 +1,14 @@
+.link {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.arrow {
+	transform: rotate(-90deg);
+}
+
+.link p {
+	font-weight: 600;
+	font-size: 17px;
+}

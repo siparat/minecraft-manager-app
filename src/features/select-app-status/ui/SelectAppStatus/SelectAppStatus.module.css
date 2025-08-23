@@ -1,0 +1,18 @@
+.select {
+	margin-top: 6px;
+}
+
+.select > div {
+	padding-left: 0 !important;
+}
+
+.select > div > span > span {
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	color: var(--color) !important;
+	border-bottom: 1px solid var(--color) !important;
+}
+
+.option {
+	color: red
+}

@@ -1,5 +1,5 @@
+import type { UploadedFileResponse } from '@/entities/dropzone';
 import { ApiRoutes, httpClient } from '@/shared/api';
-import type { UploadedFileResponse } from '../model';
 
 export const uploadFile = async (file: File, isImage: boolean = false, oldImageFilename?: string): Promise<UploadedFileResponse> => {
 	const formData = new FormData();

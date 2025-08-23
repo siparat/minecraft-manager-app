@@ -1,0 +1,56 @@
+.issue {
+	width: 100%;
+	overflow: hidden;
+	background: var(--white);
+	border-radius: 10px;
+	display: flex;
+}
+
+.info {
+	padding: 18px 20px 30px;
+	flex-grow: 1;
+}
+
+.actions {
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	width: 43px;
+}
+
+.actions button {
+	width: 100%;
+	flex-grow: 1;
+	background: var(--color);
+	transition: .4s box-shadow ease;
+}
+
+.actions button svg {
+	stroke: var(--white);
+	transition: .3s transform ease;
+}
+
+.solveButton {
+	--color: var(--blue-100);
+}
+
+.deleteButton {
+	--color: var(--red);
+}
+
+.actions button:hover svg {
+	transform: translateY(-2px);
+}
+
+.actions button:hover {
+	box-shadow: 0px 0px 20px 0px var(--color);
+}
+
+.email {
+	margin-top: 10px;
+}
+
+.text {
+	font-weight: 400;
+	margin-top: 5px;
+}

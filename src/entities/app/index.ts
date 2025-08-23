@@ -1,2 +1,2 @@
 export * from './model';
-export { getApp, deleteApp } from './api';
+export { getApp, deleteApp, uploadAppFile, setNewAppStatus } from './api';

@@ -6,7 +6,7 @@ import styles from './Dropzone.module.css';
 import TrashIcon from '@/shared/assets/icons/trash.svg?react';
 import ClipIcon from '@/shared/assets/icons/clip.svg?react';
 import toast from 'react-hot-toast';
-import { uploadFile, type IFile } from '../../';
+import { type IFile, type UploadedFileResponse } from '../../';
 import { HTTPError } from 'ky';
 
 interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
@@ -17,20 +17,38 @@ interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defau
 	defaultValue?: IFile;
 	validateFile?: (file: File) => boolean;
 	placeholder?: string;
+	hideDeletion?: boolean;
+	uploadFile: (file: File, isImage?: boolean, oldFilename?: string) => Promise<UploadedFileResponse>;
 	onChange?: (file: string | null) => void;
 }
 
 export const Dropzone = forwardRef(
 	(
-		{ className, error, onChange, placeholder, defaultValue, validateFile: userValidateFile, label, sizes, types, ...props }: Props,
+		{
+			className,
+			error,
+			uploadFile,
+			onChange,
+			placeholder,
+			defaultValue,
+			validateFile: userValidateFile,
+			label,
+			sizes,
+			hideDeletion,
+			types,
+			...props
+		}: Props,
 		ref: ForwardedRef<HTMLInputElement>
 	): JSX.Element => {
 		const [uploadedFile, setUploadedFile] = useState<IFile | null>(defaultValue || null);
 		const [oldImageUrl, setOldImageUrl] = useState<string | undefined>();
 
 		const onDrop = async (acceptedFiles: File[]): Promise<void> => {
-			setUploadedFile(null);
 			const file = acceptedFiles[0];
+			if (!file) {
+				toast.error('Файл не подходит под требования');
+				return;
+			}
 			const fileIsValid = await validateFile(file, userValidateFile, sizes);
 			if (!fileIsValid) {
 				toast.error('Файл не прошел валидацию');
@@ -79,9 +97,11 @@ export const Dropzone = forwardRef(
 					{(!uploadedFile || !uploadedFile.isImage) && <input ref={ref} {...getInputProps()} />}
 					{uploadedFile?.isImage ? (
 						<>
-							<button tabIndex={-1} onClick={deleteUploadedFile} className={styles['trashButton']} type="button">
-								<TrashIcon />
-							</button>
+							{!hideDeletion && (
+								<button tabIndex={-1} onClick={deleteUploadedFile} className={styles['trashButton']} type="button">
+									<TrashIcon />
+								</button>
+							)}
 							<img width={128} src={'http://localhost:3000' + uploadedFile.url} alt="Предпросмотр" />
 						</>
 					) : (
@@ -91,10 +111,14 @@ export const Dropzone = forwardRef(
 				{uploadedFile && !uploadedFile.isImage && (
 					<div className={styles['uploadedFileString']}>
 						<ClipIcon />
-						<p>{uploadedFile.filename}</p>
-						<button tabIndex={-1} onClick={deleteUploadedFile} type="button">
-							<TrashIcon />
-						</button>
+						<a target="_blank" href={'http://localhost:3000' + uploadedFile.url}>
+							<p>{uploadedFile.filename}</p>
+						</a>
+						{!hideDeletion && (
+							<button tabIndex={-1} onClick={deleteUploadedFile} type="button">
+								<TrashIcon />
+							</button>
+						)}
 					</div>
 				)}
 				{error && <p className={styles['error']}>{error}</p>}

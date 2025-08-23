@@ -65,7 +65,12 @@ div:has(> .dropzone) {
 }
 
 .uploadedFileString p {
+	border-bottom: 1px solid transparent;
 	color: var(--blue-100);
+}
+
+.uploadedFileString p:hover {
+	border-color: var(--blue-100);
 }
 
 .uploadedFileString button svg {

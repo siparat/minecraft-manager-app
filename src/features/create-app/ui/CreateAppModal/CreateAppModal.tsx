@@ -5,7 +5,7 @@ import { useEffect, useState, type JSX } from 'react';
 import styles from './CreateAppModal.module.css';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import type { AppLanguage } from '@/entities/app';
-import { getAllLanguages, translateText } from '../../api';
+import { getAllLanguages, translateText, uploadFile } from '../../api';
 import toast from 'react-hot-toast';
 import ArrowIcon from '@/shared/assets/icons/arrow.svg?react';
 import TranslateIcon from '@/shared/assets/icons/translate.svg?react';
@@ -166,6 +166,7 @@ export const CreateAppModal = (): JSX.Element => {
 								control={control}
 								render={({ field }) => (
 									<Dropzone
+										uploadFile={uploadFile}
 										error={errors.logo?.message}
 										{...field}
 										placeholder="512x512 .png"
@@ -180,6 +181,7 @@ export const CreateAppModal = (): JSX.Element => {
 								control={control}
 								render={({ field }) => (
 									<Dropzone
+										uploadFile={uploadFile}
 										error={errors.banner?.message}
 										{...field}
 										placeholder="720x320 .png"
