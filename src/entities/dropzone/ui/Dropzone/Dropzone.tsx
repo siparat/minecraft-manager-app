@@ -18,7 +18,7 @@ interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defau
 	validateFile?: (file: File) => boolean;
 	placeholder?: string;
 	hideDeletion?: boolean;
-	uploadFile: (file: File, isImage?: boolean, oldFilename?: string) => Promise<UploadedFileResponse>;
+	uploadFile: (file: File, isImage?: boolean, oldFilename?: string) => Promise<UploadedFileResponse | null>;
 	onChange?: (file: string | null) => void;
 }
 
@@ -57,6 +57,9 @@ export const Dropzone = forwardRef(
 			const isImage = file.type.includes('image');
 			try {
 				const response = await uploadFile(file, isImage, oldImageUrl);
+				if (!response) {
+					return;
+				}
 				const uploadedFile = { ...response, isImage };
 				setUploadedFile(uploadedFile);
 				onChange?.(uploadedFile.url);
@@ -102,7 +105,7 @@ export const Dropzone = forwardRef(
 									<TrashIcon />
 								</button>
 							)}
-							<img width={128} src={'http://localhost:3000' + uploadedFile.url} alt="Предпросмотр" />
+							<img width={128} src={uploadedFile.url} alt="Предпросмотр" />
 						</>
 					) : (
 						<>{isDragActive ? <p>Отпустите файл здесь…</p> : <p>{placeholder || 'Прикрепите файл'}</p>}</>
@@ -111,7 +114,7 @@ export const Dropzone = forwardRef(
 				{uploadedFile && !uploadedFile.isImage && (
 					<div className={styles['uploadedFileString']}>
 						<ClipIcon />
-						<a target="_blank" href={'http://localhost:3000' + uploadedFile.url}>
+						<a target="_blank" href={uploadedFile.url}>
 							<p>{uploadedFile.filename}</p>
 						</a>
 						{!hideDeletion && (
