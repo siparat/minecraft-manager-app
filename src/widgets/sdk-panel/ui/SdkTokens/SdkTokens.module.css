@@ -1,0 +1,7 @@
+.title:not(:first-of-type) {
+	margin-top: 25px;
+}
+
+.editableProp:not(:first-child) {
+	margin-top: 10px;
+}
