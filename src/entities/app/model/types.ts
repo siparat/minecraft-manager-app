@@ -16,8 +16,8 @@ export interface App {
 	packageName: string;
 	logo: string;
 	banner: string;
-	apk: string;
-	bundle: string;
+	apk?: string;
+	bundle?: string;
 	sdk: AppSdk;
 	translations: (Omit<AppTranslation, 'languageId'> & { language: AppLanguage })[];
 	_count: {

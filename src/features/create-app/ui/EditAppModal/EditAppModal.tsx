@@ -5,7 +5,7 @@ import { useEffect, useState, type JSX } from 'react';
 import styles from './EditAppModal.module.css';
 import { Controller, useForm } from 'react-hook-form';
 import type { App, AppLanguage } from '@/entities/app';
-import { editApp, getAllLanguages, translateText } from '../../api';
+import { editApp, getAllLanguages, translateText, uploadFile } from '../../api';
 import toast from 'react-hot-toast';
 import ArrowIcon from '@/shared/assets/icons/arrow.svg?react';
 import TranslateIcon from '@/shared/assets/icons/translate.svg?react';
@@ -162,6 +162,7 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 								control={control}
 								render={({ field }) => (
 									<Dropzone
+										uploadFile={uploadFile}
 										defaultValue={{ isImage: true, filename: appData.logo, url: appData.logo }}
 										error={errors.logo?.message}
 										{...field}
@@ -177,6 +178,7 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 								control={control}
 								render={({ field }) => (
 									<Dropzone
+										uploadFile={uploadFile}
 										defaultValue={{ isImage: true, filename: appData.banner, url: appData.banner }}
 										error={errors.banner?.message}
 										{...field}

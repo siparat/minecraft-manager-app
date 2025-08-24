@@ -1,0 +1,30 @@
+.wrapper {
+	display: flex;
+	gap: 10px;
+	align-items: flex-end;
+}
+
+.button {
+	width: 39px;
+	height: 39px;
+	border-radius: 6px;
+	background: #000;
+	flex-shrink: 0;
+}
+
+.wrapper.editable .button svg {
+	stroke: var(--white)
+}
+
+.wrapper.editable .button svg {
+    width: 22px;
+    height: 15px;
+}
+
+.editable .button {
+	background: var(--blue-100);
+}
+
+.wrapper > *:first-child {
+	flex-grow: 1;
+}

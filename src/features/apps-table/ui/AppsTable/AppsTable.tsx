@@ -51,7 +51,7 @@ export const AppsTable = (): JSX.Element => {
 						style={{ height: '100%', objectFit: 'contain' }}
 						width={50}
 						height={50}
-						src={'http://localhost:3000' + params.value}
+						src={params.value}
 						alt="Логотип"
 					/>
 				);

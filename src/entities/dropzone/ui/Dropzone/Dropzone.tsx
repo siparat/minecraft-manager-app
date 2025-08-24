@@ -102,7 +102,7 @@ export const Dropzone = forwardRef(
 									<TrashIcon />
 								</button>
 							)}
-							<img width={128} src={'http://localhost:3000' + uploadedFile.url} alt="Предпросмотр" />
+							<img width={128} src={uploadedFile.url} alt="Предпросмотр" />
 						</>
 					) : (
 						<>{isDragActive ? <p>Отпустите файл здесь…</p> : <p>{placeholder || 'Прикрепите файл'}</p>}</>
@@ -111,7 +111,7 @@ export const Dropzone = forwardRef(
 				{uploadedFile && !uploadedFile.isImage && (
 					<div className={styles['uploadedFileString']}>
 						<ClipIcon />
-						<a target="_blank" href={'http://localhost:3000' + uploadedFile.url}>
+						<a target="_blank" href={uploadedFile.url}>
 							<p>{uploadedFile.filename}</p>
 						</a>
 						{!hideDeletion && (

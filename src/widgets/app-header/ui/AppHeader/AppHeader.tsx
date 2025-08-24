@@ -17,7 +17,7 @@ export const AppHeader = (): JSX.Element => {
 	return (
 		<div className={styles['header']}>
 			<div className={styles['logo']}>
-				<img src={'http://localhost:3000' + app.logo} alt={app.packageName} />
+				<img src={app.logo} alt={app.packageName} />
 			</div>
 			<div className={styles['info']}>
 				<div className={styles['titleWrapper']}>
@@ -31,7 +31,7 @@ export const AppHeader = (): JSX.Element => {
 				</div>
 				<div className={styles['packageName']}>
 					<p>{app.packageName}</p>
-					<a href={'https://play.google.com/store/apps/details?id=' + app.packageName}>
+					<a target="_blank" href={'https://play.google.com/store/apps/details?id=' + app.packageName}>
 						<OpenArrowIcon />
 					</a>
 				</div>

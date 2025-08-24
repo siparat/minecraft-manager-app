@@ -4,3 +4,4 @@ export { Input } from './Input';
 export { Button } from './Button';
 export { Text } from './Text';
 export { ConfirmModal } from './ConfirmModal';
+export { Switch } from './Switch';

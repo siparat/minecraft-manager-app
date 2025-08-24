@@ -12,7 +12,7 @@ export const UploadAppFilesModal = (): JSX.Element => {
 
 	const onLoad = async (type: 'apk' | 'bundle', file: File): Promise<UploadedFileResponse> => {
 		const uploadedFile = await uploadAppFile(type, app!.id, file);
-		return { filename: getFilenameFromUrl(uploadedFile[type]) || '', url: uploadedFile[type] };
+		return { filename: getFilenameFromUrl(uploadedFile[type]) || '', url: uploadedFile[type] || '' };
 	};
 
 	if (!app) {
@@ -30,14 +30,14 @@ export const UploadAppFilesModal = (): JSX.Element => {
 					<div className={styles['dropzones']}>
 						<Dropzone
 							hideDeletion
-							defaultValue={{ isImage: false, url: app.apk, filename: getFilenameFromUrl(app.apk) || '' }}
+							defaultValue={{ isImage: false, url: app.apk || '', filename: getFilenameFromUrl(app.apk) || '' }}
 							uploadFile={(file) => onLoad('apk', file)}
 							placeholder="Прикрепить файл .apk"
 							label="Файл .apk"
 						/>
 						<Dropzone
 							hideDeletion
-							defaultValue={{ isImage: false, url: app.bundle, filename: getFilenameFromUrl(app.bundle) || '' }}
+							defaultValue={{ isImage: false, url: app.bundle || '', filename: getFilenameFromUrl(app.bundle) || '' }}
 							uploadFile={(file) => onLoad('bundle', file)}
 							placeholder="Прикрепить файл .aab"
 							label="Файл .aab"

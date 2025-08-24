@@ -11,18 +11,22 @@ import { UploadAppFilesModal } from '..';
 export const UploadModfiles = (): JSX.Element => {
 	const app = useAppStore((state) => state.app);
 
-	const downloadFiles = async (apkPath: string, bundlePath: string): Promise<void> => {
-		const apk = document.createElement('a');
-		apk.href = 'http://localhost:3000' + apkPath;
-		apk.download = apkPath;
-		apk.click();
+	const downloadFiles = async (apkPath: string | undefined, bundlePath: string | undefined): Promise<void> => {
+		if (apkPath) {
+			const apk = document.createElement('a');
+			apk.href = apkPath;
+			apk.download = apkPath;
+			apk.click();
+		}
 
 		await sleep(1000);
 
-		const bundle = document.createElement('a');
-		bundle.href = 'http://localhost:3000' + bundlePath;
-		bundle.download = bundlePath;
-		bundle.click();
+		if (bundlePath) {
+			const bundle = document.createElement('a');
+			bundle.href = bundlePath;
+			bundle.download = bundlePath;
+			bundle.click();
+		}
 	};
 
 	if (!app) {

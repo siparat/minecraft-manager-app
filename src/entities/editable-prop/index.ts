@@ -1,0 +1,1 @@
+export { EditableProp } from './ui';
