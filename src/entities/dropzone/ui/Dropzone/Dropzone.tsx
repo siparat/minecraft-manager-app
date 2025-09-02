@@ -1,4 +1,4 @@
-import { type JSX, useState, type HTMLAttributes, type MouseEvent, forwardRef, type ForwardedRef } from 'react';
+import { type JSX, useState, type HTMLAttributes, forwardRef, type ForwardedRef } from 'react';
 import { useDropzone, type Accept } from 'react-dropzone';
 import { validateFile } from '../../lib';
 import classNames from 'classnames';
@@ -14,12 +14,13 @@ interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defau
 	types?: string[];
 	error?: string;
 	label: string;
-	defaultValue?: IFile;
+	defaultValue?: IFile[];
 	validateFile?: (file: File) => boolean;
 	placeholder?: string;
 	hideDeletion?: boolean;
-	uploadFile: (file: File, isImage?: boolean, oldFilename?: string) => Promise<UploadedFileResponse>;
-	onChange?: (file: string | null) => void;
+	onUpload?: (files: IFile[]) => any;
+	uploadFile: (files: File[], isImage?: boolean, oldFilename?: string) => Promise<UploadedFileResponse[]>;
+	isMultifile?: boolean;
 }
 
 export const Dropzone = forwardRef(
@@ -28,7 +29,6 @@ export const Dropzone = forwardRef(
 			className,
 			error,
 			uploadFile,
-			onChange,
 			placeholder,
 			defaultValue,
 			validateFile: userValidateFile,
@@ -36,19 +36,28 @@ export const Dropzone = forwardRef(
 			sizes,
 			hideDeletion,
 			types,
+			onUpload,
+			isMultifile = false,
 			...props
 		}: Props,
 		ref: ForwardedRef<HTMLInputElement>
 	): JSX.Element => {
-		const [uploadedFile, setUploadedFile] = useState<IFile | null>(defaultValue || null);
+		const [uploadedFiles, setUploadedFiles] = useState<IFile[] | null>(defaultValue ?? null);
 		const [oldImageUrl, setOldImageUrl] = useState<string | undefined>();
 
 		const onDrop = async (acceptedFiles: File[]): Promise<void> => {
-			const file = acceptedFiles[0];
-			if (!file) {
+			if (!acceptedFiles.length) {
 				toast.error('Файл не подходит под требования');
 				return;
 			}
+
+			if (isMultifile) {
+				return await processMultiFile(acceptedFiles);
+			}
+			await processOneFile(acceptedFiles[0]);
+		};
+
+		const processOneFile = async (file: File): Promise<void> => {
 			const fileIsValid = await validateFile(file, userValidateFile, sizes);
 			if (!fileIsValid) {
 				toast.error('Файл не прошел валидацию');
@@ -56,10 +65,29 @@ export const Dropzone = forwardRef(
 			}
 			const isImage = file.type.includes('image');
 			try {
-				const response = await uploadFile(file, isImage, oldImageUrl);
-				const uploadedFile = { ...response, isImage };
-				setUploadedFile(uploadedFile);
-				onChange?.(uploadedFile.url);
+				const response = (await uploadFile([file], isImage, oldImageUrl))[0];
+				const uploadedFile = [{ ...response, isImage }];
+				setUploadedFiles(uploadedFile);
+				onUpload?.(uploadedFile);
+			} catch (error) {
+				if (error instanceof HTTPError) {
+					toast.error('Произошла ошибка при загрузке файла: ' + error.message);
+				}
+			}
+		};
+		const processMultiFile = async (files: File[]): Promise<void> => {
+			for (const file of files) {
+				const fileIsValid = await validateFile(file, userValidateFile, sizes);
+				if (!fileIsValid) {
+					toast.error('Некоторые файлы не прошли валидацию');
+					return;
+				}
+			}
+			try {
+				const response = await uploadFile(files);
+				const uploadedFiles = response.map((f) => ({ ...f, isImage: false }));
+				setUploadedFiles(uploadedFiles);
+				onUpload?.(uploadedFiles);
 			} catch (error) {
 				if (error instanceof HTTPError) {
 					toast.error('Произошла ошибка при загрузке файла: ' + error.message);
@@ -75,14 +103,15 @@ export const Dropzone = forwardRef(
 						return acc;
 					}, {})
 				: undefined,
-			multiple: false
+			multiple: isMultifile
 		});
 
-		const deleteUploadedFile = (e: MouseEvent): void => {
-			e.stopPropagation();
-			setOldImageUrl(uploadedFile?.filename);
-			setUploadedFile(null);
-			onChange?.(null);
+		const deleteUploadedFile = (file: IFile): void => {
+			if (file.isImage) {
+				setOldImageUrl(file.filename);
+			}
+			const newFileList = uploadedFiles?.filter((f) => f.filename !== file.filename) || null;
+			setUploadedFiles(newFileList);
 		};
 
 		return (
@@ -92,35 +121,41 @@ export const Dropzone = forwardRef(
 					{...getRootProps()}
 					className={classNames(className, styles['dropzone'], {
 						[styles['isDragActive']]: isDragActive,
-						[styles['fileIsLoad']]: uploadedFile?.isImage
+						[styles['fileIsLoad']]: uploadedFiles?.[0]?.isImage
 					})}>
-					{(!uploadedFile || !uploadedFile.isImage) && <input ref={ref} {...getInputProps()} />}
-					{uploadedFile?.isImage ? (
+					{(!uploadedFiles || !uploadedFiles[0]?.isImage) && <input ref={ref} {...getInputProps()} />}
+					{uploadedFiles?.[0]?.isImage ? (
 						<>
 							{!hideDeletion && (
-								<button tabIndex={-1} onClick={deleteUploadedFile} className={styles['trashButton']} type="button">
+								<button
+									tabIndex={-1}
+									onClick={() => deleteUploadedFile(uploadedFiles[0])}
+									className={styles['trashButton']}
+									type="button">
 									<TrashIcon />
 								</button>
 							)}
-							<img width={128} src={uploadedFile.url} alt="Предпросмотр" />
+							<img width={128} src={uploadedFiles[0]?.url} alt="Предпросмотр" />
 						</>
 					) : (
 						<>{isDragActive ? <p>Отпустите файл здесь…</p> : <p>{placeholder || 'Прикрепите файл'}</p>}</>
 					)}
 				</div>
-				{uploadedFile && !uploadedFile.isImage && (
-					<div className={styles['uploadedFileString']}>
-						<ClipIcon />
-						<a target="_blank" href={uploadedFile.url}>
-							<p>{uploadedFile.filename}</p>
-						</a>
-						{!hideDeletion && (
-							<button tabIndex={-1} onClick={deleteUploadedFile} type="button">
-								<TrashIcon />
-							</button>
-						)}
-					</div>
-				)}
+				{uploadedFiles &&
+					uploadedFiles.some((f) => !f.isImage) &&
+					uploadedFiles.map((f) => (
+						<div key={f.filename} className={styles['uploadedFileString']}>
+							<ClipIcon />
+							<a target="_blank" href={f.url}>
+								<p>{f.filename}</p>
+							</a>
+							{!hideDeletion && (
+								<button tabIndex={-1} onClick={() => deleteUploadedFile(f)} type="button">
+									<TrashIcon />
+								</button>
+							)}
+						</div>
+					))}
 				{error && <p className={styles['error']}>{error}</p>}
 			</div>
 		);

@@ -23,6 +23,7 @@
     "dayjs": "^1.11.13",
     "framer-motion": "^12.23.12",
     "ky": "^1.8.2",
+    "lodash.debounce": "^4.0.8",
     "minecraft-manager-schemas": "^0.0.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.3.1",
     "@eslint/js": "^9.30.1",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^24.1.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

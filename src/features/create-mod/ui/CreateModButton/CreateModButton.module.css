@@ -1,0 +1,9 @@
+.addModButton {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	background: var(--green);
+	font-size: 26px;
+	line-height: 100%;
+	color: var(--white);
+}

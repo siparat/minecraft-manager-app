@@ -132,6 +132,10 @@ div.MuiDataGrid-root .MuiSvgIcon-root {
 	fill: var(--white);
 }
 
+div.MuiTablePagination-actions button svg {
+	fill: var(--primary) !important;
+}
+
 .MuiDataGrid-root .MuiDataGrid-row:hover {
 	background-color: '#F9F9FC'
 }
@@ -149,4 +153,8 @@ div.MuiDataGrid-columnHeaders div.MuiDataGrid-columnHeader:nth-child(2),
 div.MuiDataGrid-row div.MuiDataGrid-cell:nth-last-child(2), 
 div.MuiDataGrid-columnHeaders div.MuiDataGrid-columnHeader:nth-last-child(3) {
 	padding-inline: 20px;
+}
+
+.rc-virtual-list-holder-inner {
+	pointer-events: auto;
 }

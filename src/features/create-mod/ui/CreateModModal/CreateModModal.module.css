@@ -1,0 +1,23 @@
+.wrapper {
+	display: flex;
+	gap: 20px;
+	position: relative;
+}
+
+.modal {
+	width: 671px;
+}
+
+.label {
+	display: block;
+	margin-bottom: 5px;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.errorMessage {
+	font-size: 14px;
+	font-weight: 400;
+	color: var(--red);
+	margin-top: 4px;
+}

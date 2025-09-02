@@ -1,2 +1,2 @@
 export { CreateAppModal } from './ui';
-export { getAllLanguages } from './api';
+export { getAllLanguages, uploadFile } from './api';

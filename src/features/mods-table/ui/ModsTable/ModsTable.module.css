@@ -1,0 +1,17 @@
+.actions {
+	display: flex;
+	gap: 30px;
+	height: 100%;
+}
+
+.actions button {
+	font-size: 17px;
+}
+
+.table {
+	margin-top: 24px;
+}
+
+.link {
+	color: var(--purple);
+}

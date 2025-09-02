@@ -9,6 +9,8 @@ import { appLoader } from '@/entities/app';
 import { ErrorPage } from '@/pages/error';
 import { AppIssuesPage } from '@/pages/app/:id/issues';
 import { AppSdkPage } from '@/pages/app/:id/sdk';
+import { ModsPage } from '@/pages/mods';
+import { modLoader } from '@/entities/mod';
 
 export const router = createBrowserRouter(
 	createRoutesFromChildren(
@@ -25,6 +27,7 @@ export const router = createBrowserRouter(
 				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_PAGE} element={<AppPage />} />
 				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_ISSUES} element={<AppIssuesPage />} />
 				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_SDK} element={<AppSdkPage />} />
+				<Route errorElement={<ErrorPage />} loader={modLoader} path={Routes.MODS} element={<ModsPage />} />
 			</Route>
 		</>
 	)

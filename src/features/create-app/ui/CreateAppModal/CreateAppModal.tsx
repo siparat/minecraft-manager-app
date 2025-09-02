@@ -161,35 +161,23 @@ export const CreateAppModal = (): JSX.Element => {
 						<Input error={errors.packageName?.message} {...register('packageName')} label="Имя пакета" placeholder="com.dev.name" />
 
 						<div className={styles['wrapper']}>
-							<Controller
-								name="logo"
-								control={control}
-								render={({ field }) => (
-									<Dropzone
-										uploadFile={uploadFile}
-										error={errors.logo?.message}
-										{...field}
-										placeholder="512x512 .png"
-										types={['image/png']}
-										sizes={[512, 512]}
-										label="Лого"
-									/>
-								)}
+							<Dropzone
+								uploadFile={uploadFile}
+								error={errors.logo?.message}
+								onUpload={(files) => setValue('logo', files[0].url)}
+								placeholder="512x512 .png"
+								types={['image/png']}
+								sizes={[512, 512]}
+								label="Лого"
 							/>
-							<Controller
-								name="banner"
-								control={control}
-								render={({ field }) => (
-									<Dropzone
-										uploadFile={uploadFile}
-										error={errors.banner?.message}
-										{...field}
-										placeholder="720x320 .png"
-										types={['image/png']}
-										sizes={[720, 320]}
-										label="Баннер"
-									/>
-								)}
+							<Dropzone
+								uploadFile={uploadFile}
+								error={errors.banner?.message}
+								onUpload={(files) => setValue('banner', files[0].url)}
+								placeholder="720x320 .png"
+								types={['image/png']}
+								sizes={[720, 320]}
+								label="Баннер"
 							/>
 						</div>
 

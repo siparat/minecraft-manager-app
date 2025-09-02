@@ -10,9 +10,9 @@ import { getFilenameFromUrl } from '@/shared/lib';
 export const UploadAppFilesModal = (): JSX.Element => {
 	const app = useAppStore((state) => state.app);
 
-	const onLoad = async (type: 'apk' | 'bundle', file: File): Promise<UploadedFileResponse> => {
-		const uploadedFile = await uploadAppFile(type, app!.id, file);
-		return { filename: getFilenameFromUrl(uploadedFile[type]) || '', url: uploadedFile[type] || '' };
+	const onLoad = async (type: 'apk' | 'bundle', files: File[]): Promise<UploadedFileResponse[]> => {
+		const uploadedFile = await uploadAppFile(type, app!.id, files[0]);
+		return [{ filename: getFilenameFromUrl(uploadedFile[type]) || '', url: uploadedFile[type] || '' }];
 	};
 
 	if (!app) {
@@ -31,14 +31,14 @@ export const UploadAppFilesModal = (): JSX.Element => {
 						<Dropzone
 							hideDeletion
 							defaultValue={{ isImage: false, url: app.apk || '', filename: getFilenameFromUrl(app.apk) || '' }}
-							uploadFile={(file) => onLoad('apk', file)}
+							uploadFile={(files) => onLoad('apk', files)}
 							placeholder="Прикрепить файл .apk"
 							label="Файл .apk"
 						/>
 						<Dropzone
 							hideDeletion
 							defaultValue={{ isImage: false, url: app.bundle || '', filename: getFilenameFromUrl(app.bundle) || '' }}
-							uploadFile={(file) => onLoad('bundle', file)}
+							uploadFile={(files) => onLoad('bundle', files)}
 							placeholder="Прикрепить файл .aab"
 							label="Файл .aab"
 						/>

@@ -20,5 +20,11 @@ export const ApiRoutes = {
 	DELETE_APP_ISSUE: (appId: number, issueId: number): string => `apps/${appId}/issue/${issueId}/delete`,
 	SOLVE_APP_ISSUE: (appId: number, issueId: number): string => `apps/${appId}/issue/${issueId}/solve`,
 	TOGGLE_ADS_VISIBILITY: (appId: number): string => `apps/${appId}/sdk/ads/toggle`,
-	UPDATE_SDK: (appId: number): string => `apps/${appId}/sdk`
+	UPDATE_SDK: (appId: number): string => `apps/${appId}/sdk`,
+	CREATE_MOD: `mod`,
+	EDIT_MOD: (id: number): string => `mod/${id}`,
+	GET_MOD_BY_ID: (modId): string => `mod/${modId}`,
+	DELETE_MOD_BY_ID: (modId): string => `mod/${modId}`,
+	SEARCH_MODS: `mod/search`,
+	GET_ALL_MODS_VERSIONS: `mod/versions`
 } satisfies Record<string, string | ((...args: any[]) => string)>;

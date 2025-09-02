@@ -46,15 +46,7 @@ export const AppsTable = (): JSX.Element => {
 			filterable: false,
 			headerName: 'Лого',
 			renderCell(params): JSX.Element {
-				return (
-					<img
-						style={{ height: '100%', objectFit: 'contain' }}
-						width={50}
-						height={50}
-						src={params.value}
-						alt="Логотип"
-					/>
-				);
+				return <img style={{ height: '100%', objectFit: 'contain' }} width={50} height={50} src={params.value} alt="Логотип" />;
 			}
 		},
 
