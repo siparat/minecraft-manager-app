@@ -28,7 +28,8 @@ export const CreateModModal = (): JSX.Element => {
 		reset,
 		formState: { errors }
 	} = useForm<FormValues>({
-		resolver: zodResolver(CreateModSchema)
+		resolver: zodResolver(CreateModSchema),
+		defaultValues: { descriptionImages: [] }
 	});
 
 	const onSubmit = async (dto: FormValues): Promise<void> => {
@@ -67,9 +68,24 @@ export const CreateModModal = (): JSX.Element => {
 							onUpload={(files) => setValue('image', files[0].url)}
 							error={errors.image?.message}
 							uploadFile={uploadFile}
-							placeholder="Загрузить картинку мода"
-							types={['image/png']}
-							label="Картинка"
+							placeholder="Загрузить лого мода"
+							types={['image/png', 'image/jpeg']}
+							label="Лого"
+						/>
+
+						<Dropzone
+							isMultifile
+							onUpload={(files) =>
+								setValue(
+									'descriptionImages',
+									files.map((f) => f.url)
+								)
+							}
+							error={errors.descriptionImages?.message}
+							uploadFile={(files) => uploadFile(files, true)}
+							placeholder="Загрузить фотографии в описании мода"
+							types={['image/png', 'image/jpeg']}
+							label="Фотографии в описании мода"
 						/>
 
 						<Dropzone
