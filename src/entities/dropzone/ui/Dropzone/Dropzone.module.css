@@ -57,26 +57,6 @@ div:has(> .dropzone) {
 	height: 25px;
 }
 
-.uploadedFileString {
-	display: flex;
-	align-items: center;
-	gap: 6px;
-	margin-top: 11px;
-}
-
-.uploadedFileString p {
-	border-bottom: 1px solid transparent;
-	color: var(--blue-100);
-}
-
-.uploadedFileString p:hover {
-	border-color: var(--blue-100);
-}
-
-.uploadedFileString button svg {
-	display: block;
-}
-
 .error {
 	font-size: 14px;
     font-weight: 400;

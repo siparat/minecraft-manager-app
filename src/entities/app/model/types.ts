@@ -18,6 +18,7 @@ export interface App {
 	banner: string;
 	apk?: string;
 	bundle?: string;
+	appScreenshots: string[];
 	sdk: AppSdk;
 	translations: (Omit<AppTranslation, 'languageId'> & { language: AppLanguage })[];
 	_count: {
@@ -57,6 +58,9 @@ export interface AppSdk {
 	secondInterCode: string | null;
 	secondNativeCode: string | null;
 	secondOpenCode: string | null;
+	thirdInterCode: string | null;
+	thirdNativeCode: string | null;
+	thirdOpenCode: string | null;
 }
 
 export interface AppLanguage {

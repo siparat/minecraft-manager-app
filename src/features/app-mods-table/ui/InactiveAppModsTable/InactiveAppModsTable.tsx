@@ -15,13 +15,33 @@ export const InactiveAppModsTable = (): JSX.Element => {
 	const [versions, setVersions] = useState<string[]>();
 	const [query, setQuery] = useState<string>();
 	const [sort, setSort] = useState<GridSortModel>();
-	const [page, setPage] = useState<number>(0);
-	const { error, data } = useAppModsQuery(app?.id || NaN, false, MODS_PER_PAGE, MODS_PER_PAGE * page, query, versions, sort?.[0]);
+	const [paginationModel, setPaginationModel] = useState({
+		page: 0,
+		pageSize: MODS_PER_PAGE
+	});
+	const { error, data } = useAppModsQuery(
+		app?.id || NaN,
+		false,
+		paginationModel.pageSize,
+		paginationModel.pageSize * paginationModel.page,
+		query,
+		versions,
+		sort?.[0]
+	);
 	const queryClient = useQueryClient();
 
 	const updateModValue = (modId: number, value: boolean): void => {
 		queryClient.setQueryData(
-			['appMods', app?.id || NaN, false, MODS_PER_PAGE, MODS_PER_PAGE * page, query, versions, sort?.[0]],
+			[
+				'appMods',
+				app?.id || NaN,
+				false,
+				paginationModel.pageSize,
+				paginationModel.pageSize * paginationModel.page,
+				query,
+				versions,
+				sort?.[0]
+			],
 			({ count, mods }: ModQueryResponse): ModQueryResponse => ({
 				count,
 				mods: mods.map((m) => (m.id !== modId ? m : { ...m, apps: value ? [{ id: app!.id }] : [] }))
@@ -40,12 +60,12 @@ export const InactiveAppModsTable = (): JSX.Element => {
 			<Title tag="h1">Неактивные моды</Title>
 			<AppModsTable
 				updateModValue={updateModValue}
-				page={page}
 				data={data}
 				className={styles['table']}
 				setVersions={setVersions}
 				setSort={setSort}
-				setPage={setPage}
+				paginationModel={paginationModel}
+				onPaginationModelChange={setPaginationModel}
 				setQuery={setQuery}
 			/>
 		</div>

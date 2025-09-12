@@ -2,7 +2,7 @@ export const Routes = {
 	MAIN: '/',
 	AUTH: '/auth',
 	MODS: '/mods',
-	PARSER: '/parser',
+	// PARSER: '/parser',
 	APP_PAGE: '/app/:id',
 	MOD_PAGE: '/mod/:id',
 	APP_MODS: '/app/:id/mods',

@@ -74,6 +74,34 @@ export const SdkTokens = (): JSX.Element => {
 				label="Нативная"
 				placeholder="xxxxxxxxxx"
 			/>
+
+			<Title className={styles['title']} tag="h2">
+				Яндекс РСЯ
+			</Title>
+			<EditableProp
+				className={styles['editableProp']}
+				onSave={onUpdateProp}
+				defaultValue={app?.sdk.thirdOpenCode || undefined}
+				name="thirdOpenCode"
+				label="При открытии"
+				placeholder="xxxxxxxxxx"
+			/>
+			<EditableProp
+				className={styles['editableProp']}
+				onSave={onUpdateProp}
+				defaultValue={app?.sdk.thirdInterCode || undefined}
+				name="thirdInterCode"
+				label="Межстраничная"
+				placeholder="xxxxxxxxxx"
+			/>
+			<EditableProp
+				className={styles['editableProp']}
+				onSave={onUpdateProp}
+				defaultValue={app?.sdk.thirdNativeCode || undefined}
+				name="thirdNativeCode"
+				label="Нативная"
+				placeholder="xxxxxxxxxx"
+			/>
 		</div>
 	);
 };

@@ -1,0 +1,27 @@
+.uploadedFileString {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 11px;
+}
+
+.uploadedFileString *:not(a, p) {
+	flex-shrink: 0;
+}
+
+.uploadedFileString p {
+	border-bottom: 1px solid transparent;
+	color: var(--blue-100);
+}
+
+.uploadedFileString a, .uploadedFileString p {
+	overflow-wrap: anywhere;
+}
+
+.uploadedFileString p:hover {
+	border-color: var(--blue-100);
+}
+
+.uploadedFileString button svg {
+	display: block;
+}

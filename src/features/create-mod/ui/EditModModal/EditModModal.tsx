@@ -74,6 +74,7 @@ export const EditModModal = ({ modData }: Props): JSX.Element => {
 
 						<Textarea
 							{...register('description')}
+							className={styles['textarea']}
 							error={errors.description?.message}
 							label="Описание"
 							placeholder="Описание мода"
@@ -81,7 +82,7 @@ export const EditModModal = ({ modData }: Props): JSX.Element => {
 
 						<Dropzone
 							defaultValue={[{ isImage: true, url: modData.image, filename: modData.image }]}
-							onUpload={(files) => setValue('image', files[0].url)}
+							onUpload={([file]) => setValue('image', file?.url || '')}
 							error={errors.image?.message}
 							uploadFile={uploadFile}
 							placeholder="Загрузить лого мода"

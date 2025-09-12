@@ -4,8 +4,10 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { type JSX } from 'react';
 import styles from './UploadAppFilesModal.module.css';
 import { Dropzone, type UploadedFileResponse } from '@/entities/dropzone';
-import { uploadAppFile, useAppStore } from '@/entities/app';
+import { uploadAppFile, uploadAppScreenshots, useAppStore } from '@/entities/app';
 import { getFilenameFromUrl } from '@/shared/lib';
+import toast from 'react-hot-toast';
+import { HTTPError } from 'ky';
 
 export const UploadAppFilesModal = (): JSX.Element => {
 	const app = useAppStore((state) => state.app);
@@ -13,6 +15,20 @@ export const UploadAppFilesModal = (): JSX.Element => {
 	const onLoad = async (type: 'apk' | 'bundle', files: File[]): Promise<UploadedFileResponse[]> => {
 		const uploadedFile = await uploadAppFile(type, app!.id, files[0]);
 		return [{ filename: getFilenameFromUrl(uploadedFile[type]) || '', url: uploadedFile[type] || '' }];
+	};
+
+	const uploadScreenshots = async (files: File[]): Promise<UploadedFileResponse[]> => {
+		const toastId = toast.loading('Загрузка файлов...');
+		try {
+			const result = await uploadAppScreenshots(app!.id, files);
+			toast.success('Скриншоты успешно загружены', { id: toastId });
+			return result.appScreenshots.map((f) => ({ filename: getFilenameFromUrl(f) || '', url: f }));
+		} catch (error) {
+			if (error instanceof HTTPError) {
+				toast.error(error.message, { id: toastId });
+			}
+			return [];
+		}
 	};
 
 	if (!app) {
@@ -30,17 +46,28 @@ export const UploadAppFilesModal = (): JSX.Element => {
 					<div className={styles['dropzones']}>
 						<Dropzone
 							hideDeletion
-							defaultValue={{ isImage: false, url: app.apk || '', filename: getFilenameFromUrl(app.apk) || '' }}
+							defaultValue={app.apk ? [{ isImage: false, url: app.apk, filename: getFilenameFromUrl(app.apk) || '' }] : []}
 							uploadFile={(files) => onLoad('apk', files)}
 							placeholder="Прикрепить файл .apk"
 							label="Файл .apk"
 						/>
 						<Dropzone
 							hideDeletion
-							defaultValue={{ isImage: false, url: app.bundle || '', filename: getFilenameFromUrl(app.bundle) || '' }}
+							defaultValue={
+								app.bundle ? [{ isImage: false, url: app.bundle, filename: getFilenameFromUrl(app.bundle) || '' }] : []
+							}
 							uploadFile={(files) => onLoad('bundle', files)}
 							placeholder="Прикрепить файл .aab"
 							label="Файл .aab"
+						/>
+						<Dropzone
+							isMultifile
+							hideDeletion
+							defaultValue={app.appScreenshots.map((s) => ({ isImage: false, url: s, filename: getFilenameFromUrl(s) || '' }))}
+							uploadFile={(files) => uploadScreenshots(files)}
+							placeholder="Загрузите скриншоты приложения"
+							types={['image/png', 'image/jpeg', 'image/webp']}
+							label="Скриншоты приложения"
 						/>
 					</div>
 				</ContentBox>

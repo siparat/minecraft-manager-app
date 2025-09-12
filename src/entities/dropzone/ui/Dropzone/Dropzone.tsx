@@ -4,10 +4,10 @@ import { validateFile } from '../../lib';
 import classNames from 'classnames';
 import styles from './Dropzone.module.css';
 import TrashIcon from '@/shared/assets/icons/trash.svg?react';
-import ClipIcon from '@/shared/assets/icons/clip.svg?react';
 import toast from 'react-hot-toast';
 import { type IFile, type UploadedFileResponse } from '../../';
 import { HTTPError } from 'ky';
+import { UploadedFile } from '../UploadedFile/UploadedFile';
 
 interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
 	sizes?: [number, number];
@@ -112,6 +112,7 @@ export const Dropzone = forwardRef(
 			}
 			const newFileList = uploadedFiles?.filter((f) => f.filename !== file.filename) || null;
 			setUploadedFiles(newFileList);
+			onUpload?.(newFileList || []);
 		};
 
 		return (
@@ -144,17 +145,7 @@ export const Dropzone = forwardRef(
 				{uploadedFiles &&
 					uploadedFiles.some((f) => !f.isImage) &&
 					uploadedFiles.map((f) => (
-						<div key={f.filename} className={styles['uploadedFileString']}>
-							<ClipIcon />
-							<a target="_blank" href={f.url}>
-								<p>{f.filename}</p>
-							</a>
-							{!hideDeletion && (
-								<button tabIndex={-1} onClick={() => deleteUploadedFile(f)} type="button">
-									<TrashIcon />
-								</button>
-							)}
-						</div>
+						<UploadedFile key={f.filename} file={f} deleteUploadedFile={!hideDeletion ? deleteUploadedFile : undefined} />
 					))}
 				{error && <p className={styles['error']}>{error}</p>}
 			</div>

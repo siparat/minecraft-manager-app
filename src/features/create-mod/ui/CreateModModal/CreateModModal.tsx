@@ -65,7 +65,7 @@ export const CreateModModal = (): JSX.Element => {
 						/>
 
 						<Dropzone
-							onUpload={(files) => setValue('image', files[0].url)}
+							onUpload={([file]) => setValue('image', file?.url || '')}
 							error={errors.image?.message}
 							uploadFile={uploadFile}
 							placeholder="Загрузить лого мода"

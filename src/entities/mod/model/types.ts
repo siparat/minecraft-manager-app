@@ -10,6 +10,8 @@ export interface Mod {
 	descriptionImages: string[];
 	image: string;
 	files: string[];
+	parsedSlug?: string;
+	htmlDescription?: string;
 	versions: ModVersion[];
 	_count: {
 		apps: number;

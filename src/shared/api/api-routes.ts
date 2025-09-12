@@ -13,6 +13,7 @@ export const ApiRoutes = {
 	GET_APP_BY_ID: (id: number): string => `apps/${id}`,
 	DELETE_APP: (id: number): string => `apps/${id}`,
 	SET_APP_STATUS: (appId: number, status: AppStatus): string => `apps/${appId}/status/${status}`,
+	UPLOAD_SCREENSHOTS: (appId: number): string => `apps/${appId}/screenshots`,
 	UPLOAD_APK: (appId: number): string => `apps/${appId}/apk`,
 	UPLOAD_BUNDLE: (appId: number): string => `apps/${appId}/bundle`,
 	GET_ISSUES_COUNTS: (appId: number): string => `apps/${appId}/issue/counts`,

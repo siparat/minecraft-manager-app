@@ -126,8 +126,8 @@ export const AppsTable = (): JSX.Element => {
 		}
 	}, [error]);
 
-	if (isLoading) return <p>Загрузка...</p>;
 	if (isError) return <p>Ошибка загрузки</p>;
+	if (isLoading || !data) return <p>Загрузка...</p>;
 
 	return (
 		<DataGrid

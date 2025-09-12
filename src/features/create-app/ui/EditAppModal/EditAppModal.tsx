@@ -97,6 +97,7 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 			}
 		}
 	};
+
 	return (
 		<Portal>
 			<Overlay className="dialogOverlay" />
@@ -161,7 +162,7 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 								uploadFile={uploadFile}
 								defaultValue={[{ isImage: true, filename: appData.logo, url: appData.logo }]}
 								error={errors.logo?.message}
-								onUpload={(files) => setValue('logo', files[0].url)}
+								onUpload={([file]) => setValue('logo', file?.url || '')}
 								placeholder="512x512 .png"
 								types={['image/png']}
 								sizes={[512, 512]}
@@ -171,7 +172,7 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 								uploadFile={uploadFile}
 								defaultValue={[{ isImage: true, filename: appData.banner, url: appData.banner }]}
 								error={errors.banner?.message}
-								onUpload={(files) => setValue('banner', files[0].url)}
+								onUpload={([file]) => setValue('banner', file?.url || '')}
 								placeholder="720x320 .png"
 								types={['image/png']}
 								sizes={[720, 320]}

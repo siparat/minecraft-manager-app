@@ -1,5 +1,5 @@
 import { type ChangeEvent, type Dispatch, type HTMLAttributes, type JSX, type SetStateAction } from 'react';
-import { DataGrid, type GridColDef, type GridFilterModel, type GridSortModel } from '@mui/x-data-grid';
+import { DataGrid, type DataGridProps, type GridColDef, type GridFilterModel, type GridSortModel } from '@mui/x-data-grid';
 import toast from 'react-hot-toast';
 import styles from './AppModsTable.module.css';
 import { Routes } from '@/shared/config';
@@ -12,7 +12,6 @@ import Input from '@mui/material/Input';
 import debounce from 'lodash.debounce';
 import classNames from 'classnames';
 import { useAppStore } from '@/entities/app';
-import { MODS_PER_PAGE } from '@/features/mods-table/model';
 import { toggleAppMod } from '../../api/toggle-app-mod';
 
 interface ModTableRow extends Omit<Mod, 'versions'> {
@@ -23,24 +22,23 @@ interface ModTableRow extends Omit<Mod, 'versions'> {
 	isActived: boolean;
 }
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
-	data: ModQueryResponse | undefined;
-	setVersions: Dispatch<SetStateAction<string[] | undefined>>;
-	setQuery: Dispatch<SetStateAction<string | undefined>>;
-	setSort: Dispatch<SetStateAction<GridSortModel | undefined>>;
-	setPage: Dispatch<SetStateAction<number>>;
-	updateModValue: (modId: number, value: boolean) => void;
-	page: number;
-}
+type Props = Required<Pick<DataGridProps, 'paginationModel' | 'onPaginationModelChange'>> &
+	HTMLAttributes<HTMLDivElement> & {
+		data: ModQueryResponse | undefined;
+		setVersions: Dispatch<SetStateAction<string[] | undefined>>;
+		setQuery: Dispatch<SetStateAction<string | undefined>>;
+		setSort: Dispatch<SetStateAction<GridSortModel | undefined>>;
+		updateModValue: (modId: number, value: boolean) => void;
+	};
 
 export const AppModsTable = ({
 	className,
 	data,
-	page,
-	setPage,
 	updateModValue,
 	setVersions,
 	setQuery,
+	paginationModel,
+	onPaginationModelChange,
 	setSort,
 	...props
 }: Props): JSX.Element => {
@@ -128,7 +126,7 @@ export const AppModsTable = ({
 						style={{ height: '100%', width: '100%', objectFit: 'contain' }}
 						width={50}
 						height={50}
-						src={'http://localhost:3000' + params.value}
+						src={params.value}
 						alt="Логотип"
 					/>
 				);
@@ -154,6 +152,8 @@ export const AppModsTable = ({
 		setVersions(versions ? [versions] : undefined);
 	};
 
+	if (!data) return <p>Загрузка...</p>;
+
 	return (
 		<DataGrid
 			className={classNames(className, styles['table'])}
@@ -171,10 +171,10 @@ export const AppModsTable = ({
 			filterMode="server"
 			onSortModelChange={setSort}
 			onFilterModelChange={onFilter}
-			paginationModel={{ page, pageSize: MODS_PER_PAGE }}
-			pageSizeOptions={[MODS_PER_PAGE]}
-			rowCount={data?.count || 0}
-			onPaginationModelChange={({ page }) => setPage(page)}
+			paginationModel={paginationModel}
+			onPaginationModelChange={onPaginationModelChange}
+			pageSizeOptions={[paginationModel.pageSize]}
+			rowCount={data?.count}
 			getRowId={(row) => row.id}
 			{...props}
 		/>

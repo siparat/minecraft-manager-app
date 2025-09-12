@@ -164,7 +164,7 @@ export const CreateAppModal = (): JSX.Element => {
 							<Dropzone
 								uploadFile={uploadFile}
 								error={errors.logo?.message}
-								onUpload={(files) => setValue('logo', files[0].url)}
+								onUpload={([file]) => setValue('logo', file?.url || '')}
 								placeholder="512x512 .png"
 								types={['image/png']}
 								sizes={[512, 512]}
@@ -173,7 +173,7 @@ export const CreateAppModal = (): JSX.Element => {
 							<Dropzone
 								uploadFile={uploadFile}
 								error={errors.banner?.message}
-								onUpload={(files) => setValue('banner', files[0].url)}
+								onUpload={([file]) => setValue('banner', file?.url || '')}
 								placeholder="720x320 .png"
 								types={['image/png']}
 								sizes={[720, 320]}
