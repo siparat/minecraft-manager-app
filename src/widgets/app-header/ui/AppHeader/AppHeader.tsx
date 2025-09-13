@@ -6,6 +6,7 @@ import { EditAppModal } from '@/features/create-app/ui';
 import { SelectAppStatus } from '@/features/select-app-status';
 import { UploadModfiles } from '@/features/upload-modfiles';
 import OpenArrowIcon from '@/shared/assets/icons/open-arrow.svg?react';
+import { ProtectedElement } from '@/app/ProtectedElement';
 
 export const AppHeader = (): JSX.Element => {
 	const app = useAppStore((store) => store.app);
@@ -22,12 +23,14 @@ export const AppHeader = (): JSX.Element => {
 			<div className={styles['info']}>
 				<div className={styles['titleWrapper']}>
 					<h1 className={styles['title']}>{app.translations[0].name}</h1>
-					<Root>
-						<Trigger asChild>
-							<button>✏️</button>
-						</Trigger>
-						<EditAppModal appData={app} />
-					</Root>
+					<ProtectedElement>
+						<Root>
+							<Trigger asChild>
+								<button>✏️</button>
+							</Trigger>
+							<EditAppModal appData={app} />
+						</Root>
+					</ProtectedElement>
 				</div>
 				<div className={styles['packageName']}>
 					<p>{app.packageName}</p>

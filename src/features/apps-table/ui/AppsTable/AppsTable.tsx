@@ -10,6 +10,7 @@ import { EditAppModal } from '@/features/create-app/ui';
 import { HTTPError } from 'ky';
 import { ConfirmModal, Text } from '@/shared/ui';
 import { useNavigate } from 'react-router-dom';
+import { ProtectedElement } from '@/app/ProtectedElement';
 
 interface ModTableRow extends App {
 	id: number;
@@ -72,28 +73,30 @@ export const AppsTable = (): JSX.Element => {
 			filterable: false,
 			width: 300,
 			renderCell: (params): JSX.Element => (
-				<div className={styles['actions']}>
-					<Root>
-						<Trigger asChild>
-							<button onClick={() => fetchApp(params.row.id)} title="Редактировать">
-								✏️
-							</button>
-						</Trigger>
-						{editedApp && <EditAppModal appData={editedApp} />}
-					</Root>
-					<Root>
-						<Trigger asChild>
-							<button title="Удалить">🗑️</button>
-						</Trigger>
-						<ConfirmModal callback={() => deleteAppById(params.row.id)}>
-							<>
-								<Text>
-									Вы действительно хотите удалить приложение <b>{params.row.name}</b>?
-								</Text>
-							</>
-						</ConfirmModal>
-					</Root>
-				</div>
+				<ProtectedElement>
+					<div className={styles['actions']}>
+						<Root>
+							<Trigger asChild>
+								<button onClick={() => fetchApp(params.row.id)} title="Редактировать">
+									✏️
+								</button>
+							</Trigger>
+							{editedApp && <EditAppModal appData={editedApp} />}
+						</Root>
+						<Root>
+							<Trigger asChild>
+								<button title="Удалить">🗑️</button>
+							</Trigger>
+							<ConfirmModal callback={() => deleteAppById(params.row.id)}>
+								<>
+									<Text>
+										Вы действительно хотите удалить приложение <b>{params.row.name}</b>?
+									</Text>
+								</>
+							</ConfirmModal>
+						</Root>
+					</div>
+				</ProtectedElement>
 			)
 		}
 	];
