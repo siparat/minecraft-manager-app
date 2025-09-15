@@ -1,1 +1,1 @@
-export { getAllApps } from './toggle-app-mod';
+export { toggleAppMod } from './toggle-app-mod';
