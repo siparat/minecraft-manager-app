@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback, type ChangeEvent, type JSX } from 'react';
+import { useEffect, useState, useMemo, useCallback, type JSX, useRef } from 'react';
 import { MODS_PER_PAGE, useModsQuery } from '../../model';
 import { DataGrid, type GridColDef, type GridFilterModel, type GridSortModel } from '@mui/x-data-grid';
 import toast from 'react-hot-toast';
@@ -31,6 +31,7 @@ export const ModsTable = (): JSX.Element => {
 		page: 0,
 		pageSize: MODS_PER_PAGE
 	});
+	const searchInputRef = useRef<HTMLInputElement>(null);
 	const { error, isLoading, data, isError } = useModsQuery(
 		paginationModel.pageSize,
 		paginationModel.pageSize * paginationModel.page,
@@ -54,13 +55,10 @@ export const ModsTable = (): JSX.Element => {
 		[navigate]
 	);
 
-	const handleNameFilterChange = useMemo(
-		() =>
-			debounce((applyValue: any, e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-				applyValue((prev: any) => ({ ...prev, value: e.target.value }));
-			}, 350),
-		[]
-	);
+	const setQueryWithDebounce = debounce(() => {
+		const value = searchInputRef.current?.value;
+		setQuery(value || undefined);
+	}, 1000);
 
 	const columns: GridColDef<ModTableRow>[] = useMemo(
 		() => [
@@ -76,9 +74,10 @@ export const ModsTable = (): JSX.Element => {
 						getApplyFilterFn: () => () => true,
 						InputComponent: ({ item, applyValue }): JSX.Element => (
 							<Input
+								inputRef={searchInputRef}
 								defaultValue={item.value || ''}
 								placeholder="Название мода"
-								onChange={(e) => handleNameFilterChange(applyValue, e)}
+								onChange={(e) => applyValue({ value: e.target.value })}
 							/>
 						)
 					}
@@ -110,6 +109,7 @@ export const ModsTable = (): JSX.Element => {
 						getApplyFilterFn: () => () => true,
 						InputComponent: ({ item, applyValue }) => (
 							<Select
+								className={styles['select']}
 								value={item.value || ''}
 								onChange={(e) => applyValue({ ...item, value: e.target.value })}
 								displayEmpty
@@ -185,16 +185,26 @@ export const ModsTable = (): JSX.Element => {
 				)
 			}
 		],
-		[unknownVersions, deleteModById, handleNameFilterChange]
+		[unknownVersions, deleteModById]
 	);
 
-	const onFilter = useCallback((model: GridFilterModel): void => {
-		const searchValue: string | undefined = model.items.find((i) => i.field === 'name')?.value;
-		setQuery(searchValue || undefined);
+	const onFilter = useCallback(
+		(model: GridFilterModel): void => {
+			const filterItem = model.items[0];
+			if (!filterItem) {
+				return;
+			}
 
-		const versions: string | undefined = model.items.find((i) => i.field === 'versions')?.value;
-		setVersions(versions ? [versions] : undefined);
-	}, []);
+			switch (filterItem.field) {
+				case 'versions':
+					setVersions(filterItem.value ? [filterItem.value] : undefined);
+					break;
+				case 'name':
+					setQueryWithDebounce();
+			}
+		},
+		[setQueryWithDebounce]
+	);
 
 	useEffect(() => {
 		if (error) {

@@ -101,7 +101,12 @@ export const AppModsTable = ({
 					value: 'containsVersion',
 					getApplyFilterFn: () => () => true,
 					InputComponent: ({ item, applyValue }) => (
-						<Select value={item.value || ''} onChange={(e) => applyValue({ ...item, value: e.target.value })} displayEmpty fullWidth>
+						<Select
+							className={styles['select']}
+							value={item.value || ''}
+							onChange={(e) => applyValue({ ...item, value: e.target.value })}
+							displayEmpty
+							fullWidth>
 							<MenuItem value="">Все</MenuItem>
 							{unknownVersions?.map(({ version }) => (
 								<MenuItem key={version} value={version}>

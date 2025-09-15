@@ -16,3 +16,7 @@
 .link {
 	color: var(--purple);
 }
+
+.select {
+	max-height: 40px;
+}
