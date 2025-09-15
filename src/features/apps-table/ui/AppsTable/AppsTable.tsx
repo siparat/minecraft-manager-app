@@ -9,7 +9,7 @@ import { Root, Trigger } from '@radix-ui/react-dialog';
 import { EditAppModal } from '@/features/create-app/ui';
 import { HTTPError } from 'ky';
 import { ConfirmModal, Text } from '@/shared/ui';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ProtectedElement } from '@/app/ProtectedElement';
 
 interface ModTableRow extends App {
@@ -33,9 +33,9 @@ export const AppsTable = (): JSX.Element => {
 			headerName: 'Название',
 			flex: 1,
 			renderCell: (params): JSX.Element => (
-				<a className={styles['link']} href={Routes.APP_PAGE.replace(':id', params.id.toString())}>
+				<Link className={styles['link']} to={Routes.APP_PAGE.replace(':id', params.id.toString())}>
 					{params.value}
-				</a>
+				</Link>
 			)
 		},
 		{ field: 'packageName', resizable: false, headerName: 'Имя пакета', flex: 1 },

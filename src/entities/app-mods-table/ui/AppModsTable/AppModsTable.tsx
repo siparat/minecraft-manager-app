@@ -2,7 +2,6 @@ import { type ChangeEvent, type Dispatch, type HTMLAttributes, type JSX, type Se
 import { DataGrid, type DataGridProps, type GridColDef, type GridFilterModel, type GridSortModel } from '@mui/x-data-grid';
 import toast from 'react-hot-toast';
 import styles from './AppModsTable.module.css';
-import { Routes } from '@/shared/config';
 import { HTTPError } from 'ky';
 import { Switch } from '@/shared/ui';
 import { useModStore, type Mod, type ModQueryResponse } from '@/entities/mod';
@@ -83,7 +82,7 @@ export const AppModsTable = ({
 				}
 			],
 			renderCell: (params): JSX.Element => (
-				<a className={styles['link']} href={Routes.MOD_PAGE.replace(':id', params.id.toString())}>
+				<a className={styles['link']} href={import.meta.env.VITE_MODS_HOST + '/' + params.row.parsedSlug}>
 					{params.value}
 				</a>
 			)
