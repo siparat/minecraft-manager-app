@@ -88,6 +88,28 @@ export const CreateAppModal = (): JSX.Element => {
 		}
 	};
 
+	const translateAllLanguages = async (): Promise<void> => {
+		if (!appName) {
+			toast.error('Заполните название на русском');
+			return;
+		}
+		const toastId = toast.loading('Перевод...');
+		for (const language of languages) {
+			try {
+				const dto: z.infer<typeof TranslateSchema> = { code: language.code, text: appName };
+				const translation = await translateText(dto);
+				const text = translation.translations[0].text;
+				setValue(`translations.${language.id - 1}.name`, text, { shouldDirty: true });
+				clearErrors(`translations.${language.id - 1}.name`);
+				toast.success(text, { id: toastId });
+			} catch (error) {
+				if (error instanceof HTTPError) {
+					toast.error('Произошла ошибка: ' + error.message, { id: toastId });
+				}
+			}
+		}
+	};
+
 	const onSubmit = async (data: FormValues): Promise<void> => {
 		const toastId = toast.loading('Создание приложения');
 		try {
@@ -123,6 +145,9 @@ export const CreateAppModal = (): JSX.Element => {
 									/>
 								)}
 							/>
+							<button tabIndex={-1} onClick={translateAllLanguages} type="button" className={styles['translateButton']}>
+								<TranslateIcon />
+							</button>
 							<button onClick={toggleInputsWrapper} type="button" className={styles['arrowButton']}>
 								<ArrowIcon className={classNames({ [styles['rotate']]: !languagesIsOpen })} />
 							</button>
