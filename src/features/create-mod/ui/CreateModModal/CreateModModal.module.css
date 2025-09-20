@@ -21,3 +21,7 @@
 	color: var(--red);
 	margin-top: 4px;
 }
+
+.select {
+	width: 100%;
+}

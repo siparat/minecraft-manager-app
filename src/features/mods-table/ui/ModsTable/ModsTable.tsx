@@ -7,17 +7,19 @@ import { Root, Trigger } from '@radix-ui/react-dialog';
 import { HTTPError } from 'ky';
 import { ConfirmModal, Text } from '@/shared/ui';
 import { useNavigate } from 'react-router-dom';
-import { deleteMod, useModStore, type Mod } from '@/entities/mod';
+import { deleteMod, ModCategoryLabels, useModStore, type Mod } from '@/entities/mod';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Input from '@mui/material/Input';
 import debounce from 'lodash.debounce';
 import { EditModModal } from '@/features/create-mod';
+import { ModCategory } from 'minecraft-manager-schemas';
 
 interface ModTableRow extends Omit<Mod, 'versions'> {
 	id: number;
 	name: string;
 	versions: string[];
+	category: ModCategory;
 	logo: string;
 	usedCount: number;
 }
@@ -126,6 +128,15 @@ export const ModsTable = (): JSX.Element => {
 				]
 			},
 			{
+				field: 'category',
+				resizable: false,
+				width: 120,
+				sortable: false,
+				filterable: false,
+				headerName: 'Категория',
+				renderCell: ({ value }): string => ModCategoryLabels[value as ModCategory]
+			},
+			{
 				field: 'logo',
 				resizable: false,
 				width: 100,
@@ -133,13 +144,15 @@ export const ModsTable = (): JSX.Element => {
 				filterable: false,
 				headerName: 'Лого',
 				renderCell: (params): JSX.Element => (
-					<img
-						style={{ height: '100%', width: '100%', objectFit: 'contain' }}
-						width={50}
-						height={50}
-						src={params.value}
-						alt="Логотип"
-					/>
+					<a target="_blank" href={params.value}>
+						<img
+							style={{ height: '100%', width: '100%', objectFit: 'contain' }}
+							width={50}
+							height={50}
+							src={params.value}
+							alt="Логотип"
+						/>
+					</a>
 				)
 			},
 			{

@@ -6,7 +6,7 @@ import { Button, ContentBox, Input, Textarea } from '@/shared/ui';
 import { useForm } from 'react-hook-form';
 import { Dropzone } from '@/entities/dropzone';
 import type z from 'zod';
-import { CreateModSchema } from 'minecraft-manager-schemas';
+import { CreateModSchema, ModCategory } from 'minecraft-manager-schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { uploadFile } from '@/features/create-app';
 import { uploadModfiles, createMod } from '../..';
@@ -14,7 +14,7 @@ import { Select } from 'antd';
 import toast from 'react-hot-toast';
 import { HTTPError } from 'ky';
 import { useNavigate } from 'react-router-dom';
-import { useModStore } from '@/entities/mod';
+import { ModCategoryLabels, useModStore } from '@/entities/mod';
 
 type FormValues = z.infer<typeof CreateModSchema>;
 
@@ -103,11 +103,22 @@ export const CreateModModal = (): JSX.Element => {
 						/>
 
 						<fieldset>
+							<p className={styles['label']}>Категория</p>
+							<Select
+								className={styles['select']}
+								placeholder="Выберите категорию"
+								options={Object.values(ModCategory).map((c) => ({ value: c, label: ModCategoryLabels[c] }))}
+								onChange={(v) => setValue('category', v)}
+							/>
+							{errors.category && <p className={styles['errorMessage']}>{errors.category.message}</p>}
+						</fieldset>
+
+						<fieldset>
 							<p className={styles['label']}>Совместимые версии</p>
 							<Select
+								className={styles['select']}
 								mode="tags"
 								allowClear
-								style={{ width: '100%' }}
 								placeholder="1.21.30"
 								options={versions.map(({ version }) => ({ label: version, value: version }))}
 								onChange={(versions) => setValue('versions', versions)}

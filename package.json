@@ -24,7 +24,7 @@
     "framer-motion": "^12.23.12",
     "ky": "^1.8.2",
     "lodash.debounce": "^4.0.8",
-    "minecraft-manager-schemas": "^0.0.20",
+    "minecraft-manager-schemas": "^0.0.22",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.8",

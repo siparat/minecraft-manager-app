@@ -1,9 +1,11 @@
 import type { App } from '@/entities/app';
+import { ModCategory } from 'minecraft-manager-schemas';
 
 export interface Mod {
 	id: number;
 	createdAt: string;
 	updatedAt: string;
+	category: ModCategory;
 	isParsed: boolean;
 	title: string;
 	description: string;
