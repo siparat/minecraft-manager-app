@@ -46,6 +46,11 @@ export const InactiveAppModsTable = (): JSX.Element => {
 				paginationModel.pageSize * paginationModel.page,
 				query,
 				versions,
+				commentsCount,
+				rating,
+				commentsCountOperator,
+				ratingOperator,
+				category,
 				sort?.[0]
 			],
 			({ count, mods }: ModQueryResponse): ModQueryResponse => ({

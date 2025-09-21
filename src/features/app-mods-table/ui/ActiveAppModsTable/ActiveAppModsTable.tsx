@@ -39,13 +39,17 @@ export const ActiveAppModsTable = (): JSX.Element => {
 	const updateModValue = (modId: number, value: boolean): void => {
 		queryClient.setQueryData(
 			[
-				'appMods',
 				app?.id || NaN,
 				true,
 				paginationModel.pageSize,
 				paginationModel.pageSize * paginationModel.page,
 				query,
 				versions,
+				commentsCount,
+				rating,
+				commentsCountOperator,
+				ratingOperator,
+				category,
 				sort?.[0]
 			],
 			({ count, mods }: ModQueryResponse): ModQueryResponse => ({
