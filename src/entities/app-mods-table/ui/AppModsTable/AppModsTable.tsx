@@ -1,17 +1,14 @@
-import { type ChangeEvent, type Dispatch, type HTMLAttributes, type JSX, type SetStateAction } from 'react';
-import { DataGrid, type DataGridProps, type GridColDef, type GridFilterModel, type GridSortModel } from '@mui/x-data-grid';
+import { type Dispatch, type HTMLAttributes, type JSX, type SetStateAction } from 'react';
+import { DataGrid, type DataGridProps, type GridColDef, type GridSortModel } from '@mui/x-data-grid';
 import toast from 'react-hot-toast';
 import styles from './AppModsTable.module.css';
 import { HTTPError } from 'ky';
 import { Switch } from '@/shared/ui';
-import { useModStore, type Mod, type ModQueryResponse } from '@/entities/mod';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Input from '@mui/material/Input';
-import debounce from 'lodash.debounce';
+import { ModCategoryLabels, type Mod, type ModQueryResponse } from '@/entities/mod';
 import classNames from 'classnames';
 import { useAppStore } from '@/entities/app';
 import { toggleAppMod } from '../../api/toggle-app-mod';
+import type { ModCategory } from 'minecraft-manager-schemas';
 
 interface ModTableRow extends Omit<Mod, 'versions'> {
 	id: number;
@@ -24,8 +21,6 @@ interface ModTableRow extends Omit<Mod, 'versions'> {
 type Props = Required<Pick<DataGridProps, 'paginationModel' | 'onPaginationModelChange'>> &
 	HTMLAttributes<HTMLDivElement> & {
 		data: ModQueryResponse | undefined;
-		setVersions: Dispatch<SetStateAction<string[] | undefined>>;
-		setQuery: Dispatch<SetStateAction<string | undefined>>;
 		setSort: Dispatch<SetStateAction<GridSortModel | undefined>>;
 		updateModValue: (modId: number, value: boolean) => void;
 	};
@@ -34,15 +29,12 @@ export const AppModsTable = ({
 	className,
 	data,
 	updateModValue,
-	setVersions,
-	setQuery,
 	paginationModel,
 	onPaginationModelChange,
 	setSort,
 	...props
 }: Props): JSX.Element => {
 	const app = useAppStore((state) => state.app);
-	const unknownVersions = useModStore((state) => state.allVersions);
 
 	const onToggleMod = async (modId: number, value: boolean): Promise<void> => {
 		if (!app) {
@@ -67,20 +59,7 @@ export const AppModsTable = ({
 			resizable: false,
 			headerName: 'Название',
 			flex: 1,
-			filterOperators: [
-				{
-					label: 'Поиск по названию',
-					value: 'query',
-					getApplyFilterFn: () => () => true,
-					InputComponent: ({ item, applyValue }): JSX.Element => {
-						const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-							applyValue({ ...item, value: e.target.value });
-						};
-
-						return <Input defaultValue={item.value || ''} placeholder="Название мода" onChange={debounce(onChange, 350)} />;
-					}
-				}
-			],
+			filterable: false,
 			renderCell: (params): JSX.Element => (
 				<a className={styles['link']} href={import.meta.env.VITE_MODS_HOST + '/' + params.row.parsedSlug}>
 					{params.value}
@@ -94,28 +73,16 @@ export const AppModsTable = ({
 			headerName: 'Совместимые версии',
 			flex: 1,
 			renderCell: ({ value }) => value.join(', '),
-			filterOperators: [
-				{
-					label: 'Содержит версию',
-					value: 'containsVersion',
-					getApplyFilterFn: () => () => true,
-					InputComponent: ({ item, applyValue }) => (
-						<Select
-							className={styles['select']}
-							value={item.value || ''}
-							onChange={(e) => applyValue({ ...item, value: e.target.value })}
-							displayEmpty
-							fullWidth>
-							<MenuItem value="">Все</MenuItem>
-							{unknownVersions?.map(({ version }) => (
-								<MenuItem key={version} value={version}>
-									{version}
-								</MenuItem>
-							))}
-						</Select>
-					)
-				}
-			]
+			filterable: false
+		},
+		{
+			field: 'category',
+			resizable: false,
+			width: 120,
+			sortable: false,
+			filterable: false,
+			headerName: 'Категория',
+			renderCell: ({ value }): string => ModCategoryLabels[value as ModCategory]
 		},
 		{
 			field: 'logo',
@@ -137,24 +104,32 @@ export const AppModsTable = ({
 			}
 		},
 		{
+			field: 'rating',
+			resizable: false,
+			filterable: false,
+			type: 'number',
+			headerName: 'Оценка',
+			width: 110
+		},
+		{
+			field: 'commentCounts',
+			resizable: false,
+			filterable: false,
+			type: 'number',
+			headerName: 'Комментариев',
+			width: 180
+		},
+		{
 			field: 'actions',
 			resizable: false,
 			headerName: 'Действия',
 			type: 'actions',
 			sortable: false,
 			filterable: false,
-			width: 300,
+			width: 200,
 			renderCell: (params): JSX.Element => <Switch value={params.row.isActived} onSwitch={(value) => onToggleMod(params.row.id, value)} />
 		}
 	];
-
-	const onFilter = (model: GridFilterModel): void => {
-		const searchValue: string | undefined = model.items.find((i) => i.field == 'name')?.value;
-		setQuery(searchValue || undefined);
-
-		const versions: string | undefined = model.items.find((i) => i.field == 'versions')?.value;
-		setVersions(versions ? [versions] : undefined);
-	};
 
 	if (!data) return <p>Загрузка...</p>;
 
@@ -174,7 +149,6 @@ export const AppModsTable = ({
 			sortingMode="server"
 			filterMode="server"
 			onSortModelChange={setSort}
-			onFilterModelChange={onFilter}
 			paginationModel={paginationModel}
 			onPaginationModelChange={onPaginationModelChange}
 			pageSizeOptions={[paginationModel.pageSize]}

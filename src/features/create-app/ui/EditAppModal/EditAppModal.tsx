@@ -41,7 +41,6 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 	} = useForm<FormValues>({
 		resolver: zodResolver(CreateAppSchema),
 		defaultValues: {
-			banner: appData.banner,
 			logo: appData.logo,
 			packageName: appData.packageName,
 			translations: appData.translations.map((t) => ({ name: t.name, languageId: t.language.id }))
@@ -192,16 +191,6 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 								types={['image/png']}
 								sizes={[512, 512]}
 								label="Лого"
-							/>
-							<Dropzone
-								uploadFile={uploadFile}
-								defaultValue={[{ isImage: true, filename: appData.banner, url: appData.banner }]}
-								error={errors.banner?.message}
-								onUpload={([file]) => setValue('banner', file?.url || '')}
-								placeholder="720x320 .png"
-								types={['image/png']}
-								sizes={[720, 320]}
-								label="Баннер"
 							/>
 						</div>
 

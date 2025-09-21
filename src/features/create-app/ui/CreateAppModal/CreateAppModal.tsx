@@ -195,15 +195,6 @@ export const CreateAppModal = (): JSX.Element => {
 								sizes={[512, 512]}
 								label="Лого"
 							/>
-							<Dropzone
-								uploadFile={uploadFile}
-								error={errors.banner?.message}
-								onUpload={([file]) => setValue('banner', file?.url || '')}
-								placeholder="720x320 .png"
-								types={['image/png']}
-								sizes={[720, 320]}
-								label="Баннер"
-							/>
 						</div>
 
 						<div className={styles['wrapper']}>

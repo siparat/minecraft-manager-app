@@ -1,14 +1,21 @@
 import { Input } from '@/shared/ui';
-import type { ChangeEvent, JSX } from 'react';
+import debounce from 'lodash.debounce';
+import type { ChangeEvent, InputHTMLAttributes, JSX } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-export const InputSearch = (): JSX.Element => {
+interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
+	debounceMs?: number;
+	onChange?: (value: string) => unknown;
+}
+
+export const InputSearch = ({ debounceMs, onChange, ...props }: Props): JSX.Element => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+	const handleChange = debounce((e: ChangeEvent<HTMLInputElement>): void => {
 		const value = e.target.value;
 		setSearchParams({ q: value });
-	};
+		onChange?.(value);
+	}, debounceMs || 0);
 
-	return <Input onChange={handleChange} defaultValue={searchParams.get('q') || undefined} placeholder="Поиск..." />;
+	return <Input {...props} onChange={handleChange} defaultValue={searchParams.get('q') || undefined} />;
 };

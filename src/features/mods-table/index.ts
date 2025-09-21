@@ -1,1 +1,1 @@
-export { ModsTable } from './ui';
+export { ModsTable, ModsRatingFilter, ModsCommentsCountFilter } from './ui';

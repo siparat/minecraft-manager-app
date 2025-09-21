@@ -5,15 +5,16 @@ import styles from './InactiveAppModsTable.module.css';
 import { Title } from '@/shared/ui';
 import { AppModsTable } from '@/entities/app-mods-table';
 import toast from 'react-hot-toast';
-import { MODS_PER_PAGE } from '@/features/mods-table/model';
+import { MODS_PER_PAGE, useModsTableFilters } from '@/features/mods-table/model';
 import { useAppStore } from '@/entities/app';
 import type { ModQueryResponse } from '@/entities/mod';
 import { useQueryClient } from '@tanstack/react-query';
+import { ModsTableFilters } from '@/features/mods-table/ui/ModsTableFilters/ModsTableFilters';
 
 export const InactiveAppModsTable = (): JSX.Element => {
 	const app = useAppStore((state) => state.app);
-	const [versions, setVersions] = useState<string[]>();
-	const [query, setQuery] = useState<string>();
+	const filters = useModsTableFilters();
+	const { query, versions, commentsCount, rating, commentsCountOperator, ratingOperator, category } = filters;
 	const [sort, setSort] = useState<GridSortModel>();
 	const [paginationModel, setPaginationModel] = useState({
 		page: 0,
@@ -26,6 +27,11 @@ export const InactiveAppModsTable = (): JSX.Element => {
 		paginationModel.pageSize * paginationModel.page,
 		query,
 		versions,
+		commentsCount,
+		rating,
+		commentsCountOperator,
+		ratingOperator,
+		category,
 		sort?.[0]
 	);
 	const queryClient = useQueryClient();
@@ -58,15 +64,14 @@ export const InactiveAppModsTable = (): JSX.Element => {
 	return (
 		<div className={styles['block']}>
 			<Title tag="h1">Неактивные моды</Title>
+			<ModsTableFilters filters={filters} />
 			<AppModsTable
 				updateModValue={updateModValue}
 				data={data}
 				className={styles['table']}
-				setVersions={setVersions}
 				setSort={setSort}
 				paginationModel={paginationModel}
 				onPaginationModelChange={setPaginationModel}
-				setQuery={setQuery}
 			/>
 		</div>
 	);

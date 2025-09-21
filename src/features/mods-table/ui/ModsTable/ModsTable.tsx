@@ -1,19 +1,16 @@
-import { useEffect, useState, useMemo, useCallback, type JSX, useRef } from 'react';
-import { MODS_PER_PAGE, useModsQuery } from '../../model';
-import { DataGrid, type GridColDef, type GridFilterModel, type GridSortModel } from '@mui/x-data-grid';
+import { useEffect, useState, useMemo, useCallback, type JSX } from 'react';
+import { MODS_PER_PAGE, useModsQuery, useModsTableFilters } from '../../model';
+import { DataGrid, type GridColDef, type GridSortModel } from '@mui/x-data-grid';
 import toast from 'react-hot-toast';
 import styles from './ModsTable.module.css';
 import { Root, Trigger } from '@radix-ui/react-dialog';
 import { HTTPError } from 'ky';
 import { ConfirmModal, Text } from '@/shared/ui';
 import { useNavigate } from 'react-router-dom';
-import { deleteMod, ModCategoryLabels, useModStore, type Mod } from '@/entities/mod';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Input from '@mui/material/Input';
-import debounce from 'lodash.debounce';
+import { deleteMod, ModCategoryLabels, type Mod } from '@/entities/mod';
 import { EditModModal } from '@/features/create-mod';
 import { ModCategory } from 'minecraft-manager-schemas';
+import { ModsTableFilters } from '../ModsTableFilters/ModsTableFilters';
 
 interface ModTableRow extends Omit<Mod, 'versions'> {
 	id: number;
@@ -25,20 +22,23 @@ interface ModTableRow extends Omit<Mod, 'versions'> {
 }
 
 export const ModsTable = (): JSX.Element => {
-	const unknownVersions = useModStore((state) => state.allVersions);
-	const [versions, setVersions] = useState<string[]>();
-	const [query, setQuery] = useState<string>();
+	const filters = useModsTableFilters();
+	const { query, versions, commentsCount, rating, commentsCountOperator, ratingOperator, category } = filters;
 	const [sort, setSort] = useState<GridSortModel>();
 	const [paginationModel, setPaginationModel] = useState({
 		page: 0,
 		pageSize: MODS_PER_PAGE
 	});
-	const searchInputRef = useRef<HTMLInputElement>(null);
 	const { error, isLoading, data, isError } = useModsQuery(
 		paginationModel.pageSize,
 		paginationModel.pageSize * paginationModel.page,
 		query,
 		versions,
+		commentsCount,
+		rating,
+		commentsCountOperator,
+		ratingOperator,
+		category,
 		sort?.[0]
 	);
 	const navigate = useNavigate();
@@ -57,11 +57,6 @@ export const ModsTable = (): JSX.Element => {
 		[navigate]
 	);
 
-	const setQueryWithDebounce = debounce(() => {
-		const value = searchInputRef.current?.value;
-		setQuery(value || undefined);
-	}, 1000);
-
 	const columns: GridColDef<ModTableRow>[] = useMemo(
 		() => [
 			{
@@ -69,21 +64,7 @@ export const ModsTable = (): JSX.Element => {
 				resizable: false,
 				headerName: 'Название',
 				flex: 1,
-				filterOperators: [
-					{
-						label: 'Поиск по названию',
-						value: 'query',
-						getApplyFilterFn: () => () => true,
-						InputComponent: ({ item, applyValue }): JSX.Element => (
-							<Input
-								inputRef={searchInputRef}
-								defaultValue={item.value || ''}
-								placeholder="Название мода"
-								onChange={(e) => applyValue({ value: e.target.value })}
-							/>
-						)
-					}
-				],
+				filterable: false,
 				renderCell: (params): JSX.Element =>
 					params.row.isParsed ? (
 						<a
@@ -104,28 +85,7 @@ export const ModsTable = (): JSX.Element => {
 				headerName: 'Совместимые версии',
 				flex: 1,
 				renderCell: ({ value }) => <p title={value}>{value.join(', ')}</p>,
-				filterOperators: [
-					{
-						label: 'Содержит версию',
-						value: 'containsVersion',
-						getApplyFilterFn: () => () => true,
-						InputComponent: ({ item, applyValue }) => (
-							<Select
-								className={styles['select']}
-								value={item.value || ''}
-								onChange={(e) => applyValue({ ...item, value: e.target.value })}
-								displayEmpty
-								fullWidth>
-								<MenuItem value="">Все</MenuItem>
-								{unknownVersions?.map(({ version }) => (
-									<MenuItem key={version} value={version}>
-										{version}
-									</MenuItem>
-								))}
-							</Select>
-						)
-					}
-				]
+				filterable: false
 			},
 			{
 				field: 'category',
@@ -156,6 +116,22 @@ export const ModsTable = (): JSX.Element => {
 				)
 			},
 			{
+				field: 'rating',
+				resizable: false,
+				filterable: false,
+				type: 'number',
+				headerName: 'Оценка',
+				width: 110
+			},
+			{
+				field: 'commentCounts',
+				resizable: false,
+				filterable: false,
+				type: 'number',
+				headerName: 'Комментариев',
+				width: 180
+			},
+			{
 				field: 'usedCount',
 				resizable: false,
 				filterable: false,
@@ -170,7 +146,7 @@ export const ModsTable = (): JSX.Element => {
 				type: 'actions',
 				sortable: false,
 				filterable: false,
-				width: 300,
+				width: 200,
 				renderCell: (params): JSX.Element => (
 					<div className={styles['actions']}>
 						<Root>
@@ -198,25 +174,7 @@ export const ModsTable = (): JSX.Element => {
 				)
 			}
 		],
-		[unknownVersions, deleteModById]
-	);
-
-	const onFilter = useCallback(
-		(model: GridFilterModel): void => {
-			const filterItem = model.items[0];
-			if (!filterItem) {
-				return;
-			}
-
-			switch (filterItem.field) {
-				case 'versions':
-					setVersions(filterItem.value ? [filterItem.value] : undefined);
-					break;
-				case 'name':
-					setQueryWithDebounce();
-			}
-		},
-		[setQueryWithDebounce]
+		[deleteModById]
 	);
 
 	useEffect(() => {
@@ -230,28 +188,30 @@ export const ModsTable = (): JSX.Element => {
 	if (!data) return <p>Загрузка...</p>;
 
 	return (
-		<DataGrid
-			className={styles['table']}
-			rows={data?.mods.map((mod) => ({
-				...mod,
-				id: mod.id,
-				name: mod.title,
-				versions: mod.versions.map(({ version }) => version),
-				logo: mod.image,
-				usedCount: mod._count.apps
-			}))}
-			columns={columns}
-			paginationMode="server"
-			sortingMode="server"
-			filterMode="server"
-			onSortModelChange={setSort}
-			onFilterModelChange={onFilter}
-			loading={isLoading || !data}
-			paginationModel={paginationModel}
-			pageSizeOptions={[paginationModel.pageSize]}
-			rowCount={data?.count}
-			onPaginationModelChange={setPaginationModel}
-			getRowId={(row) => row.id}
-		/>
+		<>
+			<ModsTableFilters filters={filters} />
+			<DataGrid
+				className={styles['table']}
+				rows={data?.mods.map((mod) => ({
+					...mod,
+					id: mod.id,
+					name: mod.title,
+					versions: mod.versions.map(({ version }) => version),
+					logo: mod.image,
+					usedCount: mod._count.apps
+				}))}
+				columns={columns}
+				paginationMode="server"
+				sortingMode="server"
+				filterMode="server"
+				onSortModelChange={setSort}
+				loading={isLoading || !data}
+				paginationModel={paginationModel}
+				pageSizeOptions={[paginationModel.pageSize]}
+				rowCount={data?.count}
+				onPaginationModelChange={setPaginationModel}
+				getRowId={(row) => row.id}
+			/>
+		</>
 	);
 };

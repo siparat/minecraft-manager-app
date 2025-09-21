@@ -7,6 +7,8 @@ export interface Mod {
 	updatedAt: string;
 	category: ModCategory;
 	isParsed: boolean;
+	rating: number | null;
+	commentCounts: number;
 	title: string;
 	description: string;
 	descriptionImages: string[];
