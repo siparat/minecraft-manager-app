@@ -9,6 +9,8 @@ import classNames from 'classnames';
 import { useAppStore } from '@/entities/app';
 import { toggleAppMod } from '../../api/toggle-app-mod';
 import type { ModCategory } from 'minecraft-manager-schemas';
+import { EditModModal } from '@/features/create-mod';
+import { Root, Trigger } from '@radix-ui/react-dialog';
 
 interface ModTableRow extends Omit<Mod, 'versions'> {
 	id: number;
@@ -127,7 +129,23 @@ export const AppModsTable = ({
 			sortable: false,
 			filterable: false,
 			width: 200,
-			renderCell: (params): JSX.Element => <Switch value={params.row.isActived} onSwitch={(value) => onToggleMod(params.row.id, value)} />
+			renderCell: (params): JSX.Element => (
+				<div className={styles['actions']}>
+					<Root>
+						<Trigger asChild>
+							<button title="Редактировать">✏️</button>
+						</Trigger>
+						<EditModModal
+							reloadPage={false}
+							modData={{
+								...params.row,
+								versions: params.row.versions.map((version) => ({ version }))
+							}}
+						/>
+					</Root>
+					<Switch value={params.row.isActived} onSwitch={(value) => onToggleMod(params.row.id, value)} />
+				</div>
+			)
 		}
 	];
 

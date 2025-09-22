@@ -1,11 +1,16 @@
 .actions {
 	display: flex;
+	align-items: center;
 	gap: 30px;
 	height: 100%;
 }
 
 .actions button {
 	font-size: 17px;
+}
+
+.actions > button:first-of-type {
+	margin-bottom: 4px;
 }
 
 .table {

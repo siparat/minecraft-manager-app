@@ -20,16 +20,16 @@ type FormValues = z.infer<typeof CreateModSchema>;
 
 interface Props {
 	modData: Mod;
+	reloadPage?: boolean;
 }
 
-export const EditModModal = ({ modData }: Props): JSX.Element => {
+export const EditModModal = ({ modData, reloadPage = true }: Props): JSX.Element => {
 	const versions = useModStore((state) => state.allVersions);
 	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
 		setValue,
-		reset,
 		formState: { errors }
 	} = useForm<FormValues>({
 		resolver: zodResolver(CreateModSchema),
@@ -53,8 +53,9 @@ export const EditModModal = ({ modData }: Props): JSX.Element => {
 		try {
 			await editMod(modData.id, dto);
 			toast.success('Мод успешно редактирован', { id: toastId });
-			reset();
-			navigate(0);
+			if (reloadPage) {
+				navigate(0);
+			}
 		} catch (error) {
 			if (error instanceof HTTPError) {
 				toast.error(error.message, { id: toastId });

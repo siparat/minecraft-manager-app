@@ -7,7 +7,6 @@
 }
 
 .wrapper {
-	max-width: 1024px;
 	background: var(--white);
 	margin-top: 20px;
 	border-radius: 18px;
@@ -18,4 +17,16 @@
 
 .wrapper > div {
 	flex-grow: 1;
+}
+
+.saveButton, .wrapper {
+	max-width: 1024px;
+}
+
+.saveButton {
+	margin-top: 20px;
+}
+
+.saveButton:disabled {
+	cursor: default;
 }
