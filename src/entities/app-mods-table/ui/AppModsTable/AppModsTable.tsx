@@ -63,7 +63,7 @@ export const AppModsTable = ({
 			flex: 1,
 			filterable: false,
 			renderCell: (params): JSX.Element => (
-				<a className={styles['link']} href={import.meta.env.VITE_MODS_HOST + '/' + params.row.parsedSlug}>
+				<a target="_blank" className={styles['link']} href={import.meta.env.VITE_MODS_HOST + '/' + params.row.parsedSlug}>
 					{params.value}
 				</a>
 			)
@@ -95,13 +95,15 @@ export const AppModsTable = ({
 			headerName: 'Лого',
 			renderCell(params): JSX.Element {
 				return (
-					<img
-						style={{ height: '100%', width: '100%', objectFit: 'contain' }}
-						width={50}
-						height={50}
-						src={params.value}
-						alt="Логотип"
-					/>
+					<a target="_blank" href={params.value}>
+						<img
+							style={{ height: '100%', width: '100%', objectFit: 'contain' }}
+							width={50}
+							height={50}
+							src={params.value}
+							alt="Логотип"
+						/>
+					</a>
 				);
 			}
 		},

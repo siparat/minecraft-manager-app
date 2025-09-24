@@ -10,7 +10,7 @@ export const uploadFile = async (files: File[], isImage: boolean = false, oldIma
 			formData.append('oldImageFilename', oldImageFilename);
 		}
 		const response = await httpClient
-			.post(ApiRoutes[isImage ? 'UPLOAD_IMAGE' : 'UPLOAD_MODFILE'], { body: formData })
+			.post(ApiRoutes[isImage ? 'UPLOAD_IMAGE' : 'UPLOAD_MODFILE'], { body: formData, timeout: false })
 			.json<UploadedFileResponse>();
 		result.push(response);
 	}
