@@ -1,0 +1,18 @@
+.wrapper {
+	margin: 0 auto;
+	max-width: 1110px;
+	padding-inline: 20px;
+}
+
+.blockText {
+	margin-top: 20px;
+}
+
+.blockText p {
+	line-height: 150%;
+}
+
+.blockText a {
+	text-decoration: underline;
+	color: var(--blue-100)
+}

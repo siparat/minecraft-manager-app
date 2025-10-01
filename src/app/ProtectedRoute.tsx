@@ -1,7 +1,6 @@
 import { useUserStore } from '@/entities/user';
-import { Routes } from '@/shared/config';
+import { InfoPage } from '@/pages/info';
 import { useEffect, type JSX, type PropsWithChildren } from 'react';
-import { Navigate } from 'react-router-dom';
 
 export const ProtectedRoute = ({ children }: Required<PropsWithChildren>): JSX.Element => {
 	const fetchUserInfo = useUserStore((state) => state.fetchUserInfo);
@@ -15,10 +14,14 @@ export const ProtectedRoute = ({ children }: Required<PropsWithChildren>): JSX.E
 		fetchUserInfo();
 	}, [user, fetchUserInfo]);
 
+	if (!isLoaded && !user) {
+		return <></>;
+	}
+
 	if (!user && isLoaded) {
 		return (
 			<>
-				<Navigate to={Routes.AUTH} replace />
+				<InfoPage />
 			</>
 		);
 	}
