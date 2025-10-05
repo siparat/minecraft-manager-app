@@ -191,7 +191,7 @@ export const CreateAppModal = (): JSX.Element => {
 								error={errors.logo?.message}
 								onUpload={([file]) => setValue('logo', file?.url || '')}
 								placeholder="512x512 .png"
-								types={['image/png']}
+								types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
 								sizes={[512, 512]}
 								label="Лого"
 							/>

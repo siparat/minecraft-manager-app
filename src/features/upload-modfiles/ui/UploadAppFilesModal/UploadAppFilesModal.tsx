@@ -66,7 +66,7 @@ export const UploadAppFilesModal = (): JSX.Element => {
 							defaultValue={app.appScreenshots.map((s) => ({ isImage: false, url: s, filename: getFilenameFromUrl(s) || '' }))}
 							uploadFile={(files) => uploadScreenshots(files)}
 							placeholder="Загрузите скриншоты приложения"
-							types={['image/png', 'image/jpeg', 'image/webp']}
+							types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
 							label="Скриншоты приложения"
 						/>
 					</div>

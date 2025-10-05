@@ -69,7 +69,7 @@ export const CreateModModal = (): JSX.Element => {
 							error={errors.image?.message}
 							uploadFile={uploadFile}
 							placeholder="Загрузить лого мода"
-							types={['image/png', 'image/jpeg']}
+							types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
 							label="Лого"
 						/>
 
@@ -84,7 +84,7 @@ export const CreateModModal = (): JSX.Element => {
 							error={errors.descriptionImages?.message}
 							uploadFile={(files) => uploadFile(files, true)}
 							placeholder="Загрузить фотографии в описании мода"
-							types={['image/png', 'image/jpeg']}
+							types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
 							label="Фотографии в описании мода"
 						/>
 

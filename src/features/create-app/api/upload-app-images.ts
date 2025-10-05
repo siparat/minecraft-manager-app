@@ -6,7 +6,7 @@ export const uploadFile = async (files: File[], isImage: boolean = false, oldIma
 	for (const file of files) {
 		const formData = new FormData();
 		formData.append(isImage ? 'image' : 'modfile', file);
-		if (oldImageFilename && oldImageFilename.endsWith('.webp')) {
+		if (oldImageFilename) {
 			formData.append('oldImageFilename', oldImageFilename);
 		}
 		const response = await httpClient
