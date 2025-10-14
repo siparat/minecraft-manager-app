@@ -192,6 +192,15 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 								sizes={[512, 512]}
 								label="Лого"
 							/>
+							<Dropzone
+								uploadFile={uploadFile}
+								defaultValue={appData.banner ? [{ isImage: true, filename: appData.banner, url: appData.banner }] : undefined}
+								error={errors.banner?.message}
+								onUpload={([file]) => setValue('banner', file?.url || '')}
+								placeholder="1024x500 .png"
+								types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
+								label="Баннер"
+							/>
 						</div>
 
 						<div className={styles['wrapper']}>
