@@ -8,6 +8,7 @@ import { uploadAppFile, uploadAppScreenshots, useAppStore } from '@/entities/app
 import { getFilenameFromUrl } from '@/shared/lib';
 import toast from 'react-hot-toast';
 import { HTTPError } from 'ky';
+import { uploadAppFirebase } from '@/entities/app/api';
 
 export const UploadAppFilesModal = (): JSX.Element => {
 	const app = useAppStore((state) => state.app);
@@ -23,6 +24,20 @@ export const UploadAppFilesModal = (): JSX.Element => {
 			const result = await uploadAppScreenshots(app!.id, files);
 			toast.success('Скриншоты успешно загружены', { id: toastId });
 			return result.appScreenshots.map((f) => ({ filename: getFilenameFromUrl(f) || '', url: f }));
+		} catch (error) {
+			if (error instanceof HTTPError) {
+				toast.error(error.message, { id: toastId });
+			}
+			return [];
+		}
+	};
+
+	const uploadFirebaseFile = async (file: File): Promise<UploadedFileResponse[]> => {
+		const toastId = toast.loading('Загрузка файла...');
+		try {
+			const uploadedFile = await uploadAppFirebase(app!.id, file);
+			toast.success('Файл успешно загружен', { id: toastId });
+			return [{ filename: getFilenameFromUrl(uploadedFile.firebaseFile) || '', url: uploadedFile.firebaseFile || '' }];
 		} catch (error) {
 			if (error instanceof HTTPError) {
 				toast.error(error.message, { id: toastId });
@@ -68,6 +83,18 @@ export const UploadAppFilesModal = (): JSX.Element => {
 							placeholder="Загрузите скриншоты приложения"
 							types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
 							label="Скриншоты приложения"
+						/>
+						<Dropzone
+							hideDeletion
+							defaultValue={
+								app.firebaseFile
+									? [{ isImage: false, url: app.firebaseFile, filename: getFilenameFromUrl(app.firebaseFile) || '' }]
+									: []
+							}
+							uploadFile={(files) => uploadFirebaseFile(files[0])}
+							placeholder="Загрузить Firebase ID"
+							types={['application/json']}
+							label="Firebase File ID"
 						/>
 					</div>
 				</ContentBox>

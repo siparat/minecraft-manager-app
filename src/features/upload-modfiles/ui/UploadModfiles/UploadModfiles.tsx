@@ -25,7 +25,7 @@ export const UploadModfiles = (): JSX.Element => {
 				</Trigger>
 				<UploadAppFilesModal />
 			</Root>
-			{(app.apk || app.bundle) && (
+			{(app.apk || app.bundle || app.firebaseFile) && (
 				<Root>
 					<Trigger asChild>
 						<button className={classNames(styles['button'], styles['blue'])}>

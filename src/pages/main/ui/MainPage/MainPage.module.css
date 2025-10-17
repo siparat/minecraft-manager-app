@@ -1,0 +1,9 @@
+.wrapperTitle {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.changeOrdersButton {
+	font-size: 25px;
+}

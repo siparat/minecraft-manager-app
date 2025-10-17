@@ -196,7 +196,7 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 								uploadFile={uploadFile}
 								defaultValue={appData.banner ? [{ isImage: true, filename: appData.banner, url: appData.banner }] : undefined}
 								error={errors.banner?.message}
-								onUpload={([file]) => setValue('banner', file?.url || '')}
+								onUpload={([file]) => setValue('banner', file?.url || undefined)}
 								placeholder="1024x500 .png"
 								types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
 								label="Баннер"

@@ -15,10 +15,10 @@ export const DownloadAppFilesModal = (): JSX.Element => {
 		if (!app) {
 			return [];
 		}
-		const result = [
-			{ filename: getFilenameFromUrl(app.apk) || '', url: app.apk || '' },
-			{ filename: getFilenameFromUrl(app.bundle) || '', url: app.bundle || '' }
-		];
+		const result = [];
+		app.apk && result.push({ filename: getFilenameFromUrl(app.apk) || '', url: app.apk || '' });
+		app.bundle && result.push({ filename: getFilenameFromUrl(app.bundle) || '', url: app.bundle || '' });
+		app.firebaseFile && result.push({ filename: getFilenameFromUrl(app.firebaseFile) || '', url: app.firebaseFile || '' });
 		return result.concat(app.appScreenshots.map((s) => ({ url: s, filename: getFilenameFromUrl(s) || '' })));
 	}, [app]);
 

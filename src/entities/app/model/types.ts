@@ -18,6 +18,7 @@ export interface App {
 	packageName: string;
 	logo: string;
 	banner: string;
+	firebaseFile?: string;
 	apk?: string;
 	bundle?: string;
 	appScreenshots: string[];

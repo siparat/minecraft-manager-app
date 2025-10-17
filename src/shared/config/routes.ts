@@ -1,8 +1,8 @@
 export const Routes = {
 	MAIN: '/',
+	CHANGE_ORDERS: '/change-orders',
 	AUTH: '/auth',
 	MODS: '/mods',
-	// PARSER: '/parser',
 	APP_PAGE: '/app/:id',
 	MOD_PAGE: '/mod/:id',
 	APP_MODS: '/app/:id/mods',

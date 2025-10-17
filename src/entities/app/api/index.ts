@@ -6,3 +6,4 @@ export { getAppIssuesCounts } from './get-app-issues-counts';
 export { getAppIssues } from './get-app-issues';
 export { updateSdkProps } from './update-sdk-props';
 export { uploadAppScreenshots } from './upload-app-screenshots';
+export { uploadAppFirebase } from './upload-app-firebase';
