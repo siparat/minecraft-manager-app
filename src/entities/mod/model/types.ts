@@ -18,7 +18,7 @@ export interface Mod {
 	htmlDescription?: string;
 	versions: ModVersion[];
 	_count: {
-		apps: number;
+		apps: number; //!
 	};
 	apps?: Pick<App, 'id'>[];
 }

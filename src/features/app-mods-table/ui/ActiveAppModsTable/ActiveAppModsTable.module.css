@@ -5,3 +5,9 @@
 .table {
 	margin-top: 15px;
 }
+
+.link {
+	margin-top: 15px;
+	max-width: 250px;
+	display: block;
+}

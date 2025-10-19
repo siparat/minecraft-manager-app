@@ -4,9 +4,9 @@ import { useEffect, type JSX } from 'react';
 import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import { ChangeAppOrders } from '@/features/change-app-orders';
-import styles from './ChangeOrdersPage.module.css';
+import styles from './ChangeAppOrderPage.module.css';
 
-export const ChangeOrdersPage = (): JSX.Element => {
+export const ChangeAppOrderPage = (): JSX.Element => {
 	const { error, isError, isLoading, data } = useAllAppsQuery();
 
 	useEffect(() => {

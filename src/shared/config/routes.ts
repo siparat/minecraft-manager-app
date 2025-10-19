@@ -6,6 +6,7 @@ export const Routes = {
 	APP_PAGE: '/app/:id',
 	MOD_PAGE: '/mod/:id',
 	APP_MODS: '/app/:id/mods',
+	APP_MODS_ORDER: '/app/:id/mods/order',
 	APP_FEEDBACKS: '/app/:id/feedbacks',
 	APP_SDK: '/app/:id/sdk',
 	APP_ISSUES: '/app/:id/issues'

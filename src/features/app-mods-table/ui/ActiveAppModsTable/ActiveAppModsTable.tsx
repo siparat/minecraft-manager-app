@@ -2,7 +2,7 @@ import { useEffect, useState, type JSX } from 'react';
 import { useAppModsQuery } from '../../model';
 import { type GridSortModel } from '@mui/x-data-grid';
 import styles from './ActiveAppModsTable.module.css';
-import { Title } from '@/shared/ui';
+import { Button, Title } from '@/shared/ui';
 import { AppModsTable } from '@/entities/app-mods-table';
 import toast from 'react-hot-toast';
 import { MODS_PER_PAGE, useModsTableFilters } from '@/features/mods-table/model';
@@ -10,6 +10,8 @@ import { useAppStore } from '@/entities/app';
 import { useQueryClient } from '@tanstack/react-query';
 import type { ModQueryResponse } from '@/entities/mod';
 import { ModsTableFilters } from '@/features/mods-table/ui/ModsTableFilters/ModsTableFilters';
+import { Link } from 'react-router-dom';
+import { Routes } from '@/shared/config';
 
 export const ActiveAppModsTable = (): JSX.Element => {
 	const filters = useModsTableFilters();
@@ -77,6 +79,9 @@ export const ActiveAppModsTable = (): JSX.Element => {
 				paginationModel={paginationModel}
 				onPaginationModelChange={setPaginationModel}
 			/>
+			<Link className={styles['link']} to={Routes.APP_MODS_ORDER.replace(':id', app!.id.toString())}>
+				<Button>Изменить порядок</Button>
+			</Link>
 		</div>
 	);
 };

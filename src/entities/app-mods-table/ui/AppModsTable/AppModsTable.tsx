@@ -74,7 +74,7 @@ export const AppModsTable = ({
 			resizable: true,
 			headerName: 'Совместимые версии',
 			flex: 1,
-			renderCell: ({ value }) => value.join(', '),
+			renderCell: ({ value }) => <p title={value}>{value.join(', ')}</p>,
 			filterable: false
 		},
 		{

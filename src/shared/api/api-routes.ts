@@ -20,6 +20,7 @@ export const ApiRoutes = {
 	GET_ISSUES_COUNTS: (appId: number): string => `apps/${appId}/issue/counts`,
 	GET_ALL_APP_ISSUES: (appId: number): string => `apps/${appId}/issue`,
 	SET_APP_ORDER: 'apps/order/set',
+	SET_APP_MODS_ORDER: (appId: number): string => `apps/${appId}/mod/order/set`,
 	SEARCH_APP_MODS: (appId: number, isActived: boolean): string => `apps/${appId}/mod/${isActived ? 'actived' : 'inactived'}`,
 	DELETE_APP_ISSUE: (appId: number, issueId: number): string => `apps/${appId}/issue/${issueId}/delete`,
 	SOLVE_APP_ISSUE: (appId: number, issueId: number): string => `apps/${appId}/issue/${issueId}/solve`,

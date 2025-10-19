@@ -15,7 +15,7 @@ interface Params {
 	commentsCountOperator?: OperationValue;
 	ratingOperator?: OperationValue;
 	category?: ModCategory;
-	sort?: GridSortModel[number];
+	sort?: GridSortModel[number] | { field: string; sort: 'asc' | 'desc' };
 }
 
 export const searchAppMods = async (appId: number, isActived: boolean, { sort, ...params }: Params): Promise<ModQueryResponse> => {

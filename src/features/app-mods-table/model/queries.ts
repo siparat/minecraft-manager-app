@@ -18,7 +18,7 @@ export const useAppModsQuery = (
 	commentsCountOperator?: OperationValue,
 	ratingOperator?: OperationValue,
 	category?: ModCategory,
-	sort?: GridSortModel[number]
+	sort?: GridSortModel[number] | { field: string; sort: 'asc' | 'desc' }
 ): UseQueryResult<ModQueryResponse, HTTPError> => {
 	return useQuery({
 		queryKey: [

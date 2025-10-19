@@ -1,0 +1,37 @@
+.orderList {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.orderItem {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	padding: 6px 8px;
+	border-bottom: 1px solid var(--text-300);
+	cursor: grab;
+}
+
+.orderItem span {
+	font-size: 24px;
+}
+
+.orderItem p {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.orderItem img {
+	width: 34px;
+	height: 34px;
+	border-radius: 4px;
+}
+
+.orderItem:last-child {
+	border-bottom: none;
+}
+
+.saveButton {
+ 	margin-top: 15px;
+}
