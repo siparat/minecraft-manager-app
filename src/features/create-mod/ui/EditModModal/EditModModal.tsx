@@ -46,7 +46,8 @@ export const EditModModal = ({ modData, reloadPage = true }: Props): JSX.Element
 			'versions',
 			modData.versions.map(({ version }) => version)
 		);
-	}, [modData, setValue]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const onSubmit = async (dto: FormValues): Promise<void> => {
 		const toastId = toast.loading('Редактирование мода...');
@@ -117,7 +118,7 @@ export const EditModModal = ({ modData, reloadPage = true }: Props): JSX.Element
 									files.map((f) => f.url)
 								)
 							}
-							error={errors.files?.message}
+							error={errors.files?.[0]?.message}
 							uploadFile={uploadModfiles}
 							placeholder="Прикрепить файлы .mc* или .zip"
 							label="Файлы"

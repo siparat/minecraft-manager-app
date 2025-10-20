@@ -96,7 +96,7 @@ export const CreateModModal = (): JSX.Element => {
 									files.map((f) => f.url)
 								)
 							}
-							error={errors.files?.message}
+							error={errors.files?.[0]?.message}
 							uploadFile={uploadModfiles}
 							placeholder="Прикрепить файлы .mc* или .zip"
 							label="Файлы"
