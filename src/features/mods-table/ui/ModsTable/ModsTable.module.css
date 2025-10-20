@@ -22,3 +22,8 @@
 	z-index: 100;
 }
 
+.chainIcon {
+	width: 18px;
+	height: 18px;
+	fill: var(--blue-100);
+}

@@ -1,0 +1,30 @@
+.modal {
+	width: 671px;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.row {
+    display: flex;
+	align-items: center;
+    justify-content: space-between;
+    background: var(--blue-200);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.row img {
+	width: 45px;
+	height: 45px;
+	border-radius: 4px;
+}
+
+.row > div {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}

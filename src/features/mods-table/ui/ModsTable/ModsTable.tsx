@@ -11,6 +11,8 @@ import { deleteMod, ModCategoryLabels, type Mod } from '@/entities/mod';
 import { EditModModal } from '@/features/create-mod';
 import { ModCategory } from 'minecraft-manager-schemas';
 import { ModsTableFilters } from '../ModsTableFilters/ModsTableFilters';
+import ChainIcon from '@/shared/assets/icons/chain.svg?react';
+import { LinkModsModal } from '../LinkModsModal/LinkModsModal';
 
 interface ModTableRow extends Omit<Mod, 'versions'> {
 	id: number;
@@ -154,6 +156,19 @@ export const ModsTable = (): JSX.Element => {
 								<button title="Редактировать">✏️</button>
 							</Trigger>
 							<EditModModal
+								modData={{
+									...params.row,
+									versions: params.row.versions.map((version) => ({ version }))
+								}}
+							/>
+						</Root>
+						<Root>
+							<Trigger asChild>
+								<button title="Привязать">
+									<ChainIcon className={styles['chainIcon']} />
+								</button>
+							</Trigger>
+							<LinkModsModal
 								modData={{
 									...params.row,
 									versions: params.row.versions.map((version) => ({ version }))
