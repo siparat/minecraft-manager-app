@@ -85,9 +85,9 @@ export const Dropzone = forwardRef(
 			}
 			try {
 				const response = await uploadFile(files);
-				const uploadedFiles = response.map((f) => ({ ...f, isImage: false }));
-				setUploadedFiles(uploadedFiles);
-				onUpload?.(uploadedFiles);
+				const newUploadedFiles = (uploadedFiles || []).concat(response.map((f) => ({ ...f, isImage: false })));
+				setUploadedFiles(newUploadedFiles);
+				onUpload?.(newUploadedFiles);
 			} catch (error) {
 				if (error instanceof HTTPError) {
 					toast.error('Произошла ошибка при загрузке файла: ' + error.message);
