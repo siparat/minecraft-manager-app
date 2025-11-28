@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" stroke="white" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16 24C16 19.7565 17.6857 15.6869 20.6863 12.6863C23.6869 9.6857 27.7565 8 32 8C36.2435 8 40.3131 9.6857 43.3137 12.6863C46.3143 15.6869 48 19.7565 48 24V40C48 44.2435 46.3143 48.3131 43.3137 51.3137C40.3131 54.3143 36.2435 56 32 56C27.7565 56 23.6869 54.3143 20.6863 51.3137C17.6857 48.3131 16 44.2435 16 40V24Z" stroke-width="3.5" stroke-linejoin="round"/>
+  <rect id="wheel" x="30" y="18.6667" width="4" height="8" rx="2" fill="white" >
+    <animate attributeName="y"
+             values="18.6667;26;18.6667"
+             dur="0.9s"
+             repeatCount="indefinite" />
+    <animate attributeName="opacity"
+             values="1;0.35;1"
+             dur="0.9s"
+             repeatCount="indefinite" />
+  </rect>
+</svg>

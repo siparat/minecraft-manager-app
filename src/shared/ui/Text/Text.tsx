@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 interface Props extends HTMLAttributes<HTMLParagraphElement> {
 	children: ReactNode;
-	color?: 'primary' | 'secondary' | 'red';
+	color?: 'primary' | 'secondary' | 'red' | 'white';
 	size?: 'l' | 'm' | 's' | 'xs';
 }
 
