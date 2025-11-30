@@ -15,11 +15,18 @@ import { AppModsPage } from '@/pages/app/:id/mods';
 import { multiloader } from './multiloader';
 import { ChangeAppOrderPage } from '@/pages/change-app-order';
 import { ChangeModsOrderPage } from '@/pages/app/:id/change-mods-order';
+import { PoliciesPage } from '@/pages/policy';
+import { CreatePolicyPage } from '@/pages/policy/create';
+import { policiesLoader, policyLoader } from '@/entities/policy';
+import { PolicyPage } from '@/pages/policy/:slug';
+import { EditPolicyPage } from '@/pages/policy/:slug/edit';
 
 export const router = createBrowserRouter(
 	createRoutesFromChildren(
 		<>
 			<Route path={Routes.AUTH} element={<AuthPage />} />
+			<Route errorElement={<ErrorPage />} loader={policyLoader} path={Routes.POLICY_CONTENT} element={<PolicyPage />} />
+
 			<Route
 				path={Routes.MAIN}
 				element={
@@ -40,6 +47,9 @@ export const router = createBrowserRouter(
 				/>
 				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_SDK} element={<AppSdkPage />} />
 				<Route errorElement={<ErrorPage />} loader={modLoader} path={Routes.MODS} element={<ModsPage />} />
+				<Route errorElement={<ErrorPage />} loader={policiesLoader} path={Routes.POLICIES} element={<PoliciesPage />} />
+				<Route errorElement={<ErrorPage />} path={Routes.CREATE_POLICY} element={<CreatePolicyPage />} />
+				<Route errorElement={<ErrorPage />} loader={policyLoader} path={Routes.EDIT_POLICY} element={<EditPolicyPage />} />
 			</Route>
 		</>
 	)

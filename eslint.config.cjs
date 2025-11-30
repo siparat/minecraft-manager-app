@@ -34,11 +34,12 @@ module.exports = defineConfig([
 		},
 
 		rules: {
-			'@typescript-eslint/no-unused-expressions': "off",
+			'@typescript-eslint/no-unused-expressions': 'off',
 			'@typescript-eslint/no-unused-vars': [
 				'warn',
 				{
-					caughtErrors: 'none'
+					caughtErrors: 'none',
+					argsIgnorePattern: '^_'
 				}
 			],
 			'@typescript-eslint/explicit-function-return-type': 'warn',

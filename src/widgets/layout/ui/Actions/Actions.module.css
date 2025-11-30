@@ -27,3 +27,7 @@
 .button.green {
 	background: var(--green);
 }
+
+.button.blue {
+	background: var(--blue-100);
+}

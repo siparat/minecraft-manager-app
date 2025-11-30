@@ -39,3 +39,24 @@
 	color: var(--red);
 	margin-top: 4px;
 }
+
+.addonWrapper {
+	display: flex;
+}
+
+.addonWrapper input {
+	border-radius: 0px 5px 5px 0px;
+}
+
+.addonWrapper .addon {
+	border-radius:  5px 0px 0px 5px;
+}
+
+.addon {
+	width: auto;
+	padding: 10px;
+    background: var(--text-100);
+    color: var(--white);
+	font-size: 14px;
+	font-weight: 500;
+}

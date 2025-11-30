@@ -1,0 +1,20 @@
+.article {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-bottom: 100px;
+}
+
+.article ul li {
+	list-style: disc;
+	list-style-position: inside;
+}
+
+.article ol li {
+	list-style: decimal;
+	list-style-position: inside;
+}
+
+.article a {
+	color: var(--blue-100);
+	text-decoration: underline;
+}

@@ -1,14 +1,10 @@
-html {
-	scroll-behavior: smooth;
-}
-
-body {
+/* body {
 	background-image: url("/background.png");
 	background-size: cover;
 	background-attachment: fixed;
-}
+} */
 
-body::-webkit-scrollbar {
+/* body::-webkit-scrollbar {
 	width: 0;
 }
 
@@ -20,7 +16,7 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
 	background-color: var(--secondary);
 	border-radius: 20px;
-}
+} */
 
 .header {
 	border-bottom: 1px solid var(--white);

@@ -1,0 +1,9 @@
+.switchWrapper {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+.form {
+	padding-bottom: 50px;
+}

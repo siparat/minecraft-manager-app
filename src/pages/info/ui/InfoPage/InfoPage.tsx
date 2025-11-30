@@ -1,10 +1,24 @@
-import type { JSX } from 'react';
+import { useLayoutEffect, type JSX } from 'react';
 import styles from './InfoPage.module.css';
 import { Helmet } from 'react-helmet-async';
 import { Text, Title } from '@/shared/ui';
 import ScrollMouse from '@/shared/assets/icons/scroll-mouse.svg?react';
 
 export const InfoPage = (): JSX.Element => {
+	useLayoutEffect(() => {
+		document.body.style.backgroundImage = 'url("/background.png")';
+		document.body.style.backgroundSize = 'cover';
+		document.body.style.backgroundAttachment = 'fixed';
+		document.body.style.scrollBehavior = 'smooth';
+
+		return () => {
+			document.body.style.backgroundImage = '';
+			document.body.style.backgroundSize = '';
+			document.body.style.backgroundAttachment = '';
+			document.body.style.scrollBehavior = '';
+		};
+	}, []);
+
 	return (
 		<>
 			<Helmet>
