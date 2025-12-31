@@ -1,91 +1,6 @@
-/* body {
-	background-image: url("/background.png");
-	background-size: cover;
-	background-attachment: fixed;
-} */
-
-/* body::-webkit-scrollbar {
-	width: 0;
-}
-
-body::-webkit-scrollbar-track {
-	background: transparent;
-	margin-block: 0;
-}
-
-body::-webkit-scrollbar-thumb {
-	background-color: var(--secondary);
-	border-radius: 20px;
-} */
-
-.header {
-	border-bottom: 1px solid var(--white);
-	padding: 0 20px 30px 0;
-}
-
-.header a {
-	cursor: pointer;
-}
-
-.header-list {
-	display: flex;
-    align-items: center;
-    gap: 30px;
-    justify-content: end;
-}
-
-.title {
-	text-align: center;
-	color: var(--white);
-	font-size: 8.5vw;
-	line-height: 100%;
-}
-
-.scroll-icon {
-	display: block;
-	margin: 40px auto 0;
-}
-
-.first-screen {
-	min-height: calc(100vh - 100px);
-	padding-block: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.second-screen, .third-screen, .fourth-screen {
-	padding-block: 30px;
-	margin-inline: -40px;
-	background: var(--white);
-}
-
-.second-screen .title {
-	color: var(--text-100);
-}
-
-.third-screen {
-	background: var(--blue-100);
-}
-
-.third-screen .title {
-	font-size: 6.5vw;
-	color: var(--white);
-}
-
-.fourth-screen {
-	padding-top: 250px;
-	background: none;
-}
-
-.fourth-screen .blockText p {
-	font-size: 1.5vw;
-	text-align: center;
-}
-
 .wrapper {
 	margin: 0 auto;
-	max-width: 75vw;
+	max-width: 1110px;
 	padding-inline: 20px;
 }
 
@@ -95,7 +10,6 @@ body::-webkit-scrollbar-thumb {
 
 .blockText p {
 	line-height: 150%;
-	font-size: 2vw;
 }
 
 .blockText a {
