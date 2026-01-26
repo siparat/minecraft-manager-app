@@ -6,7 +6,7 @@ import styles from './ModsTable.module.css';
 import { Root, Trigger } from '@radix-ui/react-dialog';
 import { HTTPError } from 'ky';
 import { ConfirmModal, Text } from '@/shared/ui';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteMod, ModCategoryLabels, type Mod } from '@/entities/mod';
 import { EditModModal } from '@/features/create-mod';
 import { ModCategory } from 'minecraft-manager-schemas';
@@ -27,10 +27,12 @@ export const ModsTable = (): JSX.Element => {
 	const filters = useModsTableFilters();
 	const { query, versions, commentsCount, rating, commentsCountOperator, ratingOperator, category } = filters;
 	const [sort, setSort] = useState<GridSortModel>();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [paginationModel, setPaginationModel] = useState({
-		page: 0,
+		page: Number(searchParams.get('page') || '0'),
 		pageSize: MODS_PER_PAGE
 	});
+
 	const { error, isLoading, data, isError } = useModsQuery(
 		paginationModel.pageSize,
 		paginationModel.pageSize * paginationModel.page,
@@ -57,6 +59,17 @@ export const ModsTable = (): JSX.Element => {
 			}
 		},
 		[navigate]
+	);
+
+	const setPagination = useCallback(
+		(model: { page: number; pageSize: number }) => {
+			setSearchParams((params) => {
+				params.set('page', model.page.toString());
+				return params;
+			});
+			setPaginationModel(model);
+		},
+		[setSearchParams]
 	);
 
 	const columns: GridColDef<ModTableRow>[] = useMemo(
@@ -224,7 +237,7 @@ export const ModsTable = (): JSX.Element => {
 				paginationModel={paginationModel}
 				pageSizeOptions={[paginationModel.pageSize]}
 				rowCount={data?.count}
-				onPaginationModelChange={setPaginationModel}
+				onPaginationModelChange={setPagination}
 				getRowId={(row) => row.id}
 			/>
 		</>
