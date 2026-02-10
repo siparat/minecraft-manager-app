@@ -28,7 +28,7 @@
     "html-react-parser": "^5.2.10",
     "ky": "^1.8.2",
     "lodash.debounce": "^4.0.8",
-    "minecraft-manager-schemas": "^0.0.38",
+    "minecraft-manager-schemas": "^0.0.40",
     "quill": "^2.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
