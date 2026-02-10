@@ -57,6 +57,10 @@ export interface AppSdk {
 	firstNativeCode: string | null;
 	firstOpenCode: string | null;
 	isAdsEnabled: boolean;
+	isOpenAdsEnabled: boolean;
+	isInterAdsEnabled: boolean;
+	isNativeAdsEnabled: boolean;
+	delayInter: number;
 	metricaToken: string | null;
 	secondInterCode: string | null;
 	secondNativeCode: string | null;
@@ -72,3 +76,5 @@ export interface AppLanguage {
 	nameOriginal: string;
 	nameRu: string;
 }
+
+export type AppSdkAdsType = 'open' | 'native' | 'inter';

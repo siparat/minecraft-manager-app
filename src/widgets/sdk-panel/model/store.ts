@@ -8,7 +8,7 @@ interface UpdateSdkStore {
 	setInitialSdk: (sdk: AppSdk) => void;
 	newSdk: Partial<z.infer<typeof UpdateSdkSchema>>;
 	setNewSdk: (sdk: Partial<z.infer<typeof UpdateSdkSchema>>) => void;
-	setProp: (name: keyof z.infer<typeof UpdateSdkSchema>, value: string) => void;
+	setProp: (name: keyof z.infer<typeof UpdateSdkSchema>, value: z.infer<typeof UpdateSdkSchema>[typeof name]) => void;
 }
 
 export const useUpdateSdkStore = create<UpdateSdkStore>((set, get) => ({
