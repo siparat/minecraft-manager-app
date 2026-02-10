@@ -58,6 +58,7 @@ export interface AppSdk {
 	firstInterCode: string | null;
 	firstNativeCode: string | null;
 	firstOpenCode: string | null;
+	firstBannerCode: string | null;
 	isAdsEnabled: boolean;
 	isOpenAdsEnabled: boolean;
 	isInterAdsEnabled: boolean;
@@ -68,9 +69,11 @@ export interface AppSdk {
 	secondInterCode: string | null;
 	secondNativeCode: string | null;
 	secondOpenCode: string | null;
+	secondBannerCode: string | null;
 	thirdInterCode: string | null;
 	thirdNativeCode: string | null;
 	thirdOpenCode: string | null;
+	thirdBannerCode: string | null;
 }
 
 export interface AppLanguage {

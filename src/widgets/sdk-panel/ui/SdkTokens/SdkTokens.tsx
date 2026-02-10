@@ -34,6 +34,13 @@ export const SdkTokens = (): JSX.Element => {
 				label="Нативная"
 				placeholder="xxxxxxxxxx"
 			/>
+			<Input
+				onChange={(e) => setProp('secondBannerCode', e.currentTarget.value)}
+				fieldsetClassName={styles['editableProp']}
+				defaultValue={app?.sdk.secondBannerCode || undefined}
+				label="Баннер"
+				placeholder="xxxxxxxxxx"
+			/>
 
 			<Title className={styles['title']} tag="h2">
 				Яндекс РСЯ
@@ -57,6 +64,13 @@ export const SdkTokens = (): JSX.Element => {
 				fieldsetClassName={styles['editableProp']}
 				defaultValue={app?.sdk.thirdNativeCode || undefined}
 				label="Нативная"
+				placeholder="xxxxxxxxxx"
+			/>
+			<Input
+				onChange={(e) => setProp('thirdBannerCode', e.currentTarget.value)}
+				fieldsetClassName={styles['editableProp']}
+				defaultValue={app?.sdk.thirdBannerCode || undefined}
+				label="Баннер"
 				placeholder="xxxxxxxxxx"
 			/>
 		</div>
