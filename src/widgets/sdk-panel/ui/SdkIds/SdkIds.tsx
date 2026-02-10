@@ -34,6 +34,15 @@ export const SdkIds = (): JSX.Element => {
 				label="AdMob"
 				placeholder="ca-app-pub-QWERTYUIOPLKJHGF~DSAZXCVBNM"
 			/>
+			<Input
+				type="number"
+				min={0}
+				onChange={(e) => setProp('delayInter', Number(e.currentTarget.value))}
+				fieldsetClassName={styles['editableProp']}
+				defaultValue={app?.sdk.delayInter || undefined}
+				label="Межстраничная задержка (сек)"
+				placeholder="120"
+			/>
 		</div>
 	);
 };

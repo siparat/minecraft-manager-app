@@ -1,4 +1,4 @@
-import type { AppStatus } from '@/entities/app';
+import type { AppSdkAdsType, AppStatus } from '@/entities/app';
 
 export const ApiRoutes = {
 	LOGIN: 'auth/login',
@@ -26,6 +26,7 @@ export const ApiRoutes = {
 	SOLVE_APP_ISSUE: (appId: number, issueId: number): string => `apps/${appId}/issue/${issueId}/solve`,
 	TOGGLE_APP_MOD: (appId: number, modId: number): string => `apps/${appId}/mod/${modId}/toggle`,
 	TOGGLE_ADS_VISIBILITY: (appId: number): string => `apps/${appId}/sdk/ads/toggle`,
+	TOGGLE_DETAILS_ADS_VISIBILITY: (appId: number, type: AppSdkAdsType): string => `apps/${appId}/sdk/ads/${type}/toggle`,
 	UPDATE_SDK: (appId: number): string => `apps/${appId}/sdk`,
 	CREATE_MOD: `mod`,
 	CREATE_POLICY: `policy`,
