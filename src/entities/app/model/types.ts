@@ -1,3 +1,5 @@
+import type { AdsNativeType } from 'minecraft-manager-schemas/build/app/ads-native-type.enum';
+
 export enum AppStatus {
 	PLANNED = 'PLANNED',
 	IN_PROGRESS = 'IN_PROGRESS',
@@ -61,6 +63,7 @@ export interface AppSdk {
 	isInterAdsEnabled: boolean;
 	isNativeAdsEnabled: boolean;
 	delayInter: number;
+	adsNativeType: AdsNativeType;
 	metricaToken: string | null;
 	secondInterCode: string | null;
 	secondNativeCode: string | null;
