@@ -5,8 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import styles from './AppSdkPage.module.css';
 import { Button, Title } from '@/shared/ui';
 import { ToggleAdsVisibility } from '@/features/toggle-ads-visibility';
-import { SdkIds } from '@/widgets/sdk-panel';
-import { SdkTokens } from '@/widgets/sdk-panel/ui/SdkTokens/SdkTokens';
+import { SdkIds, SdkSettings, SdkTokens } from '@/widgets/sdk-panel';
 import { useUpdateSdkStore } from '@/widgets/sdk-panel/model/store';
 import toast from 'react-hot-toast';
 import { HTTPError } from 'ky';
@@ -60,6 +59,7 @@ export const AppSdkPage = (): JSX.Element => {
 			<section className={styles['wrapper']}>
 				<SdkIds />
 				<SdkTokens />
+				<SdkSettings />
 			</section>
 			<Button
 				appearance={propsIsEdited ? 'primary' : 'ghost'}

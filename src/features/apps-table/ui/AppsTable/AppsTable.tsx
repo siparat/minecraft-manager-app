@@ -1,7 +1,7 @@
 import { useEffect, useState, type JSX } from 'react';
 import { useAllAppsQuery } from '../../model';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
-import { AppStatus, AppStatusLabels, deleteApp, getApp, type App } from '@/entities/app';
+import { AppStatus, AppStatusLabels, deleteApp, getApp, type App, type AppSdk } from '@/entities/app';
 import toast from 'react-hot-toast';
 import styles from './AppsTable.module.css';
 import { Routes } from '@/shared/config';
@@ -11,11 +11,13 @@ import { HTTPError } from 'ky';
 import { ConfirmModal, Text } from '@/shared/ui';
 import { Link, useNavigate } from 'react-router-dom';
 import { ProtectedElement } from '@/app/ProtectedElement';
+import classNames from 'classnames';
 
 interface ModTableRow extends App {
 	id: number;
 	name: string;
 	packageName: string;
+	adsStatus: string;
 	logo: string;
 	modCounts: number;
 	status: AppStatus;
@@ -39,6 +41,17 @@ export const AppsTable = (): JSX.Element => {
 			)
 		},
 		{ field: 'packageName', resizable: false, headerName: 'Имя пакета', flex: 1 },
+		{
+			field: 'adsStatus',
+			resizable: false,
+			headerName: 'Реклама',
+			width: 100,
+			renderCell: ({ value }) => (
+				<div className={classNames(styles['adsStatus'], styles[value])}>
+					<span></span>
+				</div>
+			)
+		},
 		{
 			field: 'logo',
 			resizable: false,
@@ -71,7 +84,7 @@ export const AppsTable = (): JSX.Element => {
 			type: 'actions',
 			sortable: false,
 			filterable: false,
-			width: 300,
+			width: 200,
 			renderCell: (params): JSX.Element => (
 				<ProtectedElement>
 					<div className={styles['actions']}>
@@ -123,6 +136,24 @@ export const AppsTable = (): JSX.Element => {
 		}
 	};
 
+	const getAdsStatus = (sdk: AppSdk): string => {
+		const adsValues = [sdk.isInterAdsEnabled, sdk.isNativeAdsEnabled, sdk.isOpenAdsEnabled];
+
+		let countsEnabled = 0;
+		for (const value of adsValues) {
+			if (value == true) countsEnabled++;
+		}
+
+		switch (countsEnabled) {
+			case adsValues.length:
+				return 'green';
+			case 0:
+				return 'red';
+			default:
+				return 'yellow';
+		}
+	};
+
 	useEffect(() => {
 		if (error) {
 			toast.error(error.message);
@@ -142,7 +173,8 @@ export const AppsTable = (): JSX.Element => {
 				packageName: app.packageName,
 				logo: app.logo,
 				modCounts: app._count.mods,
-				status: app.status
+				status: app.status,
+				adsStatus: getAdsStatus(app.sdk)
 			}))}
 			columns={columns}
 			getRowId={(row) => row.id}

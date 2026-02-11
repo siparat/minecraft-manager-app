@@ -3,8 +3,6 @@ import { Input, Title } from '@/shared/ui';
 import { type JSX } from 'react';
 import styles from './SdkIds.module.css';
 import { useUpdateSdkStore } from '../../model/store';
-import { Select } from 'antd';
-import { AdsNativeType } from 'minecraft-manager-schemas/build/app/ads-native-type.enum';
 
 export const SdkIds = (): JSX.Element => {
 	const app = useAppStore((state) => state.app);
@@ -36,25 +34,6 @@ export const SdkIds = (): JSX.Element => {
 				label="AdMob"
 				placeholder="ca-app-pub-QWERTYUIOPLKJHGF~DSAZXCVBNM"
 			/>
-			<Input
-				type="number"
-				min={0}
-				onChange={(e) => setProp('delayInter', Number(e.currentTarget.value))}
-				fieldsetClassName={styles['editableProp']}
-				defaultValue={app?.sdk.delayInter || undefined}
-				label="Межстраничная задержка (сек)"
-				placeholder="120"
-			/>
-			<fieldset className={styles['editableProp']}>
-				<p className={styles['label']}>Вид нативной рекламы</p>
-				<Select
-					className={styles['select']}
-					placeholder="Выберите"
-					defaultValue={app?.sdk.adsNativeType}
-					options={Object.values(AdsNativeType).map((c) => ({ value: c, label: c }))}
-					onChange={(v) => setProp('adsNativeType', v)}
-				/>
-			</fieldset>
 		</div>
 	);
 };

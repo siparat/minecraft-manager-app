@@ -13,7 +13,7 @@ interface Props {
 	modData: Mod;
 }
 
-export const LinkModsModal = ({ modData }: Props): JSX.Element => {
+const LinkModsModalContent = ({ modData }: Props): JSX.Element => {
 	const { isLoading, data } = useAllAppsQuery();
 
 	const [linkedApps, setLinkedApps] = useState(modData.apps ?? []);
@@ -33,32 +33,38 @@ export const LinkModsModal = ({ modData }: Props): JSX.Element => {
 	};
 
 	return (
+		<ContentBox className={styles['modal']} title={`Привязать мод ${modData.title}`}>
+			<ul className={styles['list']}>
+				{isLoading
+					? 'Загрузка...'
+					: data?.map((app) => (
+							<li className={styles['row']} key={app.id}>
+								<div>
+									<img src={'http://youlovehamit.kz' + app.logo} alt={app.translations[0].name} />
+									<Text>{app.translations[0].name}</Text>
+								</div>
+								<div>
+									<Switch
+										value={linkedApps.some(({ id }) => id === app.id)}
+										onSwitch={(value) => onToggleMod(app.id, value)}
+									/>
+								</div>
+							</li>
+						))}
+			</ul>
+		</ContentBox>
+	);
+};
+
+export const LinkModsModal = ({ modData }: Props): JSX.Element => {
+	return (
 		<Portal>
 			<Overlay className="dialogOverlay" />
 			<Content className="dialogContent">
 				<VisuallyHidden asChild>
 					<DialogTitle>Привязать мод {modData.title}</DialogTitle>
 				</VisuallyHidden>
-				<ContentBox className={styles['modal']} title={`Привязать мод ${modData.title}`}>
-					<ul className={styles['list']}>
-						{isLoading
-							? 'Загрузка...'
-							: data?.map((app) => (
-									<li className={styles['row']} key={app.id}>
-										<div>
-											<img src={'http://youlovehamit.kz' + app.logo} alt={app.translations[0].name} />
-											<Text>{app.translations[0].name}</Text>
-										</div>
-										<div>
-											<Switch
-												value={linkedApps.some(({ id }) => id === app.id)}
-												onSwitch={(value) => onToggleMod(app.id, value)}
-											/>
-										</div>
-									</li>
-								))}
-					</ul>
-				</ContentBox>
+				<LinkModsModalContent modData={modData} />
 			</Content>
 		</Portal>
 	);

@@ -74,6 +74,11 @@ export interface AppSdk {
 	thirdNativeCode: string | null;
 	thirdOpenCode: string | null;
 	thirdBannerCode: string | null;
+	countNativePreload: number;
+	chanceShowOpenAds: number;
+	chanceShowInterAds: number;
+	chanceShowNativeAds: number;
+	adsInverval: number;
 }
 
 export interface AppLanguage {
