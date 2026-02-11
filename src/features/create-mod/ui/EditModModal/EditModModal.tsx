@@ -23,7 +23,7 @@ interface Props {
 	reloadPage?: boolean;
 }
 
-export const EditModModal = ({ modData, reloadPage = true }: Props): JSX.Element => {
+const EditModModalContent = ({ modData, reloadPage = true }: Props): JSX.Element => {
 	const versions = useModStore((state) => state.allVersions);
 	const navigate = useNavigate();
 	const {
@@ -65,103 +65,109 @@ export const EditModModal = ({ modData, reloadPage = true }: Props): JSX.Element
 	};
 
 	return (
+		<ContentBox className={styles['modal']} title="Редактировать мод">
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<Input {...register('title')} error={errors.title?.message} label="Заголовок" placeholder="Генератор домов" />
+
+				<Textarea
+					{...register('description')}
+					className={styles['textarea']}
+					error={errors.description?.message}
+					label="Описание"
+					placeholder="Описание мода"
+				/>
+
+				<Dropzone
+					defaultValue={[{ isImage: true, url: modData.image, filename: modData.image }]}
+					onUpload={([file]) => setValue('image', file?.url || '')}
+					error={errors.image?.message}
+					uploadFile={uploadFile}
+					placeholder="Загрузить лого мода"
+					types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
+					label="Лого"
+				/>
+
+				<Dropzone
+					defaultValue={modData.descriptionImages.map((url) => ({ isImage: false, url, filename: url }))}
+					isMultifile
+					onUpload={(files) =>
+						setValue(
+							'descriptionImages',
+							files.map((f) => f.url)
+						)
+					}
+					error={errors.descriptionImages?.message}
+					uploadFile={(files) => uploadFile(files, true)}
+					placeholder="Загрузить фотографии в описании мода"
+					types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
+					label="Фотографии в описании мода"
+				/>
+
+				<Dropzone
+					defaultValue={modData.files.map((url) => ({ isImage: false, url, filename: url }))}
+					isMultifile
+					onUpload={(files) =>
+						setValue(
+							'files',
+							files.map((f) => f.url)
+						)
+					}
+					error={errors.files?.[0]?.message}
+					uploadFile={uploadModfiles}
+					placeholder="Прикрепить файлы .mc* или .zip"
+					label="Файлы"
+				/>
+
+				<fieldset>
+					<p className={styles['label']}>Категория</p>
+					<Select
+						defaultValue={modData.category}
+						className={styles['select']}
+						placeholder="Выберите категорию"
+						options={Object.values(ModCategory).map((c) => ({ value: c, label: ModCategoryLabels[c] }))}
+						onChange={(v) => setValue('category', v)}
+					/>
+					{errors.category && <p className={styles['errorMessage']}>{errors.category.message}</p>}
+				</fieldset>
+
+				<fieldset>
+					<p className={styles['label']}>Совместимые версии</p>
+					<Select
+						className={styles['select']}
+						defaultValue={modData.versions.map(({ version }) => version)}
+						mode="tags"
+						allowClear
+						placeholder="1.21.30"
+						options={versions.map(({ version }) => ({ label: version, value: version }))}
+						onChange={(versions) => setValue('versions', versions)}
+					/>
+					{errors.versions?.length && <p className={styles['errorMessage']}>{errors.versions.find?.((v) => !!v)?.message}</p>}
+				</fieldset>
+
+				<div className={styles['wrapper']}>
+					<Button appearance="primary" type="submit">
+						Редактировать
+					</Button>
+					<Close asChild>
+						<Button type="button" appearance="ghost">
+							Отмена
+						</Button>
+					</Close>
+				</div>
+			</form>
+		</ContentBox>
+	);
+};
+
+export const EditModModal = ({ modData, reloadPage = true }: Props): JSX.Element => {
+	return (
 		<Portal>
 			<Overlay className="dialogOverlay" />
 			<Content className="dialogContent">
 				<VisuallyHidden asChild>
 					<DialogTitle>Редактировать мод</DialogTitle>
 				</VisuallyHidden>
-				<ContentBox className={styles['modal']} title="Редактировать мод">
-					<form onSubmit={handleSubmit(onSubmit)}>
-						<Input {...register('title')} error={errors.title?.message} label="Заголовок" placeholder="Генератор домов" />
-
-						<Textarea
-							{...register('description')}
-							className={styles['textarea']}
-							error={errors.description?.message}
-							label="Описание"
-							placeholder="Описание мода"
-						/>
-
-						<Dropzone
-							defaultValue={[{ isImage: true, url: modData.image, filename: modData.image }]}
-							onUpload={([file]) => setValue('image', file?.url || '')}
-							error={errors.image?.message}
-							uploadFile={uploadFile}
-							placeholder="Загрузить лого мода"
-							types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
-							label="Лого"
-						/>
-
-						<Dropzone
-							defaultValue={modData.descriptionImages.map((url) => ({ isImage: false, url, filename: url }))}
-							isMultifile
-							onUpload={(files) =>
-								setValue(
-									'descriptionImages',
-									files.map((f) => f.url)
-								)
-							}
-							error={errors.descriptionImages?.message}
-							uploadFile={(files) => uploadFile(files, true)}
-							placeholder="Загрузить фотографии в описании мода"
-							types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
-							label="Фотографии в описании мода"
-						/>
-
-						<Dropzone
-							defaultValue={modData.files.map((url) => ({ isImage: false, url, filename: url }))}
-							isMultifile
-							onUpload={(files) =>
-								setValue(
-									'files',
-									files.map((f) => f.url)
-								)
-							}
-							error={errors.files?.[0]?.message}
-							uploadFile={uploadModfiles}
-							placeholder="Прикрепить файлы .mc* или .zip"
-							label="Файлы"
-						/>
-
-						<fieldset>
-							<p className={styles['label']}>Категория</p>
-							<Select
-								defaultValue={modData.category}
-								className={styles['select']}
-								placeholder="Выберите категорию"
-								options={Object.values(ModCategory).map((c) => ({ value: c, label: ModCategoryLabels[c] }))}
-								onChange={(v) => setValue('category', v)}
-							/>
-							{errors.category && <p className={styles['errorMessage']}>{errors.category.message}</p>}
-						</fieldset>
-
-						<fieldset>
-							<p className={styles['label']}>Совместимые версии</p>
-							<Select
-								className={styles['select']}
-								defaultValue={modData.versions.map(({ version }) => version)}
-								mode="tags"
-								allowClear
-								placeholder="1.21.30"
-								options={versions.map(({ version }) => ({ label: version, value: version }))}
-								onChange={(versions) => setValue('versions', versions)}
-							/>
-							{errors.versions?.length && <p className={styles['errorMessage']}>{errors.versions.find?.((v) => !!v)?.message}</p>}
-						</fieldset>
-
-						<div className={styles['wrapper']}>
-							<Button appearance="primary" type="submit">
-								Редактировать
-							</Button>
-							<Close asChild>
-								<Button type="button" appearance="ghost">
-									Отмена
-								</Button>
-							</Close>
-						</div>
-					</form>
-				</ContentBox>
+				<EditModModalContent modData={modData} reloadPage={reloadPage} />
 			</Content>
 		</Portal>
 	);

@@ -1,0 +1,37 @@
+.title {
+	margin-bottom: 10px;
+}
+
+.editableProp:not(:first-child) {
+	margin-top: 10px;
+}
+
+.label {
+	margin-bottom: 5px;
+	font-size: 14px;
+}
+
+.select {
+	width: 100%;
+    color: var(--text-100);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+	height: auto;
+}
+
+.select > div {
+	padding: 4px 24px 4px 12px !important;
+}
+
+.select span {
+	line-height: 100% !important;
+}
+
+.separator {
+	margin-block: 31px;
+	height: 1px;
+	width: 100%;
+	background: var(--text-300);
+
+}

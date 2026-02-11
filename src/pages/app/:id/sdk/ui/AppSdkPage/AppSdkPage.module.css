@@ -16,11 +16,11 @@
 }
 
 .wrapper > div {
-	flex-grow: 1;
+	flex-grow: 1
 }
 
 .saveButton, .wrapper {
-	max-width: 1024px;
+	max-width: none;
 }
 
 .saveButton {

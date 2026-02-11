@@ -15,3 +15,31 @@
 .link {
 	color: var(--purple);
 }
+
+.adsStatus {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.adsStatus span {
+	display: block;
+	width: 30px;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	margin: 0 auto;
+}
+
+.green span {
+	background: var(--green);
+}
+
+.yellow span {
+	background: var(--yellow);
+}
+
+.red span {
+	background: var(--red);
+}
