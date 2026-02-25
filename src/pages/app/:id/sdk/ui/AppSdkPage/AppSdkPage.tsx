@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import styles from './AppSdkPage.module.css';
 import { Button, Title } from '@/shared/ui';
 import { ToggleAdsVisibility } from '@/features/toggle-ads-visibility';
-import { SdkIds, SdkSettings, SdkTokens } from '@/widgets/sdk-panel';
+import { SdkIds, SdkSettings } from '@/widgets/sdk-panel';
 import { useUpdateSdkStore } from '@/widgets/sdk-panel/model/store';
 import toast from 'react-hot-toast';
 import { HTTPError } from 'ky';
@@ -58,7 +58,6 @@ export const AppSdkPage = (): JSX.Element => {
 			<ToggleAdsVisibility />
 			<section className={styles['wrapper']}>
 				<SdkIds />
-				<SdkTokens />
 				<SdkSettings />
 			</section>
 			<Button
