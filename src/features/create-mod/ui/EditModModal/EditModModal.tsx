@@ -21,9 +21,10 @@ type FormValues = z.infer<typeof CreateModSchema>;
 interface Props {
 	modData: Mod;
 	reloadPage?: boolean;
+	onSuccess?: () => void;
 }
 
-const EditModModalContent = ({ modData, reloadPage = true }: Props): JSX.Element => {
+const EditModModalContent = ({ modData, reloadPage = true, onSuccess }: Props): JSX.Element => {
 	const versions = useModStore((state) => state.allVersions);
 	const navigate = useNavigate();
 	const {
@@ -54,6 +55,7 @@ const EditModModalContent = ({ modData, reloadPage = true }: Props): JSX.Element
 		try {
 			await editMod(modData.id, dto);
 			toast.success('Мод успешно редактирован', { id: toastId });
+			onSuccess?.();
 			if (reloadPage) {
 				navigate(0);
 			}
@@ -159,7 +161,7 @@ const EditModModalContent = ({ modData, reloadPage = true }: Props): JSX.Element
 	);
 };
 
-export const EditModModal = ({ modData, reloadPage = true }: Props): JSX.Element => {
+export const EditModModal = ({ modData, reloadPage = true, onSuccess }: Props): JSX.Element => {
 	return (
 		<Portal>
 			<Overlay className="dialogOverlay" />
@@ -167,7 +169,7 @@ export const EditModModal = ({ modData, reloadPage = true }: Props): JSX.Element
 				<VisuallyHidden asChild>
 					<DialogTitle>Редактировать мод</DialogTitle>
 				</VisuallyHidden>
-				<EditModModalContent modData={modData} reloadPage={reloadPage} />
+				<EditModModalContent modData={modData} reloadPage={reloadPage} onSuccess={onSuccess} />
 			</Content>
 		</Portal>
 	);

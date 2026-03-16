@@ -31,7 +31,7 @@ export const ModsTable = (): JSX.Element => {
 		page: 0,
 		pageSize: MODS_PER_PAGE
 	});
-	const { error, isLoading, data, isError } = useModsQuery(
+	const { error, isLoading, data, isError, refetch } = useModsQuery(
 		paginationModel.pageSize,
 		paginationModel.pageSize * paginationModel.page,
 		query,
@@ -156,6 +156,8 @@ export const ModsTable = (): JSX.Element => {
 								<button title="Редактировать">✏️</button>
 							</Trigger>
 							<EditModModal
+								reloadPage={false}
+								onSuccess={refetch}
 								modData={{
 									...params.row,
 									versions: params.row.versions.map((version) => ({ version }))
@@ -189,7 +191,7 @@ export const ModsTable = (): JSX.Element => {
 				)
 			}
 		],
-		[deleteModById]
+		[deleteModById, refetch]
 	);
 
 	useEffect(() => {

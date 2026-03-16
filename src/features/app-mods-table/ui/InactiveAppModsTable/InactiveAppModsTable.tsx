@@ -20,7 +20,7 @@ export const InactiveAppModsTable = (): JSX.Element => {
 		page: 0,
 		pageSize: MODS_PER_PAGE
 	});
-	const { error, data } = useAppModsQuery(
+	const { error, data, refetch } = useAppModsQuery(
 		app?.id || NaN,
 		false,
 		paginationModel.pageSize,
@@ -71,6 +71,7 @@ export const InactiveAppModsTable = (): JSX.Element => {
 			<Title tag="h1">Неактивные моды</Title>
 			<ModsTableFilters filters={filters} />
 			<AppModsTable
+				refetch={refetch}
 				updateModValue={updateModValue}
 				data={data}
 				className={styles['table']}

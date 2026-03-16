@@ -22,12 +22,14 @@ interface ModTableRow extends Omit<Mod, 'versions'> {
 
 type Props = Required<Pick<DataGridProps, 'paginationModel' | 'onPaginationModelChange'>> &
 	HTMLAttributes<HTMLDivElement> & {
+		refetch: () => void;
 		data: ModQueryResponse | undefined;
 		setSort: Dispatch<SetStateAction<GridSortModel | undefined>>;
 		updateModValue: (modId: number, value: boolean) => void;
 	};
 
 export const AppModsTable = ({
+	refetch,
 	className,
 	data,
 	updateModValue,
@@ -139,6 +141,7 @@ export const AppModsTable = ({
 						</Trigger>
 						<EditModModal
 							reloadPage={false}
+							onSuccess={refetch}
 							modData={{
 								...params.row,
 								versions: params.row.versions.map((version) => ({ version }))
