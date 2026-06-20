@@ -187,8 +187,8 @@ export const InfoPage = (): JSX.Element => {
 								If you have any questions, suggestions, or copyright concerns, please reach out to us.
 							</p>
 							<div>
-								<a href="mailto:kairzhaniskairov@gmail.com" className={styles['contact-email']}>
-									kairzhaniskairov@gmail.com
+								<a href="mailto:naryobbba@gmail.com" className={styles['contact-email']}>
+									naryobbba@gmail.com
 								</a>
 							</div>
 							<p className={styles['contact-note']}>
