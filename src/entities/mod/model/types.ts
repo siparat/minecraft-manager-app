@@ -35,6 +35,16 @@ export interface ModReactionSummary {
 	total: number;
 }
 
+export interface ModDownloadsSummary {
+	total: number;
+	apps: {
+		appId: number;
+		packageName: string;
+		name: string;
+		downloadsCount: number;
+	}[];
+}
+
 export interface ModQueryResponse {
 	mods: Mod[];
 	count: number;
