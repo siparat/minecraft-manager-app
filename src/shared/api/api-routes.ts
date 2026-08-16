@@ -37,6 +37,7 @@ export const ApiRoutes = {
 	EDIT_MOD: (id: number): string => `mod/${id}`,
 	GET_MOD_BY_ID: (modId): string => `mod/${modId}`,
 	GET_MOD_REACTIONS: (modId: number): string => `mod/${modId}/reactions`,
+	GET_MOD_DOWNLOADS: (modId: number): string => `mod/${modId}/downloads`,
 	DELETE_MOD_BY_ID: (modId): string => `mod/${modId}`,
 	SEARCH_MODS: `mod/search`,
 	GET_ALL_MODS_VERSIONS: `mod/versions`

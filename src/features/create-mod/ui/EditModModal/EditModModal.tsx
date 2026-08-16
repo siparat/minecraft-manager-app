@@ -14,7 +14,15 @@ import { Select } from 'antd';
 import toast from 'react-hot-toast';
 import { HTTPError } from 'ky';
 import { useNavigate } from 'react-router-dom';
-import { getModReactions, ModCategoryLabels, useModStore, type Mod, type ModReactionSummary } from '@/entities/mod';
+import {
+	getModDownloads,
+	getModReactions,
+	ModCategoryLabels,
+	useModStore,
+	type Mod,
+	type ModDownloadsSummary,
+	type ModReactionSummary
+} from '@/entities/mod';
 
 type FormValues = z.infer<typeof CreateModSchema>;
 
@@ -36,6 +44,7 @@ const EditModModalContent = ({ modData, reloadPage = true, onSuccess }: Props): 
 	const versions = useModStore((state) => state.allVersions);
 	const navigate = useNavigate();
 	const [reactions, setReactions] = useState<ModReactionSummary>();
+	const [downloads, setDownloads] = useState<ModDownloadsSummary>();
 	const {
 		register,
 		handleSubmit,
@@ -60,8 +69,11 @@ const EditModModalContent = ({ modData, reloadPage = true, onSuccess }: Props): 
 	}, []);
 
 	useEffect(() => {
-		getModReactions(modData.id)
-			.then(setReactions)
+		Promise.all([getModReactions(modData.id), getModDownloads(modData.id)])
+			.then(([reactions, downloads]) => {
+				setReactions(reactions);
+				setDownloads(downloads);
+			})
 			.catch(() => undefined);
 	}, [modData.id]);
 
@@ -91,24 +103,45 @@ const EditModModalContent = ({ modData, reloadPage = true, onSuccess }: Props): 
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Input {...register('title')} error={errors.title?.message} label="Заголовок" placeholder="Генератор домов" />
 
-				<section className={styles['reactions']} aria-label="Реакции пользователей">
-					<div className={styles['reactionsHeader']}>
-						<span>Реакции пользователей</span>
-						<b>{reactions?.total ?? 0}</b>
-					</div>
-					<div className={styles['reactionsList']}>
-						{REACTIONS.map(({ type, emoji, label }) => {
-							const count = reactions?.counts[type] ?? 0;
-							return (
-								<div className={styles['reaction']} key={type} title={label}>
-									<span className={styles['reactionEmoji']}>{emoji}</span>
-									<span className={styles['reactionCount']}>{count}</span>
-									<span className={styles['reactionBar']} style={{ width: `${(count / maxReactionCount) * 100}%` }} />
-								</div>
-							);
-						})}
-					</div>
-				</section>
+				<div className={styles['stats']}>
+					<section className={styles['statCard']} aria-label="Реакции пользователей">
+						<div className={styles['statHeader']}>
+							<span>Реакции пользователей</span>
+							<b>{reactions?.total ?? 0}</b>
+						</div>
+						<div className={styles['reactionsList']}>
+							{REACTIONS.map(({ type, emoji, label }) => {
+								const count = reactions?.counts[type] ?? 0;
+								return (
+									<div className={styles['reaction']} key={type} title={label}>
+										<span className={styles['reactionEmoji']}>{emoji}</span>
+										<span className={styles['reactionCount']}>{count}</span>
+										<span className={styles['reactionBar']} style={{ width: `${(count / maxReactionCount) * 100}%` }} />
+									</div>
+								);
+							})}
+						</div>
+					</section>
+
+					<section className={styles['statCard']} aria-label="Скачивания мода">
+						<div className={styles['statHeader']}>
+							<span>Скачивания</span>
+							<b>{downloads?.total ?? 0}</b>
+						</div>
+						<div className={styles['downloadsList']}>
+							{downloads?.apps.length ? (
+								downloads.apps.map((app) => (
+									<div className={styles['downloadItem']} key={app.appId}>
+										<span title={app.packageName}>{app.name}</span>
+										<b>{app.downloadsCount}</b>
+									</div>
+								))
+							) : (
+								<p className={styles['emptyStats']}>Нет данных</p>
+							)}
+						</div>
+					</section>
+				</div>
 
 				<Textarea
 					{...register('description')}

@@ -30,15 +30,21 @@
 	width: 100%;
 }
 
-.reactions {
+.stats {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.statCard {
 	padding: 12px;
 	border: 1px solid rgba(153, 178, 198, 0.28);
 	border-radius: 8px;
-	margin-bottom: 16px;
 	background: #f9fbff;
 }
 
-.reactionsHeader {
+.statHeader {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -47,11 +53,11 @@
 	font-weight: 500;
 }
 
-.reactionsHeader span {
+.statHeader span {
 	color: var(--text-200);
 }
 
-.reactionsHeader b {
+.statHeader b {
 	color: var(--text-100);
 	font-size: 16px;
 }
@@ -95,4 +101,40 @@
 	border-radius: 0 999px 999px 0;
 	background: var(--purple);
 	opacity: 0.65;
+}
+
+.downloadsList {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	max-height: 128px;
+	overflow-y: auto;
+}
+
+.downloadItem {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	min-height: 28px;
+	padding: 4px 8px;
+	border-radius: 6px;
+	background: var(--white);
+	font-size: 12px;
+}
+
+.downloadItem span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.downloadItem b {
+	font-size: 13px;
+	color: var(--text-100);
+}
+
+.emptyStats {
+	color: var(--text-200);
+	font-size: 12px;
 }
