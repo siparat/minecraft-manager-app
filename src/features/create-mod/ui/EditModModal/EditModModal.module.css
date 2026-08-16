@@ -29,3 +29,70 @@
 .select {
 	width: 100%;
 }
+
+.reactions {
+	padding: 12px;
+	border: 1px solid rgba(153, 178, 198, 0.28);
+	border-radius: 8px;
+	margin-bottom: 16px;
+	background: #f9fbff;
+}
+
+.reactionsHeader {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 10px;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.reactionsHeader span {
+	color: var(--text-200);
+}
+
+.reactionsHeader b {
+	color: var(--text-100);
+	font-size: 16px;
+}
+
+.reactionsList {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 8px;
+}
+
+.reaction {
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	min-height: 38px;
+	border: 1px solid rgba(153, 178, 198, 0.2);
+	border-radius: 8px;
+	background: var(--white);
+}
+
+.reactionEmoji,
+.reactionCount {
+	position: relative;
+	z-index: 1;
+}
+
+.reactionCount {
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--text-100);
+}
+
+.reactionBar {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 3px;
+	border-radius: 0 999px 999px 0;
+	background: var(--purple);
+	opacity: 0.65;
+}
