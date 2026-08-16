@@ -27,6 +27,14 @@ export interface ModVersion {
 	version: string;
 }
 
+export type ModReactionType = 'LIKE' | 'FIRE' | 'LOVE' | 'FUNNY' | 'WOW';
+
+export interface ModReactionSummary {
+	selected: ModReactionType | null;
+	counts: Record<ModReactionType, number>;
+	total: number;
+}
+
 export interface ModQueryResponse {
 	mods: Mod[];
 	count: number;

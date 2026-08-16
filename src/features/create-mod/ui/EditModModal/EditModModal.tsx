@@ -1,5 +1,5 @@
 import { Close, Content, DialogTitle, Overlay, Portal } from '@radix-ui/react-dialog';
-import { useEffect, type JSX } from 'react';
+import { useEffect, useMemo, useState, type JSX } from 'react';
 import styles from './EditModModal.module.css';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button, ContentBox, Input, Textarea } from '@/shared/ui';
@@ -14,7 +14,7 @@ import { Select } from 'antd';
 import toast from 'react-hot-toast';
 import { HTTPError } from 'ky';
 import { useNavigate } from 'react-router-dom';
-import { ModCategoryLabels, useModStore, type Mod } from '@/entities/mod';
+import { getModReactions, ModCategoryLabels, useModStore, type Mod, type ModReactionSummary } from '@/entities/mod';
 
 type FormValues = z.infer<typeof CreateModSchema>;
 
@@ -24,9 +24,18 @@ interface Props {
 	onSuccess?: () => void;
 }
 
+const REACTIONS = [
+	{ type: 'LIKE', emoji: '👍', label: 'Нравится' },
+	{ type: 'FIRE', emoji: '🔥', label: 'Огонь' },
+	{ type: 'LOVE', emoji: '❤️', label: 'Любовь' },
+	{ type: 'FUNNY', emoji: '😂', label: 'Смешно' },
+	{ type: 'WOW', emoji: '😮', label: 'Вау' }
+] as const;
+
 const EditModModalContent = ({ modData, reloadPage = true, onSuccess }: Props): JSX.Element => {
 	const versions = useModStore((state) => state.allVersions);
 	const navigate = useNavigate();
+	const [reactions, setReactions] = useState<ModReactionSummary>();
 	const {
 		register,
 		handleSubmit,
@@ -50,6 +59,17 @@ const EditModModalContent = ({ modData, reloadPage = true, onSuccess }: Props): 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		getModReactions(modData.id)
+			.then(setReactions)
+			.catch(() => undefined);
+	}, [modData.id]);
+
+	const maxReactionCount = useMemo(
+		() => Math.max(1, ...REACTIONS.map(({ type }) => reactions?.counts[type] ?? 0)),
+		[reactions]
+	);
+
 	const onSubmit = async (dto: FormValues): Promise<void> => {
 		const toastId = toast.loading('Редактирование мода...');
 		try {
@@ -70,6 +90,25 @@ const EditModModalContent = ({ modData, reloadPage = true, onSuccess }: Props): 
 		<ContentBox className={styles['modal']} title="Редактировать мод">
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Input {...register('title')} error={errors.title?.message} label="Заголовок" placeholder="Генератор домов" />
+
+				<section className={styles['reactions']} aria-label="Реакции пользователей">
+					<div className={styles['reactionsHeader']}>
+						<span>Реакции пользователей</span>
+						<b>{reactions?.total ?? 0}</b>
+					</div>
+					<div className={styles['reactionsList']}>
+						{REACTIONS.map(({ type, emoji, label }) => {
+							const count = reactions?.counts[type] ?? 0;
+							return (
+								<div className={styles['reaction']} key={type} title={label}>
+									<span className={styles['reactionEmoji']}>{emoji}</span>
+									<span className={styles['reactionCount']}>{count}</span>
+									<span className={styles['reactionBar']} style={{ width: `${(count / maxReactionCount) * 100}%` }} />
+								</div>
+							);
+						})}
+					</div>
+				</section>
 
 				<Textarea
 					{...register('description')}
