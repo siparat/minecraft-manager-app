@@ -1,133 +1,166 @@
 import { useLayoutEffect, type JSX } from 'react';
 import styles from './InfoPage.module.css';
 import { Helmet } from 'react-helmet-async';
-import { Text, Title } from '@/shared/ui';
-import ScrollMouse from '@/shared/assets/icons/scroll-mouse.svg?react';
 
 export const InfoPage = (): JSX.Element => {
 	useLayoutEffect(() => {
-		document.body.style.backgroundImage = 'url("/background.png")';
-		document.body.style.backgroundSize = 'cover';
-		document.body.style.backgroundAttachment = 'fixed';
-		document.body.style.scrollBehavior = 'smooth';
-
-		return () => {
-			document.body.style.backgroundImage = '';
-			document.body.style.backgroundSize = '';
-			document.body.style.backgroundAttachment = '';
-			document.body.style.scrollBehavior = '';
-		};
+		document.body.classList.add('info-page-active');
+		return () => document.body.classList.remove('info-page-active');
 	}, []);
 
 	return (
 		<>
 			<Helmet>
-				<title>Информация</title>
+				<title>About — MC MOD DEV Studio</title>
 			</Helmet>
-			<header className={styles['header']}>
-				<ul className={styles['header-list']}>
-					<li>
-						<a href="#second-screen">
-							<Text size="l" color="white">
-								DISCLAIMER
-							</Text>
-						</a>
-					</li>
-					<li>
-						<a href="#third-screen">
-							<Text size="l" color="white">
-								COPYRIGHT & CONTENT POLICY
-							</Text>
-						</a>
-					</li>
-					<li>
-						<a href="#fourth-screen">
-							<Text size="l" color="white">
-								CONTACT US
-							</Text>
-						</a>
-					</li>
-				</ul>
+
+			{/* ── HEADER ── */}
+			<header className={styles.header}>
+				<div className={styles.headerInner}>
+					<a href="#" className={styles.logo}>
+						<span className={styles.logoBox}>M</span>
+						MC MOD DEV
+					</a>
+					<nav className={styles.nav}>
+						<a href="#disclaimer" className={styles.navLink}>Disclaimer</a>
+						<a href="#copyright" className={styles.navLink}>Content Policy</a>
+						<a href="#contact" className={styles.navCta}>Contact us ↗</a>
+					</nav>
+				</div>
 			</header>
-			<section className={styles['first-screen']}>
-				<div className={styles['wrapper']}>
-					<Title className={styles['title']} tag="h1">
-						WELCOME TO l13 STUDIO PAGE
-					</Title>
-					<ScrollMouse className={styles['scroll-icon']} />
+
+			{/* ── HERO ── */}
+			<section className={styles.hero}>
+				<div className={styles.heroTop}>
+					<span className={styles.heroBadge}>
+						<span className={styles.badgeLine} />
+						Independent mod resource
+					</span>
 				</div>
-			</section>
-			<section id="second-screen" className={styles['second-screen']}>
-				<div className={styles['wrapper']}>
-					<Title className={styles['title']} tag="h2">
-						DISCLAIMER
-					</Title>
-					<div className={styles['blockText']}>
-						<Text size="l">
-							This website is an unofficial resource for Minecraft Pocket Edition and is not affiliated with Mojang AB.
-						</Text>
-					</div>
-					<div className={styles['blockText']}>
-						<Text size="l">
-							All Minecraft-related assets, including the name, brand, and game materials, are the property of Mojang AB or their
-							respective owners. All rights reserved.
-						</Text>
-						<Text size="l">
-							Official brand guidelines:{' '}
-							<a href="https://account.mojang.com/documents/brand_guidelines">
-								https://account.mojang.com/documents/brand_guidelines
-							</a>
-						</Text>
-					</div>
-				</div>
-			</section>
-			<section id="third-screen" className={styles['third-screen']}>
-				<div className={styles['wrapper']}>
-					<Title className={styles['title']} tag="h2">
-						📌 COPYRIGHT & CONTENT POLICY
-					</Title>
-					<div className={styles['blockText']}>
-						<Text color="white" size="l">
-							All files available on this website belong to their respective authors and developers. We do not claim any
-							intellectual property rights over the materials provided and offer access to them under free distribution licenses,
-							when applicable.
-						</Text>
-					</div>
-					<div className={styles['blockText']}>
-						<Text color="white" size="l">
-							If you are a copyright holder and believe that any content on this website infringes your rights or violates
-							licensing terms, please contact us — we will promptly take the necessary actions to remove or adjust the material.
-						</Text>
+				<div className={styles.heroContent}>
+					<h1 className={styles.heroTitle}>
+						<span className={styles.heroTitleAccent}>MC MOD</span>
+						<br />DEV Studio
+					</h1>
+					<div className={styles.heroRight}>
+						<p className={styles.heroDesc}>
+							Your go-to source for Minecraft Pocket Edition mods, maps and add-ons.
+							Curated, safe, and always up to date.
+						</p>
+						<div className={styles.heroStats}>
+							<div className={styles.stat}>
+								<span className={styles.statNum}>500+</span>
+								<span className={styles.statLabel}>Mods available</span>
+							</div>
+							<div className={styles.statDivider} />
+							<div className={styles.stat}>
+								<span className={styles.statNum}>24h</span>
+								<span className={styles.statLabel}>Support response</span>
+							</div>
+							<div className={styles.statDivider} />
+							<div className={styles.stat}>
+								<span className={styles.statNum}>100%</span>
+								<span className={styles.statLabel}>Free to download</span>
+							</div>
+						</div>
 					</div>
 				</div>
+				<div className={styles.heroScroll}>
+					<span className={styles.scrollLine} />
+					<span className={styles.scrollText}>scroll</span>
+				</div>
 			</section>
-			<section id="fourth-screen" className={styles['fourth-screen']}>
-				<div className={styles['wrapper']}>
-					<Title className={styles['title']} tag="h2">
-						CONTACT US
-					</Title>
-					<div className={styles['blockText']}>
-						<Text color="white" size="l">
-							If you have any questions, suggestions, or copyright concerns, please reach
-						</Text>
+
+			{/* ── DISCLAIMER ── */}
+			<section id="disclaimer" className={styles.section}>
+				<div className={styles.sectionInner}>
+					<div className={styles.sideCol}>
+						<span className={styles.sectionNum}>01</span>
+						<span className={styles.sectionTag}>Disclaimer</span>
 					</div>
-					<div className={styles['blockText']}>
-						<Text color="white" size="l">
-							out to us:
-						</Text>
-					</div>
-					<div className={styles['blockText']}>
-						<Text color="white" size="l">
-							<a href="mailto:kairzhaniskairov@gmail.com">kairzhaniskairov@gmail.com</a>
-						</Text>
-					</div>
-					<div className={styles['blockText']}>
-						<Text color="white" size="l">
-							We aim to respond as quickly as possible and treat every inquiry with attention.
-						</Text>
+					<div className={styles.mainCol}>
+						<h2 className={styles.sectionTitle}>Independent<br />Resource</h2>
+						<div className={styles.textBlock}>
+							<p>
+								MC MOD DEV Studio is an <mark className={styles.mark}>independent, fan-made resource</mark> for
+								Minecraft Pocket Edition. We are not affiliated with, endorsed by, or officially
+								connected to Mojang AB or Microsoft in any way.
+							</p>
+						</div>
+						<div className={styles.textBlock}>
+							<p>
+								All trademarks, service marks, trade names, and game assets — including the
+								Minecraft name and brand — belong to Mojang AB and their respective owners.
+								All rights reserved.
+							</p>
+						</div>
+						<a
+							href="https://account.mojang.com/documents/brand_guidelines"
+							target="_blank"
+							rel="noreferrer"
+							className={styles.outLink}
+						>
+							Brand guidelines ↗
+						</a>
 					</div>
 				</div>
 			</section>
+
+			{/* ── COPYRIGHT ── */}
+			<section id="copyright" className={`${styles.section} ${styles.sectionAlt}`}>
+				<div className={styles.sectionInner}>
+					<div className={styles.sideCol}>
+						<span className={styles.sectionNum}>02</span>
+						<span className={styles.sectionTag}>Content Policy</span>
+					</div>
+					<div className={styles.mainCol}>
+						<h2 className={styles.sectionTitle}>Copyright<br />&amp; Usage</h2>
+						<div className={styles.policyGrid}>
+							<div className={styles.policyCard}>
+								<span className={styles.policyIcon}>⚖️</span>
+								<h3 className={styles.policyCardTitle}>Ownership</h3>
+								<p className={styles.policyCardText}>
+									All mods, maps, and content files hosted on this platform are the intellectual
+									property of their respective creators. We distribute them strictly under
+									applicable free-distribution or open licenses.
+								</p>
+							</div>
+							<div className={styles.policyCard}>
+								<span className={styles.policyIcon}>📩</span>
+								<h3 className={styles.policyCardTitle}>DMCA & Takedowns</h3>
+								<p className={styles.policyCardText}>
+									If you are a rights holder and believe any material infringes your copyright,
+									contact us directly. We take such reports seriously and will act promptly
+									to remove or adjust the relevant content.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* ── CONTACT ── */}
+			<section id="contact" className={styles.contactSection}>
+				<div className={styles.contactInner}>
+					<span className={styles.contactNum}>03</span>
+					<p className={styles.contactEyebrow}>Get in touch</p>
+					<h2 className={styles.contactTitle}>Have a question<br />or request?</h2>
+					<p className={styles.contactDesc}>
+						Content removal request, feedback, or just saying hi —
+						we respond within 24 hours.
+					</p>
+					<a href="mailto:irinavkt572@gmail.com" className={styles.contactEmail}>
+						<span>irinavkt572@gmail.com</span>
+						<span className={styles.contactArrow}>→</span>
+					</a>
+				</div>
+			</section>
+
+			{/* ── FOOTER ── */}
+			<footer className={styles.footer}>
+				<span className={styles.footerLogo}>MC MOD DEV Studio</span>
+				<span className={styles.footerNote}>© {new Date().getFullYear()} — Fan-made, not affiliated with Mojang</span>
+			</footer>
 		</>
 	);
 };

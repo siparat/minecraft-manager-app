@@ -1,11 +1,300 @@
+/* ═══════════════════════════════════════════════════
+   AUTH PAGE — Full Redesign
+   Animated gradient background + Glassmorphism card
+═══════════════════════════════════════════════════ */
+
 .page {
-	height: 100%;
-	width: 100%;
+	position: fixed;
+	inset: 0;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background: #040918;
+	z-index: 0;
 }
 
-div.box {
-	max-width: 595px;
+/* ─── Animated gradient background ─── */
+.bg {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	background:
+		radial-gradient(ellipse 80% 60% at 20% 30%, hsla(220, 100%, 18%, 0.95) 0%, transparent 70%),
+		radial-gradient(ellipse 60% 70% at 80% 70%, hsla(160, 80%, 12%, 0.9) 0%, transparent 65%),
+		radial-gradient(ellipse 50% 50% at 50% 10%, hsla(260, 60%, 15%, 0.8) 0%, transparent 60%),
+		linear-gradient(135deg, #040918 0%, #071225 40%, #080e1f 100%);
+	animation: bgPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes bgPulse {
+	0%   { filter: brightness(1) saturate(1); }
+	50%  { filter: brightness(1.08) saturate(1.2); }
+	100% { filter: brightness(0.95) saturate(1.1); }
+}
+
+/* ─── Floating orbs ─── */
+.orb {
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(60px);
+	opacity: 0;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.orb1 {
+	width: 500px;
+	height: 500px;
+	top: -120px;
+	left: -100px;
+	background: radial-gradient(circle, hsla(210, 100%, 50%, 0.18) 0%, transparent 70%);
+	animation: orbReveal 0.7s 0.1s ease forwards, orbDrift1 12s 0.8s ease-in-out infinite alternate;
+}
+
+.orb2 {
+	width: 400px;
+	height: 400px;
+	bottom: -80px;
+	right: -80px;
+	background: radial-gradient(circle, hsla(158, 90%, 40%, 0.16) 0%, transparent 70%);
+	animation: orbReveal 0.7s 0.2s ease forwards, orbDrift2 14s 0.9s ease-in-out infinite alternate;
+}
+
+.orb3 {
+	width: 300px;
+	height: 300px;
+	top: 40%;
+	left: 60%;
+	background: radial-gradient(circle, hsla(270, 80%, 55%, 0.12) 0%, transparent 70%);
+	animation: orbReveal 0.7s 0.3s ease forwards, orbDrift3 10s 1s ease-in-out infinite alternate;
+}
+
+@keyframes orbReveal {
+	to { opacity: 1; }
+}
+@keyframes orbDrift1 {
+	0%   { transform: translate(0, 0) scale(1); }
+	100% { transform: translate(40px, 30px) scale(1.1); }
+}
+@keyframes orbDrift2 {
+	0%   { transform: translate(0, 0) scale(1); }
+	100% { transform: translate(-30px, -40px) scale(1.08); }
+}
+@keyframes orbDrift3 {
+	0%   { transform: translate(0, 0); }
+	100% { transform: translate(-20px, 25px) scale(0.95); }
+}
+
+/* ─── Grid pattern overlay ─── */
+.gridOverlay {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background-image:
+		linear-gradient(hsla(220, 60%, 60%, 0.04) 1px, transparent 1px),
+		linear-gradient(90deg, hsla(220, 60%, 60%, 0.04) 1px, transparent 1px);
+	background-size: 60px 60px;
+	mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
+	pointer-events: none;
+}
+
+/* ─── Split layout ─── */
+.split {
+	position: relative;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 80px;
+	width: 100%;
+	max-width: 1100px;
+	padding: 40px;
+}
+
+/* ─── Left panel (branding) ─── */
+.brand {
+	flex: 1;
+	max-width: 420px;
+	opacity: 0;
+	transform: translateX(-40px);
+	animation: slideInLeft 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes slideInLeft {
+	to { opacity: 1; transform: translateX(0); }
+}
+
+.logoWrap {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin-bottom: 32px;
+}
+
+.logoIcon {
+	width: 52px;
+	height: 52px;
+	border-radius: 14px;
+	background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 26px;
+	box-shadow: 0 8px 30px hsla(142, 70%, 40%, 0.4);
+	flex-shrink: 0;
+}
+
+.logoText {
+	font-size: 22px;
+	font-weight: 800;
+	letter-spacing: -0.5px;
+	color: #fff;
+	line-height: 1;
+}
+
+.logoText span {
+	color: #4ade80;
+}
+
+.brandHeadline {
+	font-size: clamp(28px, 3.5vw, 40px);
+	font-weight: 800;
+	color: #fff;
+	line-height: 1.2;
+	letter-spacing: -1px;
+	margin-bottom: 16px;
+}
+
+.brandHeadline em {
+	font-style: normal;
+	background: linear-gradient(90deg, #4ade80, #22d3ee);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.brandDesc {
+	font-size: 16px;
+	line-height: 1.65;
+	color: hsla(220, 30%, 75%, 0.8);
+	font-weight: 400;
+	margin-bottom: 36px;
+}
+
+.pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.pill {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 16px;
+	border-radius: 999px;
+	border: 1px solid hsla(220, 50%, 60%, 0.15);
+	background: hsla(220, 50%, 60%, 0.06);
+	backdrop-filter: blur(8px);
+	font-size: 13px;
+	font-weight: 500;
+	color: hsla(220, 30%, 80%, 0.85);
+	transition: border-color 0.25s, background 0.25s;
+}
+
+.pill:hover {
+	border-color: hsla(142, 70%, 60%, 0.35);
+	background: hsla(142, 70%, 40%, 0.1);
+}
+
+.pillDot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: #4ade80;
+	flex-shrink: 0;
+	box-shadow: 0 0 6px #4ade80;
+}
+
+/* ─── Glass card ─── */
+.card {
+	flex-shrink: 0;
+	width: 420px;
+	padding: 44px;
+	border-radius: 28px;
+	background: hsla(220, 40%, 8%, 0.65);
+	border: 1px solid hsla(220, 50%, 70%, 0.12);
+	backdrop-filter: blur(24px) saturate(160%);
+	-webkit-backdrop-filter: blur(24px) saturate(160%);
+	box-shadow:
+		0 0 0 1px hsla(220, 50%, 70%, 0.05) inset,
+		0 40px 80px hsla(0, 0%, 0%, 0.5),
+		0 20px 40px hsla(0, 0%, 0%, 0.3);
+	opacity: 0;
+	transform: translateY(30px) scale(0.97);
+	animation: cardIn 0.7s 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes cardIn {
+	to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.cardHeader {
+	margin-bottom: 36px;
+}
+
+.cardTitle {
+	font-size: 26px;
+	font-weight: 800;
+	color: #fff;
+	letter-spacing: -0.5px;
+	margin-bottom: 8px;
+}
+
+.cardSubtitle {
+	font-size: 14px;
+	color: hsla(220, 30%, 70%, 0.7);
+	font-weight: 400;
+	line-height: 1.5;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+	.split {
+		flex-direction: column;
+		gap: 40px;
+		padding: 24px;
+	}
+
+	.brand {
+		max-width: 100%;
+		text-align: center;
+	}
+
+	.logoWrap {
+		justify-content: center;
+	}
+
+	.pills {
+		justify-content: center;
+	}
+
+	.card {
+		width: 100%;
+		max-width: 440px;
+		padding: 32px 28px;
+	}
+}
+
+@media (max-width: 480px) {
+	.card {
+		padding: 28px 20px;
+		border-radius: 20px;
+	}
+
+	.brandHeadline {
+		font-size: 26px;
+	}
 }
