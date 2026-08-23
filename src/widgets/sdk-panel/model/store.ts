@@ -3,12 +3,14 @@ import type { UpdateSdkSchema } from 'minecraft-manager-schemas';
 import type z from 'zod';
 import { create } from 'zustand';
 
+type UpdateSdk = Partial<z.infer<typeof UpdateSdkSchema>> & { skipBeforeFirstInterAdsCount?: number };
+
 interface UpdateSdkStore {
 	initialSdk?: AppSdk;
 	setInitialSdk: (sdk: AppSdk) => void;
-	newSdk: Partial<z.infer<typeof UpdateSdkSchema>>;
-	setNewSdk: (sdk: Partial<z.infer<typeof UpdateSdkSchema>>) => void;
-	setProp: (name: keyof z.infer<typeof UpdateSdkSchema>, value: z.infer<typeof UpdateSdkSchema>[typeof name]) => void;
+	newSdk: UpdateSdk;
+	setNewSdk: (sdk: UpdateSdk) => void;
+	setProp: <K extends keyof UpdateSdk>(name: K, value: UpdateSdk[K]) => void;
 }
 
 export const useUpdateSdkStore = create<UpdateSdkStore>((set, get) => ({
