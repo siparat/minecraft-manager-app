@@ -85,7 +85,7 @@ export const AppAdsPage = (): JSX.Element => {
 	};
 
 	useEffect(() => {
-		loadAds().catch((error) => error instanceof HTTPError && toast.error(error.message));
+		setAds(app?.ads || []);
 	}, [app]);
 
 	if (!app) return <></>;
