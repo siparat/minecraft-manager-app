@@ -1,0 +1,1 @@
+export { AppAdsPage } from './ui';

@@ -9,6 +9,7 @@ export const Routes = {
 	APP_MODS_ORDER: '/app/:id/mods/order',
 	APP_FEEDBACKS: '/app/:id/feedbacks',
 	APP_SDK: '/app/:id/sdk',
+	APP_ADS: '/app/:id/ads',
 	APP_ISSUES: '/app/:id/issues',
 	POLICIES: '/policy',
 	CREATE_POLICY: '/policy/create',
