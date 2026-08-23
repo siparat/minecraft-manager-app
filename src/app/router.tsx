@@ -20,6 +20,7 @@ import { CreatePolicyPage } from '@/pages/policy/create';
 import { policiesLoader, policyLoader } from '@/entities/policy';
 import { PolicyPage } from '@/pages/policy/:slug';
 import { EditPolicyPage } from '@/pages/policy/:slug/edit';
+import { AppAdsPage } from '@/pages/app/:id/adds';
 
 export const router = createBrowserRouter(
 	createRoutesFromChildren(
@@ -46,6 +47,7 @@ export const router = createBrowserRouter(
 					element={<AppModsPage />}
 				/>
 				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_SDK} element={<AppSdkPage />} />
+				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_ADS} element={<AppAdsPage />} />
 				<Route errorElement={<ErrorPage />} loader={modLoader} path={Routes.MODS} element={<ModsPage />} />
 				<Route errorElement={<ErrorPage />} loader={policiesLoader} path={Routes.POLICIES} element={<PoliciesPage />} />
 				<Route errorElement={<ErrorPage />} path={Routes.CREATE_POLICY} element={<CreatePolicyPage />} />

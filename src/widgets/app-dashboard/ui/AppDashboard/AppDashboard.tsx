@@ -35,10 +35,10 @@ export const AppDashboard = (): JSX.Element => {
 				color="#FAD457"
 			/>
 			<DashboardTab
-				title="Отзывы"
-				description="Отзывы и уведомления из Google Play Console"
-				to={Routes.APP_FEEDBACKS.replace(':id', app.id.toString())}
-				color="#62FA57"
+				title="Компоненты рекламы"
+				description="ID, названия и статусы рекламных компонентов"
+				to={Routes.APP_ADS.replace(':id', app.id.toString())}
+				color="#34C759"
 			/>
 		</div>
 	);

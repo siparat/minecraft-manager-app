@@ -1,0 +1,54 @@
+.page {
+	padding-bottom: 25px;
+}
+
+.title {
+	margin-top: 15px;
+}
+
+.panel {
+	background: var(--white);
+	border-radius: 18px;
+	margin-top: 20px;
+	padding: 24px;
+}
+
+.form {
+	display: grid;
+	grid-template-columns: 220px 1fr auto auto;
+	gap: 14px;
+	align-items: end;
+}
+
+.actions {
+	display: flex;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.table {
+	margin-top: 18px;
+}
+
+.status {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #ff453a;
+}
+
+.enabled {
+	background: #34c759;
+}
+
+.rowActions {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	height: 100%;
+}
+
+.file {
+	display: none;
+}
