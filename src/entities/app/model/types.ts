@@ -1,4 +1,5 @@
 import type { AdsNativeType } from 'minecraft-manager-schemas/build/app/ads-native-type.enum';
+import type { AppAd } from '@/entities/app-ads';
 
 export enum AppStatus {
 	PLANNED = 'PLANNED',
@@ -25,6 +26,7 @@ export interface App {
 	bundle?: string;
 	appScreenshots: string[];
 	sdk: AppSdk;
+	ads: AppAd[];
 	translations: (Omit<AppTranslation, 'languageId'> & { language: AppLanguage })[];
 	_count: {
 		mods: number;
@@ -64,6 +66,7 @@ export interface AppSdk {
 	isInterAdsEnabled: boolean;
 	isNativeAdsEnabled: boolean;
 	delayInter: number;
+	skipBeforeFirstInterAdsCount: number;
 	adsNativeType: AdsNativeType;
 	metricaToken: string | null;
 	secondInterCode: string | null;

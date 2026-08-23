@@ -36,6 +36,15 @@ export const SdkSettings = (): JSX.Element => {
 			<Input
 				type="number"
 				min={0}
+				onChange={(e) => setProp('skipBeforeFirstInterAdsCount', Number(e.currentTarget.value))}
+				fieldsetClassName={styles['editableProp']}
+				defaultValue={app?.sdk.skipBeforeFirstInterAdsCount || undefined}
+				label="Пропусков до первого показа межстраничной рекламы (кол-во)"
+				placeholder="0"
+			/>
+			<Input
+				type="number"
+				min={0}
 				onChange={(e) => setProp('adsInverval', Number(e.currentTarget.value))}
 				fieldsetClassName={styles['editableProp']}
 				defaultValue={app?.sdk.adsInverval || undefined}
