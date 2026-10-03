@@ -20,6 +20,20 @@ export const SdkIds = (): JSX.Element => {
 				label="AppMetrica"
 				placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 			/>
+			<Input
+				onChange={(e) => setProp('tgRu', e.currentTarget.value || null)}
+				fieldsetClassName={styles['editableProp']}
+				defaultValue={app?.sdk.tgRu || undefined}
+				label="Telegram RU"
+				placeholder="https://t.me/..."
+			/>
+			<Input
+				onChange={(e) => setProp('tgOther', e.currentTarget.value || null)}
+				fieldsetClassName={styles['editableProp']}
+				defaultValue={app?.sdk.tgOther || undefined}
+				label="Telegram Other"
+				placeholder="https://t.me/..."
+			/>
 		</div>
 	);
 };

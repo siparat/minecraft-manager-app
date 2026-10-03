@@ -69,6 +69,8 @@ export interface AppSdk {
 	skipBeforeFirstInterAdsCount: number;
 	adsNativeType: AdsNativeType;
 	metricaToken: string | null;
+	tgRu: string | null;
+	tgOther: string | null;
 	secondInterCode: string | null;
 	secondNativeCode: string | null;
 	secondOpenCode: string | null;

@@ -3,7 +3,11 @@ import type { UpdateSdkSchema } from 'minecraft-manager-schemas';
 import type z from 'zod';
 import { create } from 'zustand';
 
-type UpdateSdk = Partial<z.infer<typeof UpdateSdkSchema>> & { skipBeforeFirstInterAdsCount?: number };
+type UpdateSdk = Partial<z.infer<typeof UpdateSdkSchema>> & {
+	skipBeforeFirstInterAdsCount?: number;
+	tgRu?: string | null;
+	tgOther?: string | null;
+};
 
 interface UpdateSdkStore {
 	initialSdk?: AppSdk;
