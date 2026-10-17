@@ -10,8 +10,8 @@
     width: 33px;
     height: 33px;
     border-radius: 50%;
-    background: var(--blue-100);
-    color: var(--white);
+	background: var(--blue-100);
+	color: var(--white);
     font-size: 22px;
     line-height: 150%;
 }

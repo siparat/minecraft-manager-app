@@ -1,0 +1,4 @@
+.page { position: relative; min-height: 100%; padding: clamp(18px, 3vw, 42px); border: 1px solid rgba(85,255,210,.14); border-radius: 30px; background: linear-gradient(135deg, rgba(10,20,37,.97), rgba(14,10,38,.94)); box-shadow: 0 0 0 1px rgba(143,91,255,.08), 0 28px 80px rgba(2,5,20,.38), inset 0 1px rgba(255,255,255,.05); overflow: hidden; }
+.page::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(96,255,218,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(96,255,218,.035) 1px, transparent 1px); background-size: 32px 32px; pointer-events: none; }
+.glow { position: absolute; width: 360px; height: 360px; right: -150px; top: -160px; background: #6b3cff; filter: blur(100px); opacity: .22; pointer-events: none; }
+.page > *:not(.glow) { position: relative; z-index: 1; }

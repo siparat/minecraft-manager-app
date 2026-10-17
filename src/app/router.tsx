@@ -18,8 +18,8 @@ import { ChangeModsOrderPage } from '@/pages/app/:id/change-mods-order';
 import { PoliciesPage } from '@/pages/policy';
 import { CreatePolicyPage } from '@/pages/policy/create';
 import { policiesLoader, policyLoader } from '@/entities/policy';
-import { PolicyPage } from '@/pages/policy/:slug';
-import { EditPolicyPage } from '@/pages/policy/:slug/edit';
+import { PolicyPage } from '@/pages/policy/slug';
+import { EditPolicyPage } from '@/pages/policy/slug/edit';
 import { AppAdsPage } from '@/pages/app/:id/adds';
 
 export const router = createBrowserRouter(
