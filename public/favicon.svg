@@ -1,29 +1,8 @@
-<svg width="64" height="64" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-  <!-- Dirt (bottom half) -->
-  <rect x="0" y="8" width="16" height="8" fill="#8B5E3C"/>
-  <!-- Dirt texture spots -->
-  <rect x="1" y="9"  width="2" height="2" fill="#7A5230"/>
-  <rect x="5" y="10" width="2" height="2" fill="#7A5230"/>
-  <rect x="9" y="9"  width="2" height="2" fill="#7A5230"/>
-  <rect x="12" y="11" width="2" height="2" fill="#7A5230"/>
-  <rect x="3" y="12" width="2" height="2" fill="#7A5230"/>
-  <rect x="7" y="13" width="2" height="2" fill="#7A5230"/>
-  <rect x="11" y="12" width="3" height="1" fill="#7A5230"/>
-
-  <!-- Grass side strip -->
-  <rect x="0" y="7" width="16" height="2" fill="#5D9C27"/>
-  <rect x="0" y="6" width="16" height="1" fill="#6DB830"/>
-
-  <!-- Grass top -->
-  <rect x="0" y="0" width="16" height="7" fill="#6DB830"/>
-  <!-- Grass top texture -->
-  <rect x="1" y="1" width="1" height="2" fill="#5D9C27"/>
-  <rect x="4" y="0" width="1" height="2" fill="#5D9C27"/>
-  <rect x="7" y="1" width="2" height="1" fill="#5D9C27"/>
-  <rect x="11" y="0" width="1" height="2" fill="#5D9C27"/>
-  <rect x="13" y="2" width="2" height="1" fill="#5D9C27"/>
-  <rect x="2" y="4" width="2" height="1" fill="#7DC93A"/>
-  <rect x="6" y="3" width="1" height="2" fill="#7DC93A"/>
-  <rect x="9" y="4" width="2" height="1" fill="#7DC93A"/>
-  <rect x="14" y="4" width="1" height="2" fill="#7DC93A"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#6e1d24"/>
+  <path d="M6 22 L4 10 L11 15 L16 7 L21 15 L28 10 L26 22 Z" fill="#c9a24a" stroke="#7a5a1c" stroke-width="1" stroke-linejoin="round"/>
+  <rect x="6" y="23" width="20" height="3" rx="1" fill="#f1d68a" stroke="#7a5a1c" stroke-width="1"/>
+  <circle cx="16" cy="7" r="1.6" fill="#f1d68a"/>
+  <circle cx="4" cy="10" r="1.4" fill="#f1d68a"/>
+  <circle cx="28" cy="10" r="1.4" fill="#f1d68a"/>
 </svg>
