@@ -5,4 +5,5 @@ export interface Policy {
 	slug: string;
 	title: string;
 	content: string;
+	createdById?: number | null;
 }

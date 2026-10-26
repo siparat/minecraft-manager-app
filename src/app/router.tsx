@@ -21,6 +21,8 @@ import { policiesLoader, policyLoader } from '@/entities/policy';
 import { PolicyPage } from '@/pages/policy/slug';
 import { EditPolicyPage } from '@/pages/policy/slug/edit';
 import { AppAdsPage } from '@/pages/app/:id/adds';
+import { ProtectedElement } from './ProtectedElement';
+import { UserRole } from '@/entities/user/model';
 
 export const router = createBrowserRouter(
 	createRoutesFromChildren(
@@ -36,18 +38,53 @@ export const router = createBrowserRouter(
 					</ProtectedRoute>
 				}>
 				<Route errorElement={<ErrorPage />} index element={<MainPage />} />
-				<Route errorElement={<ErrorPage />} path={Routes.CHANGE_ORDERS} element={<ChangeAppOrderPage />} />
+				<Route
+					errorElement={<ErrorPage />}
+					path={Routes.CHANGE_ORDERS}
+					element={
+						<ProtectedElement>
+							<ChangeAppOrderPage />
+						</ProtectedElement>
+					}
+				/>
 				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_PAGE} element={<AppPage />} />
 				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_ISSUES} element={<AppIssuesPage />} />
-				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_MODS_ORDER} element={<ChangeModsOrderPage />} />
+				<Route
+					errorElement={<ErrorPage />}
+					loader={appLoader}
+					path={Routes.APP_MODS_ORDER}
+					element={
+						<ProtectedElement>
+							<ChangeModsOrderPage />
+						</ProtectedElement>
+					}
+				/>
 				<Route
 					errorElement={<ErrorPage />}
 					loader={multiloader(appLoader, modLoader)}
 					path={Routes.APP_MODS}
 					element={<AppModsPage />}
 				/>
-				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_SDK} element={<AppSdkPage />} />
-				<Route errorElement={<ErrorPage />} loader={appLoader} path={Routes.APP_ADS} element={<AppAdsPage />} />
+				<Route
+					errorElement={<ErrorPage />}
+					loader={appLoader}
+					path={Routes.APP_SDK}
+					element={
+						<ProtectedElement roles={[UserRole.ADMIN, UserRole.BUILDER]}>
+							<AppSdkPage />
+						</ProtectedElement>
+					}
+				/>
+				<Route
+					errorElement={<ErrorPage />}
+					loader={appLoader}
+					path={Routes.APP_ADS}
+					element={
+						<ProtectedElement roles={[UserRole.ADMIN, UserRole.BUILDER]}>
+							<AppAdsPage />
+						</ProtectedElement>
+					}
+				/>
 				<Route errorElement={<ErrorPage />} loader={modLoader} path={Routes.MODS} element={<ModsPage />} />
 				<Route errorElement={<ErrorPage />} loader={policiesLoader} path={Routes.POLICIES} element={<PoliciesPage />} />
 				<Route errorElement={<ErrorPage />} path={Routes.CREATE_POLICY} element={<CreatePolicyPage />} />

@@ -9,6 +9,8 @@ import TrashIcon from '@/shared/assets/icons/trash.svg?react';
 import toast from 'react-hot-toast';
 import { HTTPError } from 'ky';
 import { deleteAppIssue, solveAppIssue } from '../..';
+import { useUserStore } from '@/entities/user';
+import { isAdmin } from '@/entities/user/model';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	issue: AppIssue;
@@ -16,6 +18,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 export const IssueItem = ({ className, issue, ...props }: Props): JSX.Element => {
 	const refetchIssues = useAppStore((state) => state.refetchIssues);
+	const user = useUserStore((state) => state.user);
 
 	const solveIssue = async (): Promise<void> => {
 		const toastId = toast.loading('Загрузка...');
@@ -56,16 +59,18 @@ export const IssueItem = ({ className, issue, ...props }: Props): JSX.Element =>
 					{issue.text}
 				</Text>
 			</div>
-			<div className={styles['actions']}>
-				<button title="Удалить запись" onClick={deleteIssue} className={styles['deleteButton']}>
-					<TrashIcon />
-				</button>
-				{issue.status == AppIssueStatus.CREATED && (
-					<button title="Отметь как решённое" onClick={solveIssue} className={styles['solveButton']}>
-						<TickIcon />
+			{isAdmin(user) && (
+				<div className={styles['actions']}>
+					<button title="Удалить запись" onClick={deleteIssue} className={styles['deleteButton']}>
+						<TrashIcon />
 					</button>
-				)}
-			</div>
+					{issue.status == AppIssueStatus.CREATED && (
+						<button title="Отметь как решённое" onClick={solveIssue} className={styles['solveButton']}>
+							<TickIcon />
+						</button>
+					)}
+				</div>
+			)}
 		</div>
 	);
 };

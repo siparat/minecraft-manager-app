@@ -7,12 +7,14 @@ import { AppModsTable } from '@/entities/app-mods-table';
 import toast from 'react-hot-toast';
 import { MODS_PER_PAGE, useModsTableFilters } from '@/features/mods-table/model';
 import { useAppStore } from '@/entities/app';
+import { useUserStore } from '@/entities/user';
 import type { ModQueryResponse } from '@/entities/mod';
 import { useQueryClient } from '@tanstack/react-query';
 import { ModsTableFilters } from '@/features/mods-table/ui/ModsTableFilters/ModsTableFilters';
 
 export const InactiveAppModsTable = (): JSX.Element => {
 	const app = useAppStore((state) => state.app);
+	const user = useUserStore((state) => state.user);
 	const filters = useModsTableFilters();
 	const { query, versions, commentsCount, rating, commentsCountOperator, ratingOperator, category } = filters;
 	const [sort, setSort] = useState<GridSortModel>();
@@ -55,7 +57,7 @@ export const InactiveAppModsTable = (): JSX.Element => {
 			],
 			({ count, mods }: ModQueryResponse): ModQueryResponse => ({
 				count,
-				mods: mods.map((m) => (m.id !== modId ? m : { ...m, apps: value ? [{ id: app!.id }] : [] }))
+				mods: mods.map((m) => (m.id !== modId ? m : { ...m, apps: value ? [{ id: app!.id, createdById: user?.id }] : [] }))
 			})
 		);
 	};
