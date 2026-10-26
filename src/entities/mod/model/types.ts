@@ -20,7 +20,8 @@ export interface Mod {
 	_count: {
 		apps: number; //!
 	};
-	apps?: Pick<App, 'id'>[];
+	apps?: (Pick<App, 'id'> & { createdById?: number | null })[];
+	createdById?: number | null;
 }
 
 export interface ModVersion {

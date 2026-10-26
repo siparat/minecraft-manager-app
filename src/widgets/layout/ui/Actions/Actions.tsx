@@ -9,6 +9,7 @@ import { Routes } from '@/shared/config';
 import { Root, Trigger } from '@radix-ui/react-dialog';
 import { CreateAppModal } from '@/features/create-app';
 import { ProtectedElement } from '@/app/ProtectedElement';
+import { UserRole } from '@/entities/user/model';
 
 export const Actions = ({ className, ...props }: HTMLAttributes<HTMLUListElement>): JSX.Element => {
 	const logout = useAuthStore((state) => state.logout);
@@ -21,7 +22,7 @@ export const Actions = ({ className, ...props }: HTMLAttributes<HTMLUListElement
 
 	return (
 		<ul {...props} className={classNames(className, styles['list'])}>
-			<ProtectedElement>
+			<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER]}>
 				<Root>
 					<Trigger asChild>
 						<button className={classNames(styles['button'], styles['green'])}>

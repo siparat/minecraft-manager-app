@@ -3,6 +3,8 @@ import styles from './AppDashboard.module.css';
 import { DashboardTab } from '@/entities/dashboard-tab';
 import { Routes } from '@/shared/config';
 import { useAppStore } from '@/entities/app';
+import { ProtectedElement } from '@/app/ProtectedElement';
+import { UserRole } from '@/entities/user/model';
 
 export const AppDashboard = (): JSX.Element => {
 	const app = useAppStore((state) => state.app);
@@ -28,18 +30,20 @@ export const AppDashboard = (): JSX.Element => {
 				to={Routes.APP_ISSUES.replace(':id', app.id.toString())}
 				color="#FA5757"
 			/>
-			<DashboardTab
-				title="SDK и реклама"
-				description="Управление рекламой в приложении"
-				to={Routes.APP_SDK.replace(':id', app.id.toString())}
-				color="#FAD457"
-			/>
-			<DashboardTab
-				title="Компоненты рекламы"
-				description="ID, названия и статусы рекламных компонентов"
-				to={Routes.APP_ADS.replace(':id', app.id.toString())}
-				color="#34C759"
-			/>
+			<ProtectedElement roles={[UserRole.ADMIN, UserRole.BUILDER]}>
+				<DashboardTab
+					title="SDK и реклама"
+					description="Управление рекламой в приложении"
+					to={Routes.APP_SDK.replace(':id', app.id.toString())}
+					color="#FAD457"
+				/>
+				<DashboardTab
+					title="Компоненты рекламы"
+					description="ID, названия и статусы рекламных компонентов"
+					to={Routes.APP_ADS.replace(':id', app.id.toString())}
+					color="#34C759"
+				/>
+			</ProtectedElement>
 		</div>
 	);
 };

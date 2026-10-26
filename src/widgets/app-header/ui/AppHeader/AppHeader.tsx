@@ -6,14 +6,19 @@ import { EditAppModal } from '@/features/create-app/ui';
 import { SelectAppStatus } from '@/features/select-app-status';
 import { UploadModfiles } from '@/features/upload-modfiles';
 import OpenArrowIcon from '@/shared/assets/icons/open-arrow.svg?react';
-import { ProtectedElement } from '@/app/ProtectedElement';
+import { useUserStore } from '@/entities/user';
+import { canManageOwned, isManager } from '@/entities/user/model';
 
 export const AppHeader = (): JSX.Element => {
 	const app = useAppStore((store) => store.app);
+	const user = useUserStore((store) => store.user);
 
 	if (!app) {
 		return <></>;
 	}
+
+	const canEditApp = canManageOwned(user, app.createdById);
+	const canUseAppTools = !isManager(user) || canEditApp;
 
 	return (
 		<div className={styles['header']}>
@@ -23,14 +28,14 @@ export const AppHeader = (): JSX.Element => {
 			<div className={styles['info']}>
 				<div className={styles['titleWrapper']}>
 					<h1 className={styles['title']}>{app.translations[0].name}</h1>
-					<ProtectedElement>
+					{canEditApp && (
 						<Root>
 							<Trigger asChild>
 								<button>✏️</button>
 							</Trigger>
 							<EditAppModal appData={app} />
 						</Root>
-					</ProtectedElement>
+					)}
 				</div>
 				<div className={styles['packageName']}>
 					<p>{app.packageName}</p>
@@ -38,8 +43,8 @@ export const AppHeader = (): JSX.Element => {
 						<OpenArrowIcon />
 					</a>
 				</div>
-				<SelectAppStatus />
-				<UploadModfiles />
+				{canUseAppTools && <SelectAppStatus />}
+				{canUseAppTools && <UploadModfiles />}
 			</div>
 		</div>
 	);

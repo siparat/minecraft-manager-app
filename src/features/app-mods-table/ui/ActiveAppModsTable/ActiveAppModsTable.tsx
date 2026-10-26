@@ -7,16 +7,19 @@ import { AppModsTable } from '@/entities/app-mods-table';
 import toast from 'react-hot-toast';
 import { MODS_PER_PAGE, useModsTableFilters } from '@/features/mods-table/model';
 import { useAppStore } from '@/entities/app';
+import { useUserStore } from '@/entities/user';
 import { useQueryClient } from '@tanstack/react-query';
 import type { ModQueryResponse } from '@/entities/mod';
 import { ModsTableFilters } from '@/features/mods-table/ui/ModsTableFilters/ModsTableFilters';
 import { Link } from 'react-router-dom';
+import { ProtectedElement } from '@/app/ProtectedElement';
 import { Routes } from '@/shared/config';
 
 export const ActiveAppModsTable = (): JSX.Element => {
 	const filters = useModsTableFilters();
 	const { query, versions, commentsCount, rating, commentsCountOperator, ratingOperator, category } = filters;
 	const app = useAppStore((state) => state.app);
+	const user = useUserStore((state) => state.user);
 	const [sort, setSort] = useState<GridSortModel>();
 	const [paginationModel, setPaginationModel] = useState({
 		page: 0,
@@ -56,7 +59,7 @@ export const ActiveAppModsTable = (): JSX.Element => {
 			],
 			({ count, mods }: ModQueryResponse): ModQueryResponse => ({
 				count,
-				mods: mods.map((m) => (m.id !== modId ? m : { ...m, apps: value ? [{ id: app!.id }] : [] }))
+				mods: mods.map((m) => (m.id !== modId ? m : { ...m, apps: value ? [{ id: app!.id, createdById: user?.id }] : [] }))
 			})
 		);
 	};
@@ -80,9 +83,11 @@ export const ActiveAppModsTable = (): JSX.Element => {
 				paginationModel={paginationModel}
 				onPaginationModelChange={setPaginationModel}
 			/>
-			<Link className={styles['link']} to={Routes.APP_MODS_ORDER.replace(':id', app!.id.toString())}>
-				<Button>Изменить порядок</Button>
-			</Link>
+			<ProtectedElement>
+				<Link className={styles['link']} to={Routes.APP_MODS_ORDER.replace(':id', app!.id.toString())}>
+					<Button>Изменить порядок</Button>
+				</Link>
+			</ProtectedElement>
 		</div>
 	);
 };

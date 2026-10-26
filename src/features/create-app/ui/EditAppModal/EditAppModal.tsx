@@ -41,13 +41,14 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 	} = useForm<FormValues>({
 		resolver: zodResolver(CreateAppSchema),
 		defaultValues: {
-			logo: appData.logo,
+			logo: appData.logo ?? '',
 			packageName: appData.packageName,
 			translations: appData.translations.map((t) => ({ name: t.name, languageId: t.language.id }))
 		}
 	});
 
 	const appName = watch('translations.0.name');
+	const logo = watch('logo');
 
 	useEffect(() => {
 		const fetchAllLanguages = async (): Promise<void> => {
@@ -184,8 +185,8 @@ export const EditAppModal = ({ appData }: Props): JSX.Element => {
 						<div className={styles['wrapper']}>
 							<Dropzone
 								uploadFile={uploadFile}
-								defaultValue={[{ isImage: true, filename: appData.logo, url: appData.logo }]}
-								error={errors.logo?.message}
+								defaultValue={appData.logo ? [{ isImage: true, filename: appData.logo, url: appData.logo }] : []}
+								error={!logo ? 'У приложения не загружено лого. Загрузите изображение' : errors.logo?.message}
 								onUpload={([file]) => setValue('logo', file?.url || '')}
 								placeholder="512x512 .png"
 								types={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
