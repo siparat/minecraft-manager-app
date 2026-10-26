@@ -17,6 +17,7 @@ export enum AppIssueStatus {
 
 export interface App {
 	id: number;
+	createdById?: number | null;
 	status: AppStatus;
 	packageName: string;
 	logo: string;

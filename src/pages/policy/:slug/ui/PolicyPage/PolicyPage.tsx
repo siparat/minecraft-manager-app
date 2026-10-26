@@ -12,22 +12,15 @@ export const PolicyPage = (): JSX.Element => {
 	} = useLoaderData<{ policy: Policy }>();
 
 	return (
-		<div className={styles['page']}>
+		<>
 			<Helmet>
 				<title>{title}</title>
 			</Helmet>
-
-			<div className={styles['book']}>
-				<div className={styles['bookInner']}>
-					<h1 className={styles['bookTitle']}>{title}</h1>
-					<div className={styles['bookDivider']} />
-					{slug.includes('.') ? (
-						<pre className={styles['bookContent']}>{content}</pre>
-					) : (
-						<article className={styles['bookContent']}>{parse(content)}</article>
-					)}
-				</div>
-			</div>
-		</div>
+			{slug.includes('.') ? (
+				<pre className={styles['article']}>{content}</pre>
+			) : (
+				<article className={styles['article']}>{parse(content)}</article>
+			)}
+		</>
 	);
 };

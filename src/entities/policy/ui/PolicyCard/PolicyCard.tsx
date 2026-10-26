@@ -12,6 +12,8 @@ import { deletePolicy } from '../../api';
 import { HTTPError } from 'ky';
 import { Link } from 'react-router-dom';
 import { Routes } from '@/shared/config';
+import { useUserStore } from '@/entities/user';
+import { canManageOwned } from '@/entities/user/model';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	data: Omit<Policy, 'content'>;
@@ -19,6 +21,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 export const PolicyCard = ({ data, className, ...props }: Props): JSX.Element => {
 	const { policies, setPolicies } = usePolicyStore();
+	const user = useUserStore((state) => state.user);
+	const canManage = canManageOwned(user, data.createdById);
 
 	const onDelete = async (): Promise<void> => {
 		const toastId = toast.loading(`Удаление политики ${data.slug}`);
@@ -42,26 +46,30 @@ export const PolicyCard = ({ data, className, ...props }: Props): JSX.Element =>
 				<Title tag="h2">{data.title}</Title>
 			</div>
 			<div className={styles['actions']}>
-				<Link to={Routes.EDIT_POLICY.replace(':slug', data.slug)} className={styles['blue']}>
-					<PencilIcon />
-				</Link>
+				{canManage && (
+					<Link to={Routes.EDIT_POLICY.replace(':slug', data.slug)} className={styles['blue']}>
+						<PencilIcon />
+					</Link>
+				)}
 				<Link to={Routes.POLICY_CONTENT.replace(':slug', data.slug)} className={styles['green']}>
 					<EyeIcon />
 				</Link>
-				<Root>
-					<Trigger asChild>
-						<button className={styles['red']}>
-							<TrashIcon style={{ stroke: '#fff' }} />
-						</button>
-					</Trigger>
-					<ConfirmModal callback={onDelete}>
-						<>
-							<Text>
-								Вы действительно хотите удалить политику <b>{data.title}</b>?
-							</Text>
-						</>
-					</ConfirmModal>
-				</Root>
+				{canManage && (
+					<Root>
+						<Trigger asChild>
+							<button className={styles['red']}>
+								<TrashIcon style={{ stroke: '#fff' }} />
+							</button>
+						</Trigger>
+						<ConfirmModal callback={onDelete}>
+							<>
+								<Text>
+									Вы действительно хотите удалить политику <b>{data.title}</b>?
+								</Text>
+							</>
+						</ConfirmModal>
+					</Root>
+				)}
 			</div>
 		</div>
 	);
