@@ -3,7 +3,6 @@ import styles from './InfoPage.module.css';
 import { Helmet } from 'react-helmet-async';
 
 const MOJANG_BRAND_URL = 'https://account.mojang.com/documents/brand_guidelines';
-const CONTACT_EMAIL = 'irinavkt572@gmail.com';
 
 const stats = [
 	{ value: '500+', label: 'Mods available' },
@@ -33,7 +32,7 @@ export const InfoPage = (): JSX.Element => {
 	return (
 		<div className={styles.page}>
 			<Helmet>
-				<title>About — MC MOD DEV Studio</title>
+				<title>About — MINE ADDON Studio</title>
 			</Helmet>
 
 			<div className={styles.dust} aria-hidden="true">
@@ -47,7 +46,7 @@ export const InfoPage = (): JSX.Element => {
 					<a href="#" className={styles.logo}>
 						<CrownMark />
 						<span>
-							MC MOD DEV
+							MINE ADDON
 							<small>Studio</small>
 						</span>
 					</a>
@@ -70,8 +69,8 @@ export const InfoPage = (): JSX.Element => {
 					<SparkIcon /> Independent mod resource <SparkIcon />
 				</span>
 				<h1 className={styles.heroTitle}>
-					<span className={styles.heroTitleAccent}>MC MOD</span>
-					<span className={styles.heroTitleSub}>DEV Studio</span>
+					<span className={styles.heroTitleAccent}>MINE ADDON</span>
+					<span className={styles.heroTitleSub}>Studio</span>
 				</h1>
 				<p className={styles.heroDesc}>
 					Your go-to source for Minecraft Pocket Edition mods, maps and add-ons. Curated, safe, and always up to date.
@@ -104,7 +103,7 @@ export const InfoPage = (): JSX.Element => {
 					</>
 				}>
 				<p>
-					MC MOD DEV Studio is an <mark className={styles.mark}>independent, fan-made resource</mark> for Minecraft Pocket Edition. We
+					MINE ADDON Studio is an <mark className={styles.mark}>independent, fan-made resource</mark> for Minecraft Pocket Edition. We
 					are not affiliated with, endorsed by, or officially connected to Mojang AB or Microsoft in any way.
 				</p>
 				<p>
@@ -140,29 +139,9 @@ export const InfoPage = (): JSX.Element => {
 				</div>
 			</Section>
 
-			<section id="contact" className={styles.contact}>
-				<div className={styles.contactCard}>
-					<span className={styles.contactNum}>03</span>
-					<span className={styles.contactIcon}>
-						<MailIcon />
-					</span>
-					<p className={styles.contactEyebrow}>Get in touch</p>
-					<h2 className={styles.contactTitle}>
-						Have a question
-						<br />
-						or request?
-					</h2>
-					<p className={styles.contactDesc}>Content removal request, feedback, or just saying hi — we respond within 24 hours.</p>
-					<a href={`mailto:${CONTACT_EMAIL}`} className={styles.contactEmail}>
-						<span>{CONTACT_EMAIL}</span>
-						<ArrowIcon />
-					</a>
-				</div>
-			</section>
-
 			<footer className={styles.footer}>
 				<CrownMark />
-				<span className={styles.footerLogo}>MC MOD DEV Studio</span>
+				<span className={styles.footerLogo}>MINE ADDON Studio</span>
 				<span className={styles.footerNote}>© {new Date().getFullYear()} — Fan-made, not affiliated with Mojang</span>
 			</footer>
 		</div>
