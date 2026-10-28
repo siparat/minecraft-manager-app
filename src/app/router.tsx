@@ -42,7 +42,7 @@ export const router = createBrowserRouter(
 					errorElement={<ErrorPage />}
 					path={Routes.CHANGE_ORDERS}
 					element={
-						<ProtectedElement>
+						<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER]}>
 							<ChangeAppOrderPage />
 						</ProtectedElement>
 					}
@@ -54,7 +54,7 @@ export const router = createBrowserRouter(
 					loader={appLoader}
 					path={Routes.APP_MODS_ORDER}
 					element={
-						<ProtectedElement>
+						<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER]}>
 							<ChangeModsOrderPage />
 						</ProtectedElement>
 					}
