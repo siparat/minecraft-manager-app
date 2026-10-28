@@ -13,6 +13,7 @@ import type { ModQueryResponse } from '@/entities/mod';
 import { ModsTableFilters } from '@/features/mods-table/ui/ModsTableFilters/ModsTableFilters';
 import { Link } from 'react-router-dom';
 import { ProtectedElement } from '@/app/ProtectedElement';
+import { UserRole } from '@/entities/user/model';
 import { Routes } from '@/shared/config';
 
 export const ActiveAppModsTable = (): JSX.Element => {
@@ -83,7 +84,7 @@ export const ActiveAppModsTable = (): JSX.Element => {
 				paginationModel={paginationModel}
 				onPaginationModelChange={setPaginationModel}
 			/>
-			<ProtectedElement>
+			<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER]}>
 				<Link className={styles['link']} to={Routes.APP_MODS_ORDER.replace(':id', app!.id.toString())}>
 					<Button>Изменить порядок</Button>
 				</Link>
