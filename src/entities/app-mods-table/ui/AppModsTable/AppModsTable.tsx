@@ -7,8 +7,6 @@ import { Switch } from '@/shared/ui';
 import { ModCategoryLabels, type Mod, type ModQueryResponse } from '@/entities/mod';
 import classNames from 'classnames';
 import { useAppStore } from '@/entities/app';
-import { useUserStore } from '@/entities/user';
-import { canUseOwned } from '@/entities/user/model';
 import { toggleAppMod } from '../../api/toggle-app-mod';
 import type { ModCategory } from 'minecraft-manager-schemas';
 import { EditModModal } from '@/features/create-mod';
@@ -41,7 +39,6 @@ export const AppModsTable = ({
 	...props
 }: Props): JSX.Element => {
 	const app = useAppStore((state) => state.app);
-	const user = useUserStore((state) => state.user);
 
 	const onToggleMod = async (modId: number, value: boolean): Promise<void> => {
 		if (!app) {
@@ -138,7 +135,7 @@ export const AppModsTable = ({
 			width: 200,
 			renderCell: (params): JSX.Element => (
 				<div className={styles['actions']}>
-					{canUseOwned(user, params.row.createdById) && (
+					{
 						<Root>
 							<Trigger asChild>
 								<button title="Редактировать">✏️</button>
@@ -152,7 +149,7 @@ export const AppModsTable = ({
 								}}
 							/>
 						</Root>
-					)}
+					}
 					<Switch value={params.row.isActived} onSwitch={(value) => onToggleMod(params.row.id, value)} />
 				</div>
 			)
