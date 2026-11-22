@@ -22,7 +22,7 @@ export const Actions = ({ className, ...props }: HTMLAttributes<HTMLUListElement
 
 	return (
 		<ul {...props} className={classNames(className, styles['list'])}>
-			<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER]}>
+			<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER, UserRole.PARTNER]}>
 				<Root>
 					<Trigger asChild>
 						<button className={classNames(styles['button'], styles['green'])}>

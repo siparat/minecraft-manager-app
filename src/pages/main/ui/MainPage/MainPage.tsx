@@ -5,6 +5,8 @@ import { Helmet } from 'react-helmet-async';
 import styles from './MainPage.module.css';
 import { Link } from 'react-router-dom';
 import { Routes } from '@/shared/config';
+import { ProtectedElement } from '@/app/ProtectedElement';
+import { UserRole } from '@/entities/user/model';
 
 export const MainPage = (): JSX.Element => {
 	return (
@@ -14,9 +16,11 @@ export const MainPage = (): JSX.Element => {
 			</Helmet>
 			<div className={styles['wrapperTitle']}>
 				<Title tag="h1">Приложения</Title>
-				<Link className={styles['changeOrdersButton']} to={Routes.CHANGE_ORDERS}>
-					<p>⚙️</p>
-				</Link>
+				<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER]}>
+					<Link className={styles['changeOrdersButton']} to={Routes.CHANGE_ORDERS}>
+						<p>⚙️</p>
+					</Link>
+				</ProtectedElement>
 			</div>
 			<AppsTable />
 		</>
