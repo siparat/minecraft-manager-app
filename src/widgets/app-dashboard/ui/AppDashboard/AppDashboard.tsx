@@ -30,7 +30,7 @@ export const AppDashboard = (): JSX.Element => {
 				to={Routes.APP_ISSUES.replace(':id', app.id.toString())}
 				color="#FA5757"
 			/>
-			<ProtectedElement roles={[UserRole.ADMIN, UserRole.BUILDER]}>
+			<ProtectedElement roles={[UserRole.ADMIN, UserRole.BUILDER, UserRole.PARTNER]}>
 				<DashboardTab
 					title="SDK и реклама"
 					description="Управление рекламой в приложении"
