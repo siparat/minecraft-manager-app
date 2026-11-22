@@ -70,7 +70,7 @@ export const router = createBrowserRouter(
 					loader={appLoader}
 					path={Routes.APP_SDK}
 					element={
-						<ProtectedElement roles={[UserRole.ADMIN, UserRole.BUILDER]}>
+						<ProtectedElement roles={[UserRole.ADMIN, UserRole.BUILDER, UserRole.PARTNER]}>
 							<AppSdkPage />
 						</ProtectedElement>
 					}
@@ -80,7 +80,7 @@ export const router = createBrowserRouter(
 					loader={appLoader}
 					path={Routes.APP_ADS}
 					element={
-						<ProtectedElement roles={[UserRole.ADMIN, UserRole.BUILDER]}>
+						<ProtectedElement roles={[UserRole.ADMIN, UserRole.BUILDER, UserRole.PARTNER]}>
 							<AppAdsPage />
 						</ProtectedElement>
 					}
