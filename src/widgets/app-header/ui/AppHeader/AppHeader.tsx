@@ -7,7 +7,7 @@ import { SelectAppStatus } from '@/features/select-app-status';
 import { UploadModfiles } from '@/features/upload-modfiles';
 import OpenArrowIcon from '@/shared/assets/icons/open-arrow.svg?react';
 import { useUserStore } from '@/entities/user';
-import { canManageOwned, isManager } from '@/entities/user/model';
+import { canManageOwned, canUseOwned } from '@/entities/user/model';
 
 export const AppHeader = (): JSX.Element => {
 	const app = useAppStore((store) => store.app);
@@ -18,7 +18,7 @@ export const AppHeader = (): JSX.Element => {
 	}
 
 	const canEditApp = canManageOwned(user, app.createdById);
-	const canUseAppTools = !isManager(user) || canEditApp;
+	const canUseAppTools = canUseOwned(user, app.createdById);
 
 	return (
 		<div className={styles['header']}>

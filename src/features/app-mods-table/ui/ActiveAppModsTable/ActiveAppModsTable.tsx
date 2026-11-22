@@ -84,7 +84,7 @@ export const ActiveAppModsTable = (): JSX.Element => {
 				paginationModel={paginationModel}
 				onPaginationModelChange={setPaginationModel}
 			/>
-			<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER]}>
+			<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER, UserRole.PARTNER]}>
 				<Link className={styles['link']} to={Routes.APP_MODS_ORDER.replace(':id', app!.id.toString())}>
 					<Button>Изменить порядок</Button>
 				</Link>
