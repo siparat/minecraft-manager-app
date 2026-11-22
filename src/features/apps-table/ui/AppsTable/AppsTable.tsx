@@ -11,7 +11,7 @@ import { HTTPError } from 'ky';
 import { ConfirmModal, Text } from '@/shared/ui';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from '@/entities/user';
-import { canManageOwned, isManager } from '@/entities/user/model';
+import { canManageOwned, isManager, isPartner } from '@/entities/user/model';
 import classNames from 'classnames';
 
 interface ModTableRow extends App {
@@ -167,10 +167,13 @@ export const AppsTable = (): JSX.Element => {
 	if (isError) return <p>Ошибка загрузки</p>;
 	if (isLoading || !data) return <p>Загрузка...</p>;
 
+	// Партнёр видит только созданные им приложения
+	const apps = isPartner(user) ? data.filter((app) => app.createdById === user?.id) : data;
+
 	return (
 		<DataGrid
 			className={styles['table']}
-			rows={data?.map((app) => ({
+			rows={apps.map((app) => ({
 				...app,
 				id: app.id,
 				name: app.translations[0].name,
@@ -182,7 +185,7 @@ export const AppsTable = (): JSX.Element => {
 			}))}
 			columns={columns}
 			getRowId={(row) => row.id}
-			columnVisibilityModel={{ adsStatus: !isManager(user) }}
+			columnVisibilityModel={{ adsStatus: !isManager(user) && !isPartner(user) }}
 		/>
 	);
 };

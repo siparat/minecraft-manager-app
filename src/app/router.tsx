@@ -54,7 +54,7 @@ export const router = createBrowserRouter(
 					loader={appLoader}
 					path={Routes.APP_MODS_ORDER}
 					element={
-						<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER]}>
+						<ProtectedElement roles={[UserRole.ADMIN, UserRole.MANAGER, UserRole.PARTNER]}>
 							<ChangeModsOrderPage />
 						</ProtectedElement>
 					}
